@@ -1,4 +1,10 @@
 language: php
 php:
   - 7.2
-
+before_script: 
+  - "composer install"
+deploy:
+  provider: heroku
+  app: "whispering-sierra-14105"
+  api_key:
+    secure: "b0839462-afcd-492f-95f1-a8936e5e736f"
