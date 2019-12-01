@@ -1,0 +1,6 @@
+imports:
+  - { resource: "@EduBoxBundle/Resources/config/services.yml" }
+  - { resource: "@EduBoxBundle/Resources/config/admin/admin.yml" }
+  - { resource: "@EduBoxBundle/Resources/config/admin/block.yml" }
+  - { resource: "@EduBoxBundle/Resources/config/admin/services.yml" }
+

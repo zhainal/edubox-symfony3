@@ -1,0 +1,4 @@
+services:
+  EduBoxBundle\:
+    resource: '../../../EduBoxBundle/*'
+    exclude: '../../../EduBoxBundle/{Entity,Repository,Tests}'
