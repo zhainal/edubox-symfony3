@@ -5,9 +5,9 @@ edu_box:
 
 admin_area:
   resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-  prefix: /admin
+  prefix: /panel
 
 _sonata_admin:
   resource: .
   type: sonata_admin
-  prefix: /admin
+  prefix: /panel

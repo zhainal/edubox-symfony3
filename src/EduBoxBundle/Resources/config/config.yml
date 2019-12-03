@@ -4,3 +4,6 @@ imports:
   - { resource: "@EduBoxBundle/Resources/config/admin/block.yml" }
   - { resource: "@EduBoxBundle/Resources/config/admin/services.yml" }
 
+framework:
+  templating:
+    engines: ['twig']

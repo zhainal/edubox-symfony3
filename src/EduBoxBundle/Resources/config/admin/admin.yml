@@ -1,5 +1,5 @@
 sonata_admin:
   title: 'EduBox'
-  title_logo: ' '
+  show_mosaic_button: false
   dashboard:
     blocks:
