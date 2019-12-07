@@ -1,7 +1,8 @@
 services:
-  edubox.admin.dashboard:
-    class: EduBoxBundle\Admin\AdminDashboard
-    arguments: [~, ~, EduBoxBundle:Default]
+
+  edubox.admin.dashboard_admin:
+    class: EduBoxBundle\Admin\DashboardAdminAdmin
+    arguments: [~, ~, EduBoxBundle:Admin/Default]
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -9,8 +10,9 @@ services:
         label: 'Admin'
         icon: '<i class="fa fa-users"></i>'
         on_top: true
-  edubox.teacher.dashboard:
-    class: EduBoxBundle\Admin\TeacherDashboard
+
+  edubox.admin.dashboard_teacher:
+    class: EduBoxBundle\Admin\DashboardTeacherAdmin
     arguments: [~, ~, EduBoxBundle:Teacher/Default]
     tags:
       - name: sonata.admin
@@ -19,8 +21,9 @@ services:
         label: 'Teacher'
         icon: '<i class="fa fa-users"></i>'
         on_top: true
-  edubox.student.dashboard:
-    class: EduBoxBundle\Admin\StudentDashboard
+
+  edubox.admin.dashboard_student:
+    class: EduBoxBundle\Admin\DashboardStudentAdmin
     arguments: [~, ~, EduBoxBundle:Student/Default]
     tags:
       - name: sonata.admin
@@ -29,8 +32,9 @@ services:
         label: 'Student'
         icon: '<i class="fa fa-users"></i>'
         on_top: true
-  edubox.parent.dashboard:
-    class: EduBoxBundle\Admin\ParentDashboard
+
+  edubox.admin.dashboard_parent:
+    class: EduBoxBundle\Admin\DashboardParentAdmin
     arguments: [~, ~, EduBoxBundle:Parent/Default]
     tags:
       - name: sonata.admin

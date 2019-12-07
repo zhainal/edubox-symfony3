@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SecurityController extends Controller
 {
     /**
-     * @Route(path="/login",name="login")
+     * @Route(path="/loginn",name="loginn")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAction()

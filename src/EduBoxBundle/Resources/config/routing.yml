@@ -1,8 +1,3 @@
-edu_box:
-  resource: "@EduBoxBundle/Controller/"
-  type:     annotation
-  prefix:   /
-
 admin_area:
   resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
   prefix: /panel
@@ -11,3 +6,10 @@ _sonata_admin:
   resource: .
   type: sonata_admin
   prefix: /panel
+
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+home:
+  path: /
+  defaults: {_controller: EduBoxBundle:Main:home}

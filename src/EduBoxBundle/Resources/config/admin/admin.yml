@@ -1,5 +1,9 @@
 sonata_admin:
+  security:
+    handler: sonata.admin.security.handler.role
   title: 'EduBox'
+  options:
+    title_mode: 'single_text'
   show_mosaic_button: false
   dashboard:
     blocks:

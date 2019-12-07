@@ -7,10 +7,10 @@ namespace EduBoxBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class ParentDashboard extends  AbstractAdmin
+class DashboardTeacherAdmin extends  AbstractAdmin
 {
-    protected $baseRoutePattern = 'parent';
-    protected $baseRouteName = 'parent';
+    protected $baseRoutePattern = 'teacher';
+    protected $baseRouteName = 'teacher';
 
     protected function configureRoutes(RouteCollection $collection)
     {

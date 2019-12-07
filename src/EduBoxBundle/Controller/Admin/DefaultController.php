@@ -2,19 +2,29 @@
 
 namespace EduBoxBundle\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
+use EduBoxBundle\Admin\DashboardAdminAdmin;
+use EduBoxBundle\EduBoxBundle;
+use EduBoxBundle\Entity\User;
+use Sonata\AdminBundle\Controller\CRUDController;
 
-class DefaultController extends Controller
+class DefaultController extends CRUDController
 {
     public function indexAction()
     {
-        return $this->render('EduBoxBundle::stats.html.twig');
+        return $this->renderWithExtraParams('EduBoxBundle::stats.html.twig');
     }
+
 
     public function listAction()
     {
-        return $this->render('EduBoxBundle::stats.html.twig');
+        $user = $this->getUser();
+        $form = $this->createFormBuilder($user)->getForm();
+        $form->add('username');
+
+        return $this->renderWithExtraParams('@SonataAdmin/CRUD/edit.html.twig', [
+            'form' => $form->createView(),
+            'object' => $user,
+            'action' => 'list',
+        ]);
     }
 }
