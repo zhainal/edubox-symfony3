@@ -1,0 +1,17 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+
+{% set title = title is defined ? title : '' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block navbar_title %}
+    {{ block('title') }}
+{% endblock %}
+
+
+{% block content %}
+    {{  parent() }}
+{% endblock %}

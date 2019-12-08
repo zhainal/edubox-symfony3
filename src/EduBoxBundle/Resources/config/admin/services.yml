@@ -2,7 +2,7 @@ services:
 
   edubox.admin.dashboard_admin:
     class: EduBoxBundle\Admin\DashboardAdminAdmin
-    arguments: [~, ~, EduBoxBundle:Admin/Default]
+    arguments: [~, ~, EduBoxBundle:Admin\AdminCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -13,7 +13,7 @@ services:
 
   edubox.admin.dashboard_teacher:
     class: EduBoxBundle\Admin\DashboardTeacherAdmin
-    arguments: [~, ~, EduBoxBundle:Teacher/Default]
+    arguments: [~, ~, EduBoxBundle:Admin\TeacherCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -24,7 +24,7 @@ services:
 
   edubox.admin.dashboard_student:
     class: EduBoxBundle\Admin\DashboardStudentAdmin
-    arguments: [~, ~, EduBoxBundle:Student/Default]
+    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -35,11 +35,121 @@ services:
 
   edubox.admin.dashboard_parent:
     class: EduBoxBundle\Admin\DashboardParentAdmin
-    arguments: [~, ~, EduBoxBundle:Parent/Default]
+    arguments: [~, ~, EduBoxBundle:Admin\ParentCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
         group: 'Parent'
         label: 'Parent'
         icon: '<i class="fa fa-users"></i>'
+        on_top: true
+
+  edubox.admin.organisation:
+    class: EduBoxBundle\Admin\OrganisationAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\OrganisationCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Organisation'
+        label: 'Organisation'
+        icon: '<i class="fa fa-graduation-cap"></i>'
+        on_top: true
+
+  edubox.admin.user:
+    class: EduBoxBundle\Admin\UserAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\UserCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Users'
+        label: 'Users'
+        icon: '<i class="fa fa-users"></i>'
+        on_top: true
+
+  edubox.admin.calendar:
+    class: EduBoxBundle\Admin\CalendarAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\CalendarCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Calendars'
+        label: 'Calendars'
+        icon: '<i class="fa fa-calendar"></i>'
+        on_top: true
+
+  edubox.admin.student_class:
+    class: EduBoxBundle\Admin\StudentClassAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Classes'
+        label: 'Classes'
+        icon: '<i class="fa fa-address-book"></i>'
+        on_top: true
+
+  edubox.admin.subject:
+    class: EduBoxBundle\Admin\SubjectAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Subjects'
+        label: 'Subjects'
+        icon: '<i class="fa fa-book"></i>'
+        on_top: true
+
+  edubox.admin.subject_area:
+    class: EduBoxBundle\Admin\SubjectAreaAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\SubjectAreaCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Subject areas'
+        label: 'Subject areas'
+        icon: '<i class="fa fa-bookmark"></i>'
+        on_top: true
+
+  edubox.admin.subject_schedule:
+    class: EduBoxBundle\Admin\SubjectScheduleAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\SubjectScheduleCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Subject schedules'
+        label: 'Subject schedules'
+        icon: '<i class="fa fa-list"></i>'
+        on_top: true
+
+  edubox.admin.call_schedule:
+    class: EduBoxBundle\Admin\CallScheduleAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\CallScheduleCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Call schedules'
+        label: 'Call schedules'
+        icon: '<i class="fa fa-bell"></i>'
+        on_top: true
+
+  edubox.admin.message:
+    class: EduBoxBundle\Admin\MessageAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\MessageCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Messages'
+        label: 'Messages'
+        icon: '<i class="fa fa-comments"></i>'
+        on_top: true
+
+  edubox.admin.notice:
+    class: EduBoxBundle\Admin\NoticeAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\NoticeCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Notices'
+        label: 'Notices'
+        icon: '<i class="fa fa-commenting"></i>'
         on_top: true

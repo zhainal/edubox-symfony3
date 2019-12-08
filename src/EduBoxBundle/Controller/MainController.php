@@ -10,7 +10,7 @@ class MainController extends Controller
 {
     public function homeAction()
     {
-        return $this->render('EduBoxBundle::home.html.twig');
+        return $this->render('EduBoxBundle:Page:home.html.twig');
     }
 
 

@@ -1,0 +1,15 @@
+{% extends '@EduBox/standard_layout.html.twig' %}
+
+{% set title %}
+    Admin Dashboard
+{% endset %}
+
+{% set breadcrumbs = [{'label':'Test1'},{'label':'Test2'}] %}
+
+{% set box_body %}
+    <h3>Test Content!</h3>
+{% endset %}
+
+{% block content %}
+    {% include 'EduBoxBundle:Block:box.html.twig' with {'box_body': 'body'} only %}
+{% endblock %}
