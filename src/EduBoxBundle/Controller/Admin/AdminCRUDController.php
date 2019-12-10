@@ -8,6 +8,6 @@ class AdminCRUDController extends CRUDController
 {
     public function listAction()
     {
-        return $this->renderWithExtraParams('EduBoxBundle:Page:dashboard_admin.html.twig');
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:dashboard_admin.html.twig');
     }
 }
