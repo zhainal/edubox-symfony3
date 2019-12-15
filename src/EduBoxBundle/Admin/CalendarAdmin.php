@@ -5,6 +5,8 @@ namespace EduBoxBundle\Admin;
 
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 class CalendarAdmin extends AbstractAdmin
@@ -15,7 +17,16 @@ class CalendarAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clear();
-        $collection->add('list', 'index');
+        $collection->add('list', 'list');
+        $collection->add('create', 'create');
+        $collection->add('edit', '{id}/edit');
+    }
+
+    protected function configureListFields(ListMapper $list)
+    {
+        $list
+            ->addIdentifier('name')
+            ->add('year');
     }
 
 }

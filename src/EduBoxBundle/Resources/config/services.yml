@@ -1,4 +1,18 @@
 services:
-  EduBoxBundle\:
-    resource: '../../../EduBoxBundle/*'
-    exclude: '../../../EduBoxBundle/{Entity,Repository,Tests}'
+  edubox.calendar_manager:
+    class: EduBoxBundle\DomainManager\CalendarManager
+    arguments:
+      - '@doctrine.orm.entity_manager'
+
+  edubox.edit_user_form_handler:
+    class: EduBoxBundle\Form\Handler\EditUserFormHandler
+    arguments:
+      - '@doctrine.orm.entity_manager'
+  edubox.create_calendar_form_handler:
+    class: EduBoxBundle\Form\Handler\CreateCalendarFormHandler
+    arguments:
+      - '@edubox.calendar_manager'
+  edubox.edit_calendar_form_handler:
+    class: EduBoxBundle\Form\Handler\EditCalendarFormHandler
+    arguments:
+      - '@edubox.calendar_manager'

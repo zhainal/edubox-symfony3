@@ -7,34 +7,34 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.shortName.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.shortName.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.shortName} %}
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.fullName.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.fullName.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.fullName, field_attr:{'style':'resize:vertical'}} %}
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.address.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.address.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.address, field_attr:{'style':'resize:vertical'}} %}
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.director.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.director.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.director} %}
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.phone.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.phone.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.phone} %}
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="form-group{% if not org_form.email.vars.valid %}has-error{% endif %}">
+                    <div class="form-group {% if not org_form.email.vars.valid %}has-error{% endif %}">
                         {% include 'EduBoxBundle:Field:input.html.twig' with {'field':org_form.email} %}
                     </div>
                 </div>

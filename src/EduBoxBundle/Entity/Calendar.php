@@ -24,18 +24,73 @@ class Calendar
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="begin", type="date")
+     * @var
+     * @ORM\Column(name="year", type="integer",length=4, unique=true)
      */
-    private $begin;
+    private $year;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="end", type="date")
+     * @ORM\Column(name="quarter_one_begin", type="date", nullable=true)
      */
-    private $end;
+    private $quarterOneBegin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_one_end", type="date", nullable=true)
+     */
+    private $quarterOneEnd;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_two_begin", type="date", nullable=true)
+     */
+    private $quarterTwoBegin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_two_end", type="date", nullable=true)
+     */
+    private $quarterTwoEnd;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_three_begin", type="date", nullable=true)
+     */
+    private $quarterThreeBegin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_three_end", type="date", nullable=true)
+     */
+    private $quarterThreeEnd;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_four_begin", type="date", nullable=true)
+     */
+    private $quarterFourBegin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="quarter_four_end", type="date", nullable=true)
+     */
+    private $quarterFourEnd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=32)
+     */
+    private $name;
 
     /**
      * @var \DateTime
@@ -51,8 +106,6 @@ class Calendar
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -60,54 +113,188 @@ class Calendar
         return $this->id;
     }
 
-
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
     /**
-     * Set begin
-     *
-     * @param \DateTime $begin
-     *
      * @return Calendar
      */
-    public function setBegin($begin)
+    public function setName($name)
     {
-        $this->begin = $begin;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get begin
-     *
-     * @return \DateTime
+     * @return int
      */
-    public function getBegin()
+    public function getYear()
     {
-        return $this->begin;
+        return $this->year;
     }
 
     /**
-     * Set end
-     *
-     * @param \DateTime $end
-     *
-     * @return Calendar
+     * @param $year
+     * @return $this
      */
-    public function setEnd($end)
+    public function setYear($year)
     {
-        $this->end = $end;
+        $this->year = $year;
 
         return $this;
     }
 
+
     /**
-     * Get end
-     *
      * @return \DateTime
      */
-    public function getEnd()
+    public function getQuarterOneBegin()
     {
-        return $this->end;
+        return $this->quarterOneBegin;
     }
+
+    /**
+     * @param \DateTime $quarterOneBegin
+     */
+    public function setQuarterOneBegin($quarterOneBegin)
+    {
+        $this->quarterOneBegin = $quarterOneBegin;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterOneEnd()
+    {
+        return $this->quarterOneEnd;
+    }
+
+    /**
+     * @param \DateTime $quarterOneEnd
+     */
+    public function setQuarterOneEnd($quarterOneEnd)
+    {
+        $this->quarterOneEnd = $quarterOneEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterTwoBegin()
+    {
+        return $this->quarterTwoBegin;
+    }
+
+    /**
+     * @param \DateTime $quarterTwoBegin
+     */
+    public function setQuarterTwoBegin($quarterTwoBegin)
+    {
+        $this->quarterTwoBegin = $quarterTwoBegin;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterTwoEnd()
+    {
+        return $this->quarterTwoEnd;
+    }
+
+    /**
+     * @param \DateTime $quarterTwoEnd
+     */
+    public function setQuarterTwoEnd($quarterTwoEnd)
+    {
+        $this->quarterTwoEnd = $quarterTwoEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterThreeBegin()
+    {
+        return $this->quarterThreeBegin;
+    }
+
+    /**
+     * @param \DateTime $quarterThreeBegin
+     */
+    public function setQuarterThreeBegin($quarterThreeBegin)
+    {
+        $this->quarterThreeBegin = $quarterThreeBegin;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterThreeEnd()
+    {
+        return $this->quarterThreeEnd;
+    }
+
+    /**
+     * @param \DateTime $quarterThreeEnd
+     */
+    public function setQuarterThreeEnd($quarterThreeEnd)
+    {
+        $this->quarterThreeEnd = $quarterThreeEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterFourBegin()
+    {
+        return $this->quarterFourBegin;
+    }
+
+    /**
+     * @param \DateTime $quarterFourBegin
+     */
+    public function setQuarterFourBegin($quarterFourBegin)
+    {
+        $this->quarterFourBegin = $quarterFourBegin;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getQuarterFourEnd()
+    {
+        return $this->quarterFourEnd;
+    }
+
+    /**
+     * @param \DateTime $quarterFourEnd
+     */
+    public function setQuarterFourEnd($quarterFourEnd)
+    {
+        $this->quarterFourEnd = $quarterFourEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getHolidays()
+    {
+        return $this->holidays;
+    }
+
+    /**
+     * @param \DateTime $holidays
+     */
+    public function setHolidays($holidays)
+    {
+        $this->holidays = $holidays;
+    }
+
+
 }
 

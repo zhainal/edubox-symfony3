@@ -9,3 +9,6 @@ sonata_admin:
     dashboard: '@EduBox/standard_layout.html.twig'
   dashboard:
     blocks:
+  assets:
+    extra_javascripts:
+      - 'assets/js/main.js'

@@ -5,6 +5,8 @@ namespace EduBoxBundle\Admin;
 
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 class UserAdmin extends AbstractAdmin
@@ -14,7 +16,15 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clear();
-        $collection->add('list', 'index');
+        $collection->clearExcept(['list', 'create', 'edit']);
     }
+
+    protected function configureListFields(ListMapper $list)
+    {
+        $list
+            ->addIdentifier('username')
+            ->add('enabled');
+    }
+
+
 }

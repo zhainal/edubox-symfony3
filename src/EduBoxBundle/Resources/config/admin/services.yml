@@ -1,5 +1,4 @@
 services:
-
   edubox.admin.dashboard_admin:
     class: EduBoxBundle\Admin\DashboardAdminAdmin
     arguments: [~, ~, EduBoxBundle:Admin\AdminCRUD]
@@ -57,7 +56,7 @@ services:
 
   edubox.admin.user:
     class: EduBoxBundle\Admin\UserAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\UserCRUD]
+    arguments: [~, EduBoxBundle:User, EduBoxBundle:Admin\UserCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -68,7 +67,7 @@ services:
 
   edubox.admin.calendar:
     class: EduBoxBundle\Admin\CalendarAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\CalendarCRUD]
+    arguments: [~, EduBoxBundle\Entity\Calendar, EduBoxBundle:Admin\CalendarCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm

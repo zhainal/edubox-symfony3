@@ -4,9 +4,9 @@
 namespace EduBoxBundle\Form;
 
 
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,8 +39,7 @@ class OrganisationType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
-                    new TelType(),
+                    new PhoneNumber()
                 ]
             ])
             ->add('email', TextType::class, [
