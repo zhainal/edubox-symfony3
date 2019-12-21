@@ -122,7 +122,7 @@
             {% set tabs = tabs + {5:{'title':student_tab_title, 'content':student_tab_content, 'id': 'student'}} %}
         {% endif %}
 
-        {% include 'EduBoxBundle:Block:tab.html.twig' with {
+        {% include 'EduBoxBundle:Block:box_tab.html.twig' with {
             'tabs': tabs,
         } only %}
 

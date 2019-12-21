@@ -12,7 +12,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class CalendarAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'calendar';
-    protected $baseRouteName = 'calendar';
+    protected $baseRouteName = 'edubox.admin.calendar';
 
     protected function configureRoutes(RouteCollection $collection)
     {

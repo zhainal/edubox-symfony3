@@ -16,13 +16,13 @@ class CalendarManager
         $this->entityManager = $entityManager;
     }
 
-    public function createCalendar(Calendar $calendar)
+    public function create(Calendar $calendar)
     {
         $this->entityManager->persist($calendar);
         $this->entityManager->flush();
     }
 
-    public function storeCalendar(Calendar $calendar)
+    public function store(Calendar $calendar)
     {
         $this->entityManager->flush();
     }

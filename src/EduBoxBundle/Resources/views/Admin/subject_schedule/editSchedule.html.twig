@@ -1,0 +1,40 @@
+{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+
+{% set title = 'Edit subject schedule' %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('edubox.admin.subject_schedule_listSchedule', {'id': schedules_group_id}) }}">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            List
+        </a>
+    </li>
+{% endblock %}
+
+{% set box_body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':subject_schedule_form.studentsGroup} %}
+            </div>
+        </div>
+    </div>
+        {% for day in 1..6 %}
+            <hr>
+            <h4>Day {{ day }}</h4>
+            {% for hour in 1..hours %}
+                <div class="form-group  {% if not attribute(attribute(subject_schedule_form.schedule, day), hour).vars.valid %}has-error{% endif %}">
+                    {% include '@EduBox/Field/input.html.twig' with {'field':attribute(attribute(subject_schedule_form.schedule, day), hour)} %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+{% endset %}
+
+{% block content %}
+    {{ form_start(subject_schedule_form) }}
+    {% include '@EduBox/Block/box.html.twig' with {'box_body':box_body} %}
+    <div class="sonata-ba-form-actions well well-small form-actions">
+        {{ form_widget(subject_schedule_form.submit, {'attr':{'class':'btn btn-success'},'label':'Save' }) }}
+    </div>
+    {{ form_end(subject_schedule_form) }}
+{% endblock %}

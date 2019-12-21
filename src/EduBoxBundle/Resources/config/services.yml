@@ -1,18 +1,88 @@
 services:
   edubox.calendar_manager:
     class: EduBoxBundle\DomainManager\CalendarManager
-    arguments:
-      - '@doctrine.orm.entity_manager'
+    arguments: ['@doctrine.orm.entity_manager']
 
-  edubox.edit_user_form_handler:
-    class: EduBoxBundle\Form\Handler\EditUserFormHandler
-    arguments:
-      - '@doctrine.orm.entity_manager'
-  edubox.create_calendar_form_handler:
-    class: EduBoxBundle\Form\Handler\CreateCalendarFormHandler
-    arguments:
-      - '@edubox.calendar_manager'
-  edubox.edit_calendar_form_handler:
-    class: EduBoxBundle\Form\Handler\EditCalendarFormHandler
-    arguments:
-      - '@edubox.calendar_manager'
+  edubox.call_schedule_manager:
+    class: EduBoxBundle\DomainManager\CallScheduleManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.holiday_manager:
+    class: EduBoxBundle\DomainManager\HolidayManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.mark_manager:
+    class: EduBoxBundle\DomainManager\MarkManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.setting_manager:
+    class: EduBoxBundle\DomainManager\SettingManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.students_group_manager:
+    class: EduBoxBundle\DomainManager\StudentsGroupManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.subject_manager:
+    class: EduBoxBundle\DomainManager\SubjectManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.subject_area_manager:
+    class: EduBoxBundle\DomainManager\SubjectAreaManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.subject_schedule_manager:
+    class: EduBoxBundle\DomainManager\SubjectScheduleManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.subject_schedules_group_manager:
+    class: EduBoxBundle\DomainManager\SubjectSchedulesGroupManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.user_manager:
+    class: EduBoxBundle\DomainManager\UserManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.user_meta_manager:
+    class: EduBoxBundle\DomainManager\UserMetaManager
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.teacher_manager:
+    class: EduBoxBundle\DomainManager\TeacherManager
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.subject_schedule_manager']
+
+
+  edubox.user_form_handler:
+    class: EduBoxBundle\Form\Handler\UserFormHandler
+    arguments: ['@doctrine.orm.entity_manager']
+
+  edubox.calendar_form_handler:
+    class: EduBoxBundle\Form\Handler\CalendarFormHandler
+    arguments: ['@edubox.calendar_manager']
+
+  edubox.students_group_form_handler:
+    class: EduBoxBundle\Form\Handler\StudentsGroupFormHandler
+    arguments: ['@edubox.students_group_manager']
+
+  edubox.subject_form_handler:
+    class: EduBoxBundle\Form\Handler\SubjectFormHandler
+    arguments: ['@edubox.subject_manager']
+
+  edubox.subject_area_form_handler:
+    class: EduBoxBundle\Form\Handler\SubjectAreaFormHandler
+    arguments: ['@edubox.subject_area_manager']
+
+  edubox.subject_schedule_form_handler:
+    class: EduBoxBundle\Form\Handler\SubjectScheduleFormHandler
+    arguments: ['@edubox.subject_schedule_manager', '@edubox.teacher_manager']
+
+  edubox.subject_schedules_group_form_handler:
+    class: EduBoxBundle\Form\Handler\SubjectSchedulesGroupFormHandler
+    arguments: ['@edubox.subject_schedules_group_manager']
+
+  edubox.admin.student.pre_create_listener:
+    class: EduBoxBundle\EventListener\StudentAdminPreCreateListener
+    arguments: ['@doctrine.orm.entity_manager']
+    tags: [{ name: kernel.event_listener, event: edubox.admin.student.pre_create, method: onAdminPreCreate }]
+
+

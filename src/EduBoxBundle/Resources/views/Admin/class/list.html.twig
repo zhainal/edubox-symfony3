@@ -1,0 +1,43 @@
+{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+
+{% set title = 'Class groups' %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('edubox.admin.students_group_create') }}">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add new
+        </a>
+    </li>
+{% endblock %}
+
+{% set box_body %}
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Students count</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for students_group in students_groups %}
+            <tr>
+                <td>{{ students_group.number }} "{{ students_group.letter }}"</td>
+                <td></td>
+                <td>
+                    <a href="{{ path('edubox.admin.students_group_edit', {'id':students_group.id}) }}" class="btn btn-success">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <form action="{{ path('edubox.admin.students_group_delete', {'id':students_group.id}) }}" method="post" style="display: inline">
+                        <input type="hidden", name="token" value="{{ csrf_token('delete') }}">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

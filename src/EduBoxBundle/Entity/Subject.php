@@ -2,6 +2,7 @@
 
 namespace EduBoxBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,11 +32,27 @@ class Subject
     /**
      * @var \stdClass
      *
-     * @ORM\ManyToMany(targetEntity="EduBoxBundle\Entity\SubjectArea")
-     * @ORM\JoinTable(name="subject_subject_area")
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\SubjectArea", inversedBy="subjects")
      */
     private $subjectArea;
 
+    /**
+     * @var
+     * @ORM\ManyToMany(targetEntity="EduBoxBundle\Entity\StudentsGroup", inversedBy="subjects")
+     * @ORM\JoinTable(name="subject_students_group")
+     */
+    private $studentsGroups;
+
+    /**
+     * @var
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\User", inversedBy="subjects")
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->studentsGroups = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -93,6 +110,44 @@ class Subject
     public function getSubjectArea()
     {
         return $this->subjectArea;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getStudentsGroups()
+    {
+        return $this->studentsGroups;
+    }
+
+    /**
+     * @param ArrayCollection $studentsGroups
+     * @return $this
+     */
+    public function setStudentsGroups(ArrayCollection $studentsGroups)
+    {
+        $this->studentsGroups = $studentsGroups;
+
+        return $this;
     }
 }
 

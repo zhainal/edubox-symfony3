@@ -4,7 +4,7 @@
 namespace EduBoxBundle\Controller\Admin;
 
 use EduBoxBundle\Entity\Setting;
-use EduBoxBundle\Form\OrganisationType;
+use EduBoxBundle\Form\Type\OrganisationType;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 class OrganisationCRUDController extends CRUDController

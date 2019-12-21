@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EduBoxBundle\Form;
+namespace EduBoxBundle\Form\Type;
 
 
 use EduBoxBundle\Entity\UserMeta;

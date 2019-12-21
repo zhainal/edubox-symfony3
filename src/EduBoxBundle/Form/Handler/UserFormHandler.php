@@ -5,7 +5,7 @@ namespace EduBoxBundle\Form\Handler;
 
 
 use Doctrine\ORM\EntityManager;
-use EduBoxBundle\Entity\StudentClass;
+use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Entity\UserMeta;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class EditUserFormHandler
+class UserFormHandler
 {
     private $entityManager;
     private $formFields;
@@ -45,7 +45,7 @@ class EditUserFormHandler
             $form
                 ->add('has_role_student', HiddenType::class)
                 ->add('group', EntityType::class, [
-                    'class' => 'EduBoxBundle\Entity\StudentClass',
+                    'class' => StudentsGroup::class,
                     'choice_label' => 'name',
                     'required' => false,
                 ])
@@ -152,7 +152,7 @@ class EditUserFormHandler
         ];
 
         if ($roles['student']) {
-            $groupRepo = $this->entityManager->getRepository(StudentClass::class);
+            $groupRepo = $this->entityManager->getRepository(StudentsGroup::class);
 
             $this->formFields['group'] = [
                 'get' => function () use ($groupRepo, $user, $userMetaRepo) {
@@ -164,7 +164,7 @@ class EditUserFormHandler
                     } else return null;
                 },
                 'set' => function ($value) use ($userMetaRepo, $user) {
-                    if ($value instanceof StudentClass) {
+                    if ($value instanceof StudentsGroup) {
                         return $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => 'group_id'])->setMetaValue($value->getId());
                     } else if ($value === null)
                     {
@@ -191,7 +191,7 @@ class EditUserFormHandler
         $this->entityManager->flush();
     }
 
-    public function handle(FormInterface $form, Request $request)
+    public function editHandle(FormInterface $form, Request $request)
     {
         $form->handleRequest($request);
 

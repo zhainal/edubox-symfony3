@@ -10,11 +10,11 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class OrganisationAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'organisation';
-    protected $baseRouteName = 'organisation';
+    protected $baseRouteName = 'edubox.admin.organisation';
 
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clear();
-        $collection->add('list', 'index');
+        $collection->add('list', 'edit');
     }
 }

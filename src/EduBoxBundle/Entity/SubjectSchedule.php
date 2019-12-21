@@ -3,6 +3,7 @@
 namespace EduBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SubjectSchedule
@@ -22,16 +23,29 @@ class SubjectSchedule
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=32)
+     * @var
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\StudentsGroup", inversedBy="subjectSchedules")
+     * @Assert\NotBlank()
      */
-    private $name;
-
+    private $studentsGroup;
 
     /**
-     * Get id
-     *
+     * @var
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\SubjectSchedulesGroup", inversedBy="subjectSchedules")
+     */
+    private $subjectSchedulesGroup;
+
+    /**
+     * @var
+     * @ORM\Column(name="schedule", type="json_array", nullable=true)
+     */
+    private $schedule;
+
+    public function __construct()
+    {
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -40,27 +54,65 @@ class SubjectSchedule
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return SubjectSchedule
+     * @return mixed
      */
-    public function setName($name)
+    public function getStudentsGroup()
     {
-        $this->name = $name;
+        return $this->studentsGroup;
+    }
+
+    /**
+     * @param StudentsGroup $studentsGroup
+     * @return $this
+     */
+    public function setStudentsGroup(StudentsGroup $studentsGroup)
+    {
+        $this->studentsGroup = $studentsGroup;
 
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @return mixed
      */
-    public function getName()
+    public function getSchedule()
     {
-        return $this->name;
+        return $this->schedule;
+    }
+
+    /**
+     * @param $schedule
+     * @return $this
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubjectSchedulesGroup()
+    {
+        return $this->subjectSchedulesGroup;
+    }
+
+    /**
+     * @param SubjectSchedulesGroup $schedulesGroup
+     * @return $this
+     */
+    public function setSubjectSchedulesGroup(SubjectSchedulesGroup $schedulesGroup)
+    {
+        $this->subjectSchedulesGroup = $schedulesGroup;
+
+        return $this;
+    }
+
+    public function getStatus()
+    {
+        return '-';
     }
 }
 

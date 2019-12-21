@@ -5,7 +5,7 @@ namespace EduBoxBundle\Controller\Admin;
 
 
 use EduBoxBundle\Entity\Calendar;
-use EduBoxBundle\Form\CalendarType;
+use EduBoxBundle\Form\Type\CalendarType;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 class CalendarCRUDController extends CRUDController
@@ -19,9 +19,9 @@ class CalendarCRUDController extends CRUDController
         }
         $form = $this->createForm(CalendarType::class, $calendar);
 
-        $formHandler = $this->get('edubox.edit_calendar_form_handler');
+        $formHandler = $this->get('edubox.calendar_form_handler');
 
-        if ($formHandler->handle($form, $request))
+        if ($formHandler->editHandle($form, $request))
         {
             $this->addFlash('success', 'Calendar saved');
         }
@@ -37,13 +37,13 @@ class CalendarCRUDController extends CRUDController
         $calendar = new Calendar();
         $form = $this->createForm(CalendarType::class, $calendar, ['new' => true]);
 
-        $formHandler = $this->get('edubox.create_calendar_form_handler');
+        $formHandler = $this->get('edubox.calendar_form_handler');
 
-        if ($formHandler->handle($form, $request))
+        if ($formHandler->createHandle($form, $request))
         {
             $this->addFlash('success', 'Calendar created');
 
-            return $this->redirectToRoute('calendar_edit', ['id' => $calendar->getId()]);
+            return $this->redirectToRoute('edubox.admin.calendar_edit', ['id' => $calendar->getId()]);
         }
 
         return $this->renderWithExtraParams('EduBoxBundle:Admin:calendar_create.html.twig', [

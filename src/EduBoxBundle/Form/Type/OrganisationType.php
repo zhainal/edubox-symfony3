@@ -1,7 +1,7 @@
 <?php
 
 
-namespace EduBoxBundle\Form;
+namespace EduBoxBundle\Form\Type;
 
 
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;

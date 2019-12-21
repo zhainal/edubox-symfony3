@@ -9,12 +9,15 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class SubjectAdmin extends AbstractAdmin
 {
-    protected $baseRoutePattern = 'student';
-    protected $baseRouteName = 'student';
+    protected $baseRouteName = 'edubox.admin.subject';
+    protected $baseRoutePattern = 'subject';
 
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->clear();
-        $collection->add('list', 'index');
+        $collection->add('list', 'list');
+        $collection->add('create', 'create');
+        $collection->add('edit', 'edit/{id}');
+        $collection->add('delete', 'delete/{id}');
     }
 }

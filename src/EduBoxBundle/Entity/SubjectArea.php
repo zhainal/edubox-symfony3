@@ -2,6 +2,7 @@
 
 namespace EduBoxBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,17 @@ class SubjectArea
      * @ORM\Column(name="name", type="string", length=32)
      */
     private $name;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Subject", mappedBy="subjectArea")
+     */
+    private $subjects;
+
+    public function __construct()
+    {
+        $this->subjects = new ArrayCollection();
+    }
 
 
     /**
@@ -61,6 +73,25 @@ class SubjectArea
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
+    /**
+     * @param ArrayCollection $subjects
+     * @return $this
+     */
+    public function setSubjects(ArrayCollection $subjects)
+    {
+        $this->subjects = $subjects;
+
+        return $this;
     }
 }
 

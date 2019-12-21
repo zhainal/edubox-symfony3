@@ -2,6 +2,8 @@
 
 namespace EduBoxBundle\Repository;
 
+use EduBoxBundle\Entity\SubjectSchedule;
+
 /**
  * SubjectScheduleRepository
  *
@@ -10,4 +12,24 @@ namespace EduBoxBundle\Repository;
  */
 class SubjectScheduleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOrCreateOneBy(array $criteria)
+    {
+        $em = $this->getEntityManager();
+        $subjectSchedule = $this->findOneBy($criteria);
+        if (!$subjectSchedule)
+        {
+            $subjectSchedule = new SubjectSchedule();
+            foreach ($criteria as $key => $value)
+            {
+                $method = 'set'.ucfirst($key);
+                if (method_exists($subjectSchedule, $method))
+                {
+                    $subjectSchedule->$method($value);
+                }
+                $em->persist($subjectSchedule);
+                $em->flush(); // TODO: Replace EntityManager to SubjectScheduleManager->create()
+            }
+        }
+        return $subjectSchedule;
+    }
 }

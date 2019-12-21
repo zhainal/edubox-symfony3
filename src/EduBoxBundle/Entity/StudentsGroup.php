@@ -2,15 +2,16 @@
 
 namespace EduBoxBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * StudentClass
  *
- * @ORM\Table(name="student_class")
- * @ORM\Entity(repositoryClass="EduBoxBundle\Repository\StudentClassRepository")
+ * @ORM\Table(name="students_group")
+ * @ORM\Entity(repositoryClass="EduBoxBundle\Repository\StudentsGroupRepository")
  */
-class StudentClass
+class StudentsGroup
 {
     /**
      * @var int
@@ -35,10 +36,25 @@ class StudentClass
      */
     private $letter;
 
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\SubjectSchedule", mappedBy="studentsGroup")
+     */
+    private $subjectSchedules;
 
     /**
-     * Get id
-     *
+     * @var
+     * @ORM\ManyToMany(targetEntity="EduBoxBundle\Entity\Subject", mappedBy="studentsGroups")
+     */
+    private $subjects;
+
+    public function __construct()
+    {
+        $this->subjects = new ArrayCollection();
+        $this->subjectSchedules = new ArrayCollection();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -46,17 +62,17 @@ class StudentClass
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->number . $this->letter;
     }
 
     /**
-     * Set number
-     *
-     * @param integer $number
-     *
-     * @return StudentClass
+     * @param $number
+     * @return $this
      */
     public function setNumber($number)
     {
@@ -66,8 +82,6 @@ class StudentClass
     }
 
     /**
-     * Get number
-     *
      * @return int
      */
     public function getNumber()
@@ -76,11 +90,8 @@ class StudentClass
     }
 
     /**
-     * Set letter
-     *
-     * @param string $letter
-     *
-     * @return StudentClass
+     * @param $letter
+     * @return $this
      */
     public function setLetter($letter)
     {
@@ -90,13 +101,27 @@ class StudentClass
     }
 
     /**
-     * Get letter
-     *
      * @return string
      */
     public function getLetter()
     {
         return $this->letter;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSubjectSchedules()
+    {
+        return $this->subjectSchedules;
     }
 }
 

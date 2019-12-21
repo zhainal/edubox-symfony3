@@ -76,9 +76,9 @@ services:
         icon: '<i class="fa fa-calendar"></i>'
         on_top: true
 
-  edubox.admin.student_class:
-    class: EduBoxBundle\Admin\StudentClassAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
+  edubox.admin.students_group:
+    class: EduBoxBundle\Admin\StudentsGroupAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\StudentsGroupCRUD, '@event_dispatcher']
     tags:
       - name: sonata.admin
         manager_type: orm
@@ -89,7 +89,7 @@ services:
 
   edubox.admin.subject:
     class: EduBoxBundle\Admin\SubjectAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
+    arguments: [~, ~, EduBoxBundle:Admin\SubjectCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm

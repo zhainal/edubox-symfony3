@@ -1,0 +1,39 @@
+{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+
+{% set title = 'Subject schedules' %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('edubox.admin.subject_schedule_list') }}">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            List schedules groups
+        </a>
+    </li>
+{% endblock %}
+
+{% set box_body %}
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for students_group in students_groups %}
+            <tr>
+                <td>{{ students_group.name }}</td>
+                <td>{{ students_group_manager.getSubectScheduleStatus(students_group, subject_schedules_group) }}</td>
+                <td>
+                    <a href="{{ path('edubox.admin.subject_schedule_editSchedule', {'studentsGroupId':students_group.id, 'schedulesGroupId':subject_schedules_group.id}) }}" class="btn btn-success">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

@@ -68,6 +68,12 @@ class User extends BaseUser
     protected $userMeta;
 
     /**
+     * @var
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Subject", mappedBy="user")
+     */
+    protected $subjects;
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -141,6 +147,11 @@ class User extends BaseUser
         $this->middleName = $middleName;
 
         return $this;
+    }
+
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName;
     }
 
     /**
