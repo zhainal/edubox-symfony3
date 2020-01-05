@@ -1,47 +1,4 @@
 services:
-  edubox.admin.dashboard_admin:
-    class: EduBoxBundle\Admin\DashboardAdminAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\AdminCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Admin'
-        label: 'Admin'
-        icon: '<i class="fa fa-users"></i>'
-        on_top: true
-
-  edubox.admin.dashboard_teacher:
-    class: EduBoxBundle\Admin\DashboardTeacherAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\TeacherCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Teacher'
-        label: 'Teacher'
-        icon: '<i class="fa fa-users"></i>'
-        on_top: true
-
-  edubox.admin.dashboard_student:
-    class: EduBoxBundle\Admin\DashboardStudentAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\StudentCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Student'
-        label: 'Student'
-        icon: '<i class="fa fa-users"></i>'
-        on_top: true
-
-  edubox.admin.dashboard_parent:
-    class: EduBoxBundle\Admin\DashboardParentAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\ParentCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Parent'
-        label: 'Parent'
-        icon: '<i class="fa fa-users"></i>'
-        on_top: true
 
   edubox.admin.organisation:
     class: EduBoxBundle\Admin\OrganisationAdmin
@@ -74,6 +31,17 @@ services:
         group: 'Calendars'
         label: 'Calendars'
         icon: '<i class="fa fa-calendar"></i>'
+        on_top: true
+
+  edubox.admin.holiday:
+    class: EduBoxBundle\Admin\HolidayAdmin
+    arguments: [~, EduBoxBundle\Entity\Holiday, ~]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Holidays'
+        label: 'Holidays'
+        icon: '<i class="fa fa-gift"></i>'
         on_top: true
 
   edubox.admin.students_group:
@@ -129,6 +97,28 @@ services:
         group: 'Call schedules'
         label: 'Call schedules'
         icon: '<i class="fa fa-bell"></i>'
+        on_top: true
+
+  edubox.admin.mark:
+    class: EduBoxBundle\Admin\MarkAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\MarkCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Marks'
+        label: 'Marks'
+        icon: '<i class="fa fa-bar-chart"></i>'
+        on_top: true
+
+  edubox.admin.quarter:
+    class: EduBoxBundle\Admin\QuarterAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\Quarter]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Quarters'
+        label: 'Quarters'
+        icon: '<i class="fa fa-bar-chart"></i>'
         on_top: true
 
   edubox.admin.message:

@@ -1,0 +1,220 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set title = 'Journal' %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('edubox.admin.mark_list') }}">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            List
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title"><span id="current-subject" data-id="{{ subject.id }}">{{ subject.name }}</span> - {{ studentsGroup.name }}</h3>
+            <div class="box-tools pull-right">
+                <div class="btn-group">
+                    <button type="button" class="mark-source btn btn-default btn-sm">
+                        2
+                    </button>
+                    <button type="button" class="mark-source btn btn-default btn-sm">
+                        3
+                    </button>
+                    <button type="button" class="mark-source btn btn-default btn-sm">
+                        4
+                    </button>
+                    <button type="button" class="mark-source btn btn-default btn-sm">
+                        5
+                    </button>
+                    <button type="button" class="mark-source btn btn-default btn-sm">
+                        DC
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Full name</th>
+                        <th rowspan="2">Average</th>
+                        {% if dates is defined %}
+                            {% for year,months in dates %}
+                                {% for month,days in months %}
+                                    <th class="text-center" colspan="{{ days_count(days)-days|length }}">{{ month }}</th>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        {% if dates is defined %}
+                            {% for year,months in dates %}
+                                {% for month,days in months %}
+                                    {% for day,hours in days %}
+                                        {% for hour,week in hours %}
+                                            <th class="text-center">{{ day }}</th>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td id="student-{{ student.id }}">{{ student.fullname }}</td>
+                            <td class="text-center text-bold" id="student-{{ student.id }}-quarter">{% if averages[student.id] is defined %} {{ averages[student.id]|round }} {% else %} - {% endif %}</td>
+                            {% if marks[student.id] is defined %}
+                                {% for mark in marks[student.id] %}
+                                    <td class="mark-box text-center
+                                        {% if mark.mark == '' %} no-mark {% else %} has-mark {% endif %}
+                                        {% if mark.mark == 5 %} mark-5 {% endif %}
+                                        {% if mark.mark == 4 %} mark-4 {% endif %}
+                                        {% if mark.mark == 3 %} mark-3 {% endif %}
+                                        {% if mark.mark == 2 %} mark-2 {% endif %}
+                                        {% if mark.mark == 'dc' %} mark-dc {% endif %}
+                                    " data-user="{{ mark.user.id }}" data-date="{{ mark.dateText }}" data-hour="{{ mark.hour }}">
+                                        {{ mark.mark }}
+                                    </td>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!--<form action="{{ path('edubox.admin.mark_createMark', {'studentsGroupId':studentsGroup.id, 'subjectId':subject.id}) }}" method="post">
+                <input type="hidden" name="userId" value="6">
+                <input type="hidden" name="mark" value="DC">
+                <input type="hidden" name="date" value="2019-11-11">
+                <input type="hidden" name="hour" value="2">
+                <input type="hidden" name="comment" value="">
+                <input type="submit" value="test">
+            </form>-->
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $(".mark-source").on("click", function() {
+                if ($(this).hasClass("active")) {
+                    $(".mark-source").removeClass("active").removeClass("btn-primary");
+                } else {
+                    $(".mark-source").removeClass("active").removeClass("btn-primary");
+                    $(this).addClass("active").addClass("btn-primary");
+                }
+            });
+        });
+        $(function () {
+            $(".mark-box.no-mark").on('click', function () {
+                var mark = getActiveMark();
+                if (mark) {
+                    mark = mark.toLowerCase();
+                    addMark(getUserId($(this)), getSubjectId(), mark, getDate($(this)), getHour($(this)), '', $(this));
+                }
+            });
+        });
+
+        function getActiveMark() {
+            var mark = $(".mark-source.active").eq(0).text();
+            if (mark == "") return false;
+            return mark.trim();
+        }
+        function getUserId(cell) {
+            return cell.data('user');
+        }
+        function getSubjectId() {
+            return $("#current-subject").data('id');
+        }
+        function getDate(cell) {
+            return cell.data('date');
+        }
+        function getHour(cell) {
+            return cell.data('hour');
+        }
+        function updateQuarters(quarters) {
+            for (var key in quarters) {
+                var elem = $("#student-" + key + "-quarter");
+                console.log("#student-" + key + "-quarter", quarters[key]);
+                if (elem) {
+                    elem.text(quarters[key]);
+                }
+            }
+        }
+        function setCellMark(cell, mark) {
+            cell.text(mark);
+            switch (mark) {
+                case '2':
+                    cell.removeClass('no-mark');
+                    cell.addClass('has-mark');
+                    cell.addClass('mark-2');
+                    break;
+                case '3':
+                    cell.removeClass('no-mark');
+                    cell.addClass('has-mark');
+                    cell.addClass('mark-3');
+                    break;
+                case '4':
+                    cell.removeClass('no-mark');
+                    cell.addClass('has-mark');
+                    cell.addClass('mark-4');
+                    break;
+                case '5':
+                    cell.removeClass('no-mark');
+                    cell.addClass('has-mark');
+                    cell.addClass('mark-5');
+                    break;
+                case 'dc':
+                    cell.removeClass('no-mark');
+                    cell.addClass('has-mark');
+                    cell.addClass('mark-dc');
+                    break;
+            }
+        }
+        function addMark(userId, subjectId, mark, date, hour, comment, cell) {
+            window.result = false;
+            cell.html('<div class="overlay"><i class="fa fa-refresh fa-spin" style="position: static; font-size: 20px; margin: -10px"></i></div>');
+            $.ajax({
+                type: "POST",
+                url: '{{ path('edubox.admin.mark_createMark', {'studentsGroupId':studentsGroup.id, 'subjectId':subject.id}) }}',
+                data: {'userId':userId, 'subjectId':subjectId, 'mark':mark, 'date':date, 'hour':hour, 'comment':comment},
+                success: function (data, textStatus) {
+                    updateQuarters(data);
+                    setCellMark(cell, mark);
+                },
+                error: function (date, textStatus) {
+
+                }
+            });
+        }
+        function addNote(userId, subjectId, note, date) {
+
+        }
+    </script>
+    <style>
+        td.mark-box:hover {
+            background-color: #a6e1ec;
+            content: '5';
+        }
+        td.mark-box.has-mark:hover {
+        }
+        td.mark-box.mark-5 {
+            background-color: #00e765;
+        }
+        td.mark-box.mark-4 {
+            background-color: #00c0ef;
+        }
+        td.mark-box.mark-3 {
+            background-color: #f39c12;
+        }
+        td.mark-box.mark-2 {
+            background-color: #dc4735;
+        }
+        td.mark-box.mark-dc {
+            background-color: #444;
+            color: #f4f4f4;
+        }
+    </style>
+{% endblock %}

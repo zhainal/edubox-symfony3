@@ -35,10 +35,13 @@ class SubjectSchedulesGroupFormHandler
     {
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid())
         {
             $valid_subject_schedules_group = $form->getData();
-            $this->subjectSchedulesGroupManager->store($valid_subject_schedules_group);
+            $active = $form->get('active')->getData();
+            $this->subjectSchedulesGroupManager->store($valid_subject_schedules_group, $active);
             return true;
         }
         return false;

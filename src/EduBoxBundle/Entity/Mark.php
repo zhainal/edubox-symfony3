@@ -22,33 +22,71 @@ class Mark
     private $id;
 
     /**
-     * @var int
+     * @var User
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\User")
      */
-    private $userId;
+    private $user;
 
     /**
-     * @var int
+     * @var Subject
      *
-     * @ORM\Column(name="subject_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\Subject")
      */
-    private $subjectId;
+    private $subject;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mark", type="string", length=1)
+     * @ORM\Column(name="mark", type="string", length=2, nullable=true)
      */
     private $mark;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="comment", type="string", length=255, nullable=true)
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+    /**
+     * @var
+     * @ORM\Column(name="hour", type="integer")
+     */
+    private $hour = 1;
+
+
+
+    public function __construct()
+    {
+        $this->createdAt= new \DateTime();
+        $this->updatedAt= new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt= new \DateTime();
+    }
 
     /**
      * Get id
@@ -67,45 +105,45 @@ class Mark
      *
      * @return Mark
      */
-    public function setUserId($userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get User
      *
-     * @return int
+     * @return User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
-     * Set subjectId
+     * Set Subject
      *
-     * @param integer $subjectId
+     * @param Subject $subjectId
      *
      * @return Mark
      */
-    public function setSubjectId($subjectId)
+    public function setSubject(Subject $subject)
     {
-        $this->subjectId = $subjectId;
+        $this->subject = $subject;
 
         return $this;
     }
 
     /**
-     * Get subjectId
+     * Get subject
      *
-     * @return int
+     * @return Subject
      */
-    public function getSubjectId()
+    public function getSubject()
     {
-        return $this->subjectId;
+        return $this->subject;
     }
 
     /**
@@ -155,5 +193,49 @@ class Mark
     {
         return $this->comment;
     }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getDateText()
+    {
+        return $this->date instanceof \DateTime ? $this->date->format('Y-m-d') : null;
+    }
+
+    public function setHour($hour)
+    {
+        $this->hour = $hour;
+
+        return $this;
+    }
+
+    public function getHour()
+    {
+        return $this->hour;
+    }
+
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+
+
+
 }
 

@@ -6,7 +6,8 @@ sonata_admin:
     title_mode: 'single_text'
   show_mosaic_button: false
   templates:
-    dashboard: '@EduBox/standard_layout.html.twig'
+    dashboard: '@EduBox/Admin/dashboard_admin.html.twig'
+    user_block: '@EduBox/Block/user_block.html.twig'
   dashboard:
     blocks:
   assets:

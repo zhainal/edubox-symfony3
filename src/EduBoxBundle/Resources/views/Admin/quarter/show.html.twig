@@ -1,0 +1,34 @@
+{% extends 'EduBoxBundle::admin_layout.html.twig' %}
+
+{% set title = 'Student quarters' %}
+{% set float_match = '/^[-+]?[0-9]*\\.?[0-9]+$/' %}
+
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-header">
+            <div class="box-title"><strong> Student: </strong>{{ student.fullname }}</div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                <thead>
+                    <th>Subject</th>
+                    <th>Quarter 1</th>
+                    <th>Quarter 2</th>
+                    <th>Quarter 3</th>
+                    <th>Quarter 4</th>
+                </thead>
+                <tbody>
+                    {% for subject in subjectsWithQuarter %}
+                        <tr>
+                            <td>{{ subject['name'] }}</td>
+                            <td>{% if subject['quarter'][1] matches float_match %} {{ subject['quarter'][1]|round }} {% else %} {{ subject['quarter'][1] }} {% endif %}</td>
+                            <td>{% if subject['quarter'][2] matches float_match %} {{ subject['quarter'][2]|round }} {% else %} {{ subject['quarter'][2] }} {% endif %}</td>
+                            <td>{% if subject['quarter'][3] matches float_match %} {{ subject['quarter'][3]|round }} {% else %} {{ subject['quarter'][3] }} {% endif %}</td>
+                            <td>{% if subject['quarter'][4] matches float_match %} {{ subject['quarter'][4]|round }} {% else %} {{ subject['quarter'][4] }} {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

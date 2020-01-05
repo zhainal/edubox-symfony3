@@ -1,15 +1,10 @@
-{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+{% extends 'EduBoxBundle::admin_layout.html.twig' %}
 
 {% set title = 'Create calendar' %}
 
 {% set box_body %}
     <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group {% if not calendar.name.vars.valid %}has-error{% endif %}">
-                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':calendar.name} %}
-            </div>
-        </div>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="form-group {% if not calendar.year.vars.valid %}has-error{% endif %}">
                 {% include 'EduBoxBundle:Field:input.html.twig' with {'field':calendar.year} %}
             </div>

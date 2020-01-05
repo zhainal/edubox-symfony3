@@ -7,12 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserMeta
  *
- * @ORM\Table(name="user_meta")
+ * @ORM\Table(name="box_user_meta")
  * @ORM\Entity(repositoryClass="EduBoxBundle\Repository\UserMetaRepository")
  */
 class UserMeta
 {
-    CONST MALE=1,FEMALE=2;
+    const MALE=1,FEMALE=2;
+
+    const STUDENT_GROUP_ID = 'students_group_id';
+    const STUDENT_PARENT_ID = 'parent_id';
+    const PARENT_STUDENT_IDS = 'student_ids';
+
+    const ROLE_STUDENT = array('STUDENT_GROUP_ID', 'STUDENT_PARENT_ID');
+    const ROLE_PARENT = array('PARENT_STUDENT_IDS');
+
     /**
      * @var int
      *

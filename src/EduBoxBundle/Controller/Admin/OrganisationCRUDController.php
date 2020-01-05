@@ -13,20 +13,23 @@ class OrganisationCRUDController extends CRUDController
     {
         $em = $this->getDoctrine()->getManager();
         $respository = $em->getRepository(Setting::class);
-
-
-        $data = array(
-            'shortName' => $respository->findOneByOrCreate(['settingKey'=>'short_name']),
-            'fullName' => $respository->findOneByOrCreate(['settingKey'=>'full_name']),
-            'address' => $respository->findOneByOrCreate(['settingKey'=>'address']),
-            'phone' => $respository->findOneByOrCreate(['settingKey'=>'phone']),
-            'email' => $respository->findOneByOrCreate(['settingKey'=>'email']),
-            'director' => $respository->findOneByOrCreate(['settingKey'=>'director']),
+        $settingManager = $this->get('edubox.setting_manager');
+        $names = array(
+            'shortName',
+            'fullName',
+            'address',
+            'phone',
+            'email',
+            'director',
         );
+        $settings = [];
+        foreach ($names as $name) {
+            $settings[$name] = $settingManager->getSetting($name);
+        }
 
         $form = $this->createForm(OrganisationType::class);
 
-        foreach ($data as $key => $value)
+        foreach ($settings as $key => $value)
         {
             $form->get($key)->setData($value->getSettingValue());
         }
@@ -34,7 +37,7 @@ class OrganisationCRUDController extends CRUDController
         $form->handleRequest($this->getRequest());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($data as $key => $value)
+            foreach ($settings as $key => $value)
             {
                 $value->setSettingValue($form->get($key)->getData());
             }
@@ -42,7 +45,7 @@ class OrganisationCRUDController extends CRUDController
             $this->addFlash('success', 'Settings saved successfully');
         }
 
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:organisation_edit.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:organisation/edit.html.twig', [
             'org_form' => $form->createView(),
         ]);
     }

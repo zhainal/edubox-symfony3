@@ -10,8 +10,8 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class UserAdmin extends AbstractAdmin
 {
+    protected $baseRouteName = 'edubox.admin.user';
     protected $baseRoutePattern = 'user';
-    protected $baseRouteName = 'user';
 
     protected function configureRoutes(RouteCollection $collection)
     {

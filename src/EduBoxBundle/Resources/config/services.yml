@@ -1,7 +1,7 @@
 services:
   edubox.calendar_manager:
     class: EduBoxBundle\DomainManager\CalendarManager
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager']
 
   edubox.call_schedule_manager:
     class: EduBoxBundle\DomainManager\CallScheduleManager
@@ -11,9 +11,18 @@ services:
     class: EduBoxBundle\DomainManager\HolidayManager
     arguments: ['@doctrine.orm.entity_manager']
 
+  edubox.quarter_manager:
+    class: EduBoxBundle\DomainManager\QuarterManager
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager', '@edubox.students_group_manager']
+
   edubox.mark_manager:
     class: EduBoxBundle\DomainManager\MarkManager
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.calendar_manager'
+      - '@edubox.students_group_manager'
+      - '@edubox.subject_schedules_group_manager'
+      - '@edubox.quarter_manager'
 
   edubox.setting_manager:
     class: EduBoxBundle\DomainManager\SettingManager
@@ -21,7 +30,7 @@ services:
 
   edubox.students_group_manager:
     class: EduBoxBundle\DomainManager\StudentsGroupManager
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_meta_manager']
 
   edubox.subject_manager:
     class: EduBoxBundle\DomainManager\SubjectManager
@@ -37,7 +46,7 @@ services:
 
   edubox.subject_schedules_group_manager:
     class: EduBoxBundle\DomainManager\SubjectSchedulesGroupManager
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager']
 
   edubox.user_manager:
     class: EduBoxBundle\DomainManager\UserManager
@@ -51,10 +60,14 @@ services:
     class: EduBoxBundle\DomainManager\TeacherManager
     arguments: ['@doctrine.orm.entity_manager', '@edubox.subject_schedule_manager']
 
+  edubox.parent_manager:
+    class: EduBoxBundle\DomainManager\ParentManager
+    arguments: ['@doctrine.orm.entity_manager']
+
 
   edubox.user_form_handler:
     class: EduBoxBundle\Form\Handler\UserFormHandler
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@edubox.user_manager', '@doctrine.orm.entity_manager', '@security.password_encoder']
 
   edubox.calendar_form_handler:
     class: EduBoxBundle\Form\Handler\CalendarFormHandler

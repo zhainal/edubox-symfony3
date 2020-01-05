@@ -49,6 +49,12 @@ class Subject
      */
     private $user;
 
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Quarter", mappedBy="subject")
+     */
+    private $quarters;
+
     public function __construct()
     {
         $this->studentsGroups = new ArrayCollection();
@@ -148,6 +154,11 @@ class Subject
         $this->studentsGroups = $studentsGroups;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->id;
     }
 }
 

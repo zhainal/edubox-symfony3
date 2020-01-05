@@ -26,7 +26,7 @@ class CalendarCRUDController extends CRUDController
             $this->addFlash('success', 'Calendar saved');
         }
 
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:calendar_edit.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:calendar/edit.html.twig', [
             'calendar' => $form->createView(),
         ]);
     }
@@ -46,7 +46,7 @@ class CalendarCRUDController extends CRUDController
             return $this->redirectToRoute('edubox.admin.calendar_edit', ['id' => $calendar->getId()]);
         }
 
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:calendar_create.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:calendar/create.html.twig', [
             'calendar' => $form->createView(),
         ]);
 

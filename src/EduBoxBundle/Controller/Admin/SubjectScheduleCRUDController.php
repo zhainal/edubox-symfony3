@@ -28,8 +28,7 @@ class SubjectScheduleCRUDController extends  CRUDController
         $form = $this->createForm(SubjectSchedulesGroupType::class, $subject_schedules_group);
         $formHandle = $this->get('edubox.subject_schedules_group_form_handler');
 
-        if ($formHandle->createHandle($form, $this->getRequest()))
-        {
+        if ($formHandle->createHandle($form, $this->getRequest())) {
             $this->addFlash('success', 'Subject schedule created');
             return $this->redirectToRoute('edubox.admin.subject_schedule_edit', ['id'=>$subject_schedules_group->getId()]);
         }
@@ -46,8 +45,9 @@ class SubjectScheduleCRUDController extends  CRUDController
         if (!$subject_schedules_group) {
             throw $this->createNotFoundException('Subject schedules group not found');
         }
-
-        $form = $this->createForm(SubjectSchedulesGroupType::class, $subject_schedules_group);
+        $settingManager = $this->get('edubox.setting_manager');
+        $groupActive = $settingManager->getSetting('subjectSchedulesGroup')->getSettingValue() == $subject_schedules_group->getId();
+        $form = $this->createForm(SubjectSchedulesGroupType::class, $subject_schedules_group, ['active' => $groupActive]);
         $formHandle = $this->get('edubox.subject_schedules_group_form_handler');
 
         if ($formHandle->editHandle($form, $this->getRequest()))

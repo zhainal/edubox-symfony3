@@ -1,0 +1,59 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set user_tab_title = 'User data' %}
+
+{% set user_tab_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.username.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.username} %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.email.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.email} %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.roles.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.roles} %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.plainPassword.first.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.plainPassword.first} %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.plainPassword.second.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.plainPassword.second} %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group {% if not new_user_form.enabled.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.enabled} %}
+            </div>
+        </div>
+    </div>
+{% endset %}
+
+
+
+
+{% block content %}
+    {{ form_start(new_user_form) }}
+        {% set tabs = {1:{'title':user_tab_title, 'content':user_tab_content, 'id': 'user'}} %}
+    
+        {% include 'EduBoxBundle:Block:box_tab.html.twig' with {
+            'tabs': tabs,
+        } only %}
+    
+        <div class="sonata-ba-form-actions well well-small form-actions">
+            {% include 'EduBoxBundle:Field:input.html.twig' with {'field':new_user_form.submit,'field_attr':{'class':'btn btn-success'}} %}
+        </div>
+    {{ form_end(new_user_form) }}
+{% endblock %}

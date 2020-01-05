@@ -25,6 +25,7 @@ class Calendar
 
     /**
      * @var
+     *
      * @ORM\Column(name="year", type="integer",length=4, unique=true)
      */
     private $year;
@@ -86,13 +87,6 @@ class Calendar
     private $quarterFourEnd;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=32)
-     */
-    private $name;
-
-    /**
      * @var \DateTime
      *
      * @ORM\ManyToMany(targetEntity="EduBoxBundle\Entity\Holiday")
@@ -148,6 +142,25 @@ class Calendar
         $this->year = $year;
 
         return $this;
+    }
+
+    public function getBeginDate($quarter) {
+        switch ($quarter) {
+            case 1: return $this->getQuarterOneBegin();
+            case 2: return $this->getQuarterTwoBegin();
+            case 3: return $this->getQuarterThreeBegin();
+            case 4: return $this->getQuarterFourBegin();
+            default: return null;
+        }
+    }
+    public function getEndDate($quarter) {
+        switch ($quarter) {
+            case 1: return $this->getQuarterOneEnd();
+            case 2: return $this->getQuarterTwoEnd();
+            case 3: return $this->getQuarterThreeEnd();
+            case 4: return $this->getQuarterFourEnd();
+            default: return null;
+        }
     }
 
 

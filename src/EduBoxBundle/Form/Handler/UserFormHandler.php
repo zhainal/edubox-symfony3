@@ -5,31 +5,39 @@ namespace EduBoxBundle\Form\Handler;
 
 
 use Doctrine\ORM\EntityManager;
+use EduBoxBundle\DomainManager\UserManager;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Entity\UserMeta;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormError;
+use EduBoxBundle\Form\Type\AdminFormType;
+use EduBoxBundle\Form\Type\ParentFormType;
+use EduBoxBundle\Form\Type\StudentFormType;
+use EduBoxBundle\Form\Type\TeacherFormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserFormHandler
 {
     private $entityManager;
+    private $userManager;
     private $formFields;
+    private $passwordEncoder;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(UserManager $userManager, EntityManager $entityManager, UserPasswordEncoder $passwordEncoder)
     {
         $this->entityManager = $entityManager;
+        $this->userManager = $userManager;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function postCreateForm(FormInterface $form, $userId)
     {
         $user = $this->entityManager->getRepository(User::class)->find($userId);
         if (!$user) {
-            return false;
+            throw new NotFoundHttpException('User not found');
         }
         $roles = [
             'admin' => $user->hasRole('ROLE_ADMIN'),
@@ -40,31 +48,43 @@ class UserFormHandler
 
         $this->createFormFields($user, $roles);
 
+        if ($roles['admin'])
+        {
+            $form->add('admin_form', AdminFormType::class);
+        }
+        if ($roles['teacher'])
+        {
+            $form->add('teacher_form', TeacherFormType::class);
+        }
         if ($roles['student'])
         {
-            $form
-                ->add('has_role_student', HiddenType::class)
-                ->add('group', EntityType::class, [
-                    'class' => StudentsGroup::class,
-                    'choice_label' => 'name',
-                    'required' => false,
-                ])
-                ->add('parent', EntityType::class, [
-                    'class' => 'EduBoxBundle\Entity\User',
-                    'choice_label' => 'username',
-                    'required' => false,
-                ]);
+            $form->add('student_form', StudentFormType::class);
+        }
+        if ($roles['parent'])
+        {
+            $form->add('parent_form', ParentFormType::class);
         }
 
         foreach ($this->formFields as $formKey => $field)
         {
-            if (!is_callable($field['get'])) {
-                throw new HttpException(500, "No callable getter for $formKey field");
+            if (empty($field['get'])) {
+                foreach ($field as $subFormKey => $subfield)
+                {
+                    if (!is_callable(@$subfield['get'])) {
+                        throw new HttpException(500, "No callable getter for $formKey => $subFormKey field");
+                    }
+                    $form->get($formKey)
+                        ->get($subFormKey)
+                        ->setData($subfield['get']());
+                }
             }
-            $form->get($formKey)->setData($field['get']());
+            else {
+                if (!is_callable(@$field['get'])) {
+                    throw new HttpException(500, "No callable getter for $formKey field");
+                }
+                $form->get($formKey)->setData($field['get']());
+            }
         }
-
-        return true;
     }
 
     private function createFormFields(User $user, array $roles)
@@ -151,41 +171,180 @@ class UserFormHandler
             ],
         ];
 
+
+        if ($roles['admin']) {
+            $this->formFields['admin_form'] = [];
+        }
+
+        if ($roles['teacher']) {
+            $this->formFields['teacher_form'] = [];
+        }
+
         if ($roles['student']) {
             $groupRepo = $this->entityManager->getRepository(StudentsGroup::class);
+            $userRepo = $this->entityManager->getRepository(User::class);
 
-            $this->formFields['group'] = [
-                'get' => function () use ($groupRepo, $user, $userMetaRepo) {
-                    $groupId = $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => 'group_id'])->getMetaValue();
-                    if ($groupId) {
-                        $group = $groupRepo->find($groupId);
-                        if (!$group) return null;
-                        else return $group;
-                    } else return null;
-                },
-                'set' => function ($value) use ($userMetaRepo, $user) {
-                    if ($value instanceof StudentsGroup) {
-                        return $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => 'group_id'])->setMetaValue($value->getId());
-                    } else if ($value === null)
-                    {
-                        return $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => 'group_id'])->setMetaValue(null);
+            $this->formFields['student_form'] = [
+                'group' => [
+                    'get' => function () use ($groupRepo, $user, $userMetaRepo) {
+                        $groupId = $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->getMetaValue();
+                        if ($groupId) {
+                            $group = $groupRepo->find($groupId);
+                            if (!$group) return null;
+                            else return $group;
+                        } else return null;
+                    },
+                    'set' => function ($value) use ($userMetaRepo, $user) {
+                        if ($value instanceof StudentsGroup) {
+                            return $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->setMetaValue($value->getId());
+                        } else if ($value === null)
+                        {
+                            return $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->setMetaValue(null);
+                        }
+
+                        return null;
                     }
+                ],
+                'parent' => [
+                    'get' => function() use ($userMetaRepo, $user, $userRepo) {
+                        $parent_id = $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => UserMeta::STUDENT_PARENT_ID])->getMetaValue();
+                        if ($parent_id != null) {
+                            $parent = $userRepo->createQueryBuilder('u');
+                            $parent = $parent->where('u.id = :id')
+                                ->andWhere($parent->expr()->like('u.roles', $parent->expr()->literal('%"ROLE_PARENT"%')))
+                                ->setParameter('id', $parent_id)
+                                ->getQuery()->getResult();
+                            return isset($parent[0]) ? $parent[0] : null;
+                        }
+                        return null;
+                    },
+                    'set' => function($value) use ($userMetaRepo, $user) {
+                        return $value == null
+                            ? null
+                            : $userMetaRepo->findOneByOrCreate(['user' => $user, 'metaKey' => UserMeta::STUDENT_PARENT_ID])->setMetaValue($value->getId());
 
-                    return null;
-                }
+                    }
+                ]
+
             ];
 
         }
+
+        if ($roles['parent']) {
+            $userRepo = $this->entityManager->getRepository(User::class);
+
+            $this->formFields['parent_form'] = [
+                'children' => [
+                    'get' => function() use ($userMetaRepo, $user, $userRepo) {
+                        $userMetas = $userMetaRepo->findBy(['metaValue' => $user->getId(), 'metaKey' => UserMeta::STUDENT_PARENT_ID]);
+                        $student_ids = [];
+                        foreach ($userMetas as $userMeta) {
+                            $student_ids[] = $userMeta->getUser()->getId();
+                        }
+                        if ($student_ids != null) {
+                            $students = $userRepo->createQueryBuilder('u');
+                            $students = $students
+                                ->where($students->expr()->in('u.id', $student_ids))
+                                ->andWhere($students->expr()->like('u.roles', $students->expr()->literal('%"ROLE_STUDENT"%')))
+                                ->getQuery()->getResult();
+                            return isset($students) ? $students : null;
+                        }
+                        return null;
+                    },
+                    'set' => function($value) use ($userMetaRepo, $user) {
+                        $clear = $userMetaRepo->createQueryBuilder('m');
+                        $clear
+                            ->update('EduBoxBundle:UserMeta', 'm')
+                            ->where(
+                                $clear->expr()->andX(
+                                    $clear->expr()->eq('m.metaValue', $user->getId()),
+                                    $clear->expr()->eq('m.metaKey', $clear->expr()->literal(UserMeta::STUDENT_PARENT_ID))
+                                )
+                            )
+                            ->set('m.metaValue', ':metaKey')
+                            ->setParameter('metaKey', null)
+                            ->getQuery()
+                            ->execute();
+
+                        if ($value) {
+                            $students = $value;
+                            $result = true;
+                            foreach ($students as $student) {
+                                $result = $result && $userMetaRepo->findOneByOrCreate(['user'=>$student, 'metaKey' => UserMeta::STUDENT_PARENT_ID])
+                                        ->setMetaValue($user->getId());
+                            }
+                            return $result;
+                        }
+
+                        return null;
+                    }
+                ]
+            ];
+        }
+
+
+
+        $this->formFields['roles'] = [
+            'get' => function() use ($user) {
+                return $user->getRoles();
+            },
+            'set' => function($value) use ($user, $userMetaRepo) {
+                $newRoles = $value;
+                $oldRoles = $user->getRoles();
+                $removeRoles = [];
+                foreach ($oldRoles as $role) {
+                    if (!in_array($role, $newRoles) && $role != 'ROLE_USER') {
+                        $removeRoles[] = $role;
+                    }
+                }
+
+                // Get User Meta records which in ROLE_?
+                $fields = [];
+                foreach ($removeRoles as $role) {
+                    if (is_array(@constant(UserMeta::class.'::'.$role))) {
+                        foreach (@constant(UserMeta::class.'::'.$role) as $field) {
+                            $fields[] = constant(UserMeta::class.'::'.$field);
+                        }
+                    }
+                }
+
+                // Delete meta records
+                if (count($fields) > 0) {
+                    $deleteMetaQB = $userMetaRepo->createQueryBuilder('m')
+                        ->delete('EduBoxBundle:UserMeta', 'm')
+                        ->where('m.user = :user')
+                        ->setParameter('user', $user);
+                    $deleteMetaQB
+                        ->andWhere($deleteMetaQB->expr()->in('m.metaKey', $fields))
+                        ->getQuery()
+                        ->execute();
+                }
+
+                return $user->setRoles($value);
+            }
+        ];
     }
 
     private function updateUser(FormInterface $form)
     {
         foreach ($this->formFields as $formKey => $field)
         {
-            if (is_callable($field['set'])) {
-                $field['set']($form->get($formKey)->getData());
-            } else {
-                $form->addError(new FormError('Unable to change "'.$form->get($formKey)->getName().'" field'));
+            if (!$form->get($formKey)->isDisabled()) {
+                if (empty($field['set'])) {
+                    foreach ($field as $subFormKey => $subfield)
+                    {
+                        if (!is_callable(@$subfield['set'])) {
+                            throw new HttpException(500, "No callable setter for $formKey => $subFormKey field");
+                        }
+                        $subfield['set']($form->get($formKey)->get($subFormKey)->getData());
+                    }
+                }
+                else {
+                    if (!is_callable(@$field['set'])) {
+                        throw new HttpException(500, "No callable setter for $formKey field");
+                    }
+                    $field['set']($form->get($formKey)->getData());
+                }
             }
         }
         $this->entityManager->flush();
@@ -198,6 +357,20 @@ class UserFormHandler
         if ($form->isValid() && $form->isSubmitted()) {
             $this->updateUser($form);
             return true;
+        }
+
+        return false;
+    }
+
+    public function createHandle(FormInterface $form, Request $request)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $valid_user = $form->getData();
+            $valid_user->setPassword($this->passwordEncoder->encodePassword($valid_user, $valid_user->getPlainPassword()));
+            $this->userManager->store($valid_user);
+            return $valid_user;
         }
 
         return false;

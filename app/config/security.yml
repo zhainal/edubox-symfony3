@@ -6,12 +6,13 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_USER: ~
+        ROLE_USER: ROLE_SONATA_ADMIN
         ROLE_ADMIN:
             - ROLE_EDUBOX_ADMIN_DASHBOARD_ADMIN_ALL
             - ROLE_EDUBOX_ADMIN_ORGANISATION_ALL
             - ROLE_EDUBOX_ADMIN_USER_ALL
             - ROLE_EDUBOX_ADMIN_CALENDAR_ALL
+            - ROLE_EDUBOX_ADMIN_HOLIDAY_ALL
             - ROLE_EDUBOX_ADMIN_STUDENTS_GROUP_ALL
             - ROLE_EDUBOX_ADMIN_SUBJECT_ALL
             - ROLE_EDUBOX_ADMIN_SUBJECT_AREA_ALL
@@ -19,9 +20,10 @@ security:
             - ROLE_EDUBOX_ADMIN_CALL_SCHEDULE_ALL
             - ROLE_EDUBOX_ADMIN_MESSAGE_ALL
             - ROLE_EDUBOX_ADMIN_NOTICE_ALL
-            -
         ROLE_TEACHER:
             - ROLE_EDUBOX_ADMIN_DASHBOARD_TEACHER_ALL
+            - ROLE_EDUBOX_ADMIN_MARK_ALL
+            - ROLE_EDUBOX_ADMIN_QUARTER_ALL
         ROLE_PARENT:
             - ROLE_EDUBOX_ADMIN_DASHBOARD_PARENT_ALL
         ROLE_STUDENT:

@@ -155,5 +155,10 @@ class Holiday
     {
         return $this->moved;
     }
+
+    public function __toString()
+    {
+        return 'Holiday';
+    }
 }
 

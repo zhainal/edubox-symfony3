@@ -1,0 +1,39 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set title = 'Journals' %}
+
+{% block actions %}
+{% endblock %}
+
+{% set box_body %}
+    <thead>
+    <tr>
+        <th>Subject name</th>
+        <th>Class</th>
+        <th>Last lesson</th>
+        <th>Next lesson</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for subject in subjects %}
+        {% for group in subject.studentsGroups %}
+            <tr>
+                <td>{{ subject.name }}</td>
+                <td>{{ group.name }}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="{{ path('edubox.admin.mark_editJournal', {'subjectId':subject.id,'studentsGroupId':group.id}) }}" class="btn btn-success">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

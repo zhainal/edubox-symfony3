@@ -1,4 +1,4 @@
-{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+{% extends '@EduBox/admin_layout.html.twig' %}
 
 {% set title = 'Edit subject schedule' %}
 
@@ -16,6 +16,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 {% include '@EduBox/Field/input.html.twig' with {'field':subject_schedules_group_form.name} %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':subject_schedules_group_form.active} %}
             </div>
         </div>
     </div>

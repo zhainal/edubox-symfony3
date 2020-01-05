@@ -4,10 +4,11 @@
 namespace EduBoxBundle\Form\Type;
 
 
-use EduBoxBundle\Form\Type\DateWithoutYear;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use EduBoxBundle\Entity\Holiday;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,10 +19,18 @@ class CalendarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
-        $builder->add('year', NumberType::class);
+        $builder->add('year', NumberType::class, [
+            'constraints' => [
+            ]
+        ]);
 
         if (!$options['new']) {
+            $builder->add('holidays', EntityType::class, [
+                'class' => Holiday::class,
+                'multiple' => true,
+                'choice_label' => 'name',
+                'required' => false,
+            ]);
             $builder->add('quarterOneBegin', TextType::class, [
                 'required' => false,
             ]);

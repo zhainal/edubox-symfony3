@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class User
  * @package EduBoxBundle\Entity
  * @ORM\Entity()
- * @ORM\Table(name="box_users")
+ * @ORM\Table(name="box_user")
  */
 class User extends BaseUser
 {
@@ -72,6 +72,13 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Subject", mappedBy="user")
      */
     protected $subjects;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Quarter", mappedBy="user")
+     */
+    protected $quarters;
+
 
     /**
      * @return string
@@ -151,7 +158,8 @@ class User extends BaseUser
 
     public function getFullName()
     {
-        return $this->firstName . ' ' . $this->middleName . ' ' . $this->lastName;
+        $full_name = trim($this->firstName . ' ' . $this->middleName . ' ' . $this->lastName);
+        return $full_name == '' ? $this->getUsername() : $full_name;
     }
 
     /**
@@ -210,6 +218,24 @@ class User extends BaseUser
 
         return $this;
     }
+
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
+    public function getGenderAsString()
+    {
+        $gender = $this->getGender();
+        if($gender === UserMeta::FEMALE) {
+            return 'Female';
+        } elseif($gender === UserMeta::MALE) {
+            return 'Male';
+        }
+        return null;
+    }
+
+
 
 
     /**

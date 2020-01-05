@@ -2,6 +2,9 @@
 
 namespace EduBoxBundle\Repository;
 
+use EduBoxBundle\Entity\Mark;
+use EduBoxBundle\Entity\Setting;
+
 /**
  * MarkRepository
  *
@@ -10,4 +13,21 @@ namespace EduBoxBundle\Repository;
  */
 class MarkRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOneByOrCreate(array $criteria)
+    {
+        $em = $this->getEntityManager();
+        $mark = $this->findOneBy($criteria);
+
+        if ($mark === null) {
+            $mark = new Mark();
+            foreach ($criteria as $key => $value) {
+                $setter = 'set'.ucfirst($key);
+                $mark->$setter($value);
+            }
+            $em->persist($mark);
+            $em->flush();
+        }
+
+        return $mark;
+    }
 }

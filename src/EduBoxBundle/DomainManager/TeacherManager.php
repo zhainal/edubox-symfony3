@@ -6,6 +6,7 @@ namespace EduBoxBundle\DomainManager;
 
 use Doctrine\ORM\EntityManager;
 use EduBoxBundle\Entity\Subject;
+use EduBoxBundle\Entity\SubjectSchedule;
 use EduBoxBundle\Entity\SubjectSchedulesGroup;
 use EduBoxBundle\Entity\User;
 
@@ -52,5 +53,24 @@ class TeacherManager
             );
         }
         return $result;
+    }
+
+    public function hasStudent(User $teacher, User $student)
+    {
+        if ($student->hasRole('ROLE_STUDENT')) {
+
+        }
+    }
+
+    public function getSubjects(User $user)
+    {
+        $subjectRepository = $this->entityManager->getRepository(Subject::class);
+        return $subjectRepository->findBy(['user'=>$user]);
+    }
+
+    public function getStudentsGroups()
+    {
+        $subjectRepository = $this->entityManager->getRepository(Subject::class);
+        return $subjectRepository->findBy([]);
     }
 }

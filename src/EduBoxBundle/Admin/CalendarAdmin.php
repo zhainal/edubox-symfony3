@@ -4,6 +4,7 @@
 namespace EduBoxBundle\Admin;
 
 
+use Doctrine\DBAL\Types\TextType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -25,8 +26,7 @@ class CalendarAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('name')
-            ->add('year');
+            ->addIdentifier('year', TextType::class);
     }
 
 }

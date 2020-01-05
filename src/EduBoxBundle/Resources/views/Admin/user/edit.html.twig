@@ -1,4 +1,4 @@
-{% extends 'EduBoxBundle::standard_layout.html.twig' %}
+{% extends '@EduBox/admin_layout.html.twig' %}
 
 {% set user_tab_title = 'User data' %}
 
@@ -49,6 +49,11 @@
             </div>
         </div>
         <div class="col-md-4">
+            <div class="form-group {% if not user.roles.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.roles} %}
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group {% if not user.enabled.vars.valid %}has-error{% endif %}">
                 {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.enabled} %}
             </div>
@@ -56,7 +61,7 @@
     </div>
 {% endset %}
 
-{% if user.has_role_admin is defined %}
+{% if user.admin_form is defined %}
     {% set admin_tab_title = 'Admin data' %}
     {% set admin_tab_content %}
         <div class="row">
@@ -65,7 +70,7 @@
     {% endset %}
 {% endif %}
 
-{% if user.has_role_teacher is defined %}
+{% if user.teacher_form is defined %}
     {% set teacher_tab_title = 'Teacher data' %}
     {% set teacher_tab_content %}
         <div class="row">
@@ -74,27 +79,31 @@
     {% endset %}
 {% endif %}
 
-{% if user.has_role_parent is defined %}
+{% if user.parent_form is defined %}
     {% set parent_tab_title = 'Parent data' %}
     {% set parent_tab_content %}
         <div class="row">
-
+            <div class="col-md-4">
+                <div class="form-group {% if not user.parent_form.children.vars.valid %}has-error{% endif %}">
+                    {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.parent_form.children} %}
+                </div>
+            </div>
         </div>
     {% endset %}
 {% endif %}
 
-{% if user.has_role_student is defined %}
+{% if user.student_form is defined %}
     {% set student_tab_title = 'Student data' %}
     {% set student_tab_content %}
         <div class="row">
             <div class="col-md-4">
-                <div class="form-group {% if not user.group.vars.valid %}has-error{% endif %}">
-                    {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.group} %}
+                <div class="form-group {% if not user.student_form.group.vars.valid %}has-error{% endif %}">
+                    {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.student_form.group} %}
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group {% if not user.parent.vars.valid %}has-error{% endif %}">
-                    {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.parent} %}
+                <div class="form-group {% if not user.student_form.parent.vars.valid %}has-error{% endif %}">
+                    {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.student_form.parent} %}
                 </div>
             </div>
         </div>

@@ -10,10 +10,12 @@ use EduBoxBundle\Entity\Calendar;
 class CalendarManager
 {
     private $entityManager;
+    private $settingManager;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, SettingManager $settingManager)
     {
         $this->entityManager = $entityManager;
+        $this->settingManager = $settingManager;
     }
 
     public function create(Calendar $calendar)
@@ -25,5 +27,10 @@ class CalendarManager
     public function store(Calendar $calendar)
     {
         $this->entityManager->flush();
+    }
+
+    public function getActiveCalendar()
+    {
+        return $this->settingManager->getCalendar();
     }
 }
