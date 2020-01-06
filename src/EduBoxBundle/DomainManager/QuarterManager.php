@@ -14,14 +14,20 @@ use EduBoxBundle\Entity\User;
 class QuarterManager
 {
     private $entityManager;
-    private $settingManager;
+    private $calendarManager;
     private $studentsGroupManager;
+    private $subjectSchedulesGroupManager;
 
-    public function __construct(EntityManager $entityManager, SettingManager $settingManager, StudentsGroupManager $studentsGroupManager)
-    {
+    public function __construct(
+        EntityManager $entityManager,
+        CalendarManager $calendarManager,
+        StudentsGroupManager $studentsGroupManager,
+        SubjectSchedulesGroupManager $subjectSchedulesGroupManager
+    ) {
         $this->entityManager = $entityManager;
-        $this->settingManager = $settingManager;
+        $this->calendarManager = $calendarManager;
         $this->studentsGroupManager = $studentsGroupManager;
+        $this->subjectSchedulesGroupManager = $subjectSchedulesGroupManager;
     }
 
     public function create(Quarter $quarter)
@@ -35,14 +41,25 @@ class QuarterManager
         $this->entityManager->flush();
     }
 
+    /**
+     * @param $quarter
+     * @throws \Exception
+     */
+    public function isQuarterCorrect($quarter)
+    {
+        if (!$this->hasQuarter($quarter)) {
+            throw new \Exception('Quarter is not correct');
+        }
+    }
+
     public function getBeginDate($quarter)
     {
-        return $this->settingManager->getCalendar()->getBeginDate($quarter);
+        return $this->calendarManager->getActiveCalendar()->getBeginDate($quarter);
     }
 
     public function getEndDate($quarter)
     {
-        return $this->settingManager->getCalendar()->getEndDate($quarter);
+        return $this->calendarManager->getActiveCalendar()->getEndDate($quarter);
     }
 
     public function getQuarters()
@@ -170,5 +187,32 @@ class QuarterManager
             ];
         }
         return $subjectsWithQuarter;
+    }
+
+    public function getDates(
+        Subject $subject,
+        StudentsGroup $studentsGroup,
+        \DateTime $beginDate,
+        \DateTime $endDate
+    ) {
+        $schedulesGroup = $this->subjectSchedulesGroupManager->getActiveGroup();
+        $subjectSchedule = $this->subjectSchedulesGroupManager->getSchedule($schedulesGroup, $studentsGroup);
+        $schedule = $subjectSchedule->getSchedule();
+        $dates = [];
+        foreach ($schedule as $dayNum => $day) {
+            for ($date = $beginDate->getTimestamp(); $date <= $endDate->getTimestamp(); $date += 3600*24) {
+                foreach ($day as $subjectId) {
+                    if (date('N', $date) == $dayNum && $subjectId == $subject->getId()) {
+                        if (isset($dates[date('Y-m-d',$date)])) {
+                            $dates[date('Y-m-d', $date)]++;
+                        } else {
+                            $dates[date('Y-m-d',$date)] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        ksort($dates);
+        return $dates;
     }
 }

@@ -28,4 +28,16 @@ class SubjectManager
     {
         $this->entityManager->flush();
     }
+
+    public function getObject($subjectId = null)
+    {
+        if ($subjectId == null) {
+            return null;
+        }
+        $subject = $this->entityManager->getRepository(Subject::class)->find($subjectId);
+        if ($subject) {
+            return $subject;
+        }
+        return null;
+    }
 }

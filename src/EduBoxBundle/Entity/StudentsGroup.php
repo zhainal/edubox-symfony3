@@ -48,12 +48,19 @@ class StudentsGroup
      */
     private $subjects;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Lesson", mappedBy="studentsGroup")
+     */
+    private $lessons;
+
 
 
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
         $this->subjectSchedules = new ArrayCollection();
+        $this->lessons = new ArrayCollection();
     }
 
     /**

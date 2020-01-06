@@ -2,6 +2,9 @@
 
 namespace EduBoxBundle\Repository;
 
+use EduBoxBundle\Entity\Lesson;
+use EduBoxBundle\Entity\Mark;
+
 /**
  * LessonRepository
  *
@@ -10,4 +13,21 @@ namespace EduBoxBundle\Repository;
  */
 class LessonRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOneByOrCreate(array $criteria)
+    {
+        $em = $this->getEntityManager();
+        $lesson = $this->findOneBy($criteria);
+
+        if ($lesson === null) {
+            $lesson = new Lesson();
+            foreach ($criteria as $key => $value) {
+                $setter = 'set'.ucfirst($key);
+                $lesson->$setter($value);
+            }
+            $em->persist($lesson);
+            $em->flush();
+        }
+
+        return $lesson;
+    }
 }

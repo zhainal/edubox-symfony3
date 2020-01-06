@@ -44,7 +44,8 @@ class Subject
     private $studentsGroups;
 
     /**
-     * @var
+     * Teacher
+     * @var User
      * @ORM\ManyToOne(targetEntity="EduBoxBundle\Entity\User", inversedBy="subjects")
      */
     private $user;
@@ -55,9 +56,16 @@ class Subject
      */
     private $quarters;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Lesson", mappedBy="subject")
+     */
+    private $lessons;
+
     public function __construct()
     {
         $this->studentsGroups = new ArrayCollection();
+        $this->lessons = new ArrayCollection();
     }
 
     /**

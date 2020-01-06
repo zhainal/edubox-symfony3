@@ -29,6 +29,10 @@ class CalendarManager
         $this->entityManager->flush();
     }
 
+    /**
+     * @return Calendar|null
+     * @throws \Exception
+     */
     public function getActiveCalendar()
     {
         return $this->settingManager->getCalendar();

@@ -1,11 +1,12 @@
 
 {% set box_body = box_body is defined ? box_body : '' %}
-{% set box_title = box_title is defined ? box_title : '' %}
 
 <div class="box box-primary">
-    <div class="box-header">
-        <div class="box-title">{{ box_title }}</div>
-    </div>
+    {% if box_title is defined %}
+        <div class="box-header">
+            <div class="box-title">{{ box_title }}</div>
+        </div>
+    {% endif %}
     <div class="box-body">
             {{ box_body }}
     </div>

@@ -54,7 +54,10 @@ class SettingManager
         return null;
     }
 
-
+    /**
+     * @return Calendar|null
+     * @throws \Exception
+     */
     public function getCalendar()
     {
         $calendar_id = $this->getSetting('calendar')->getSettingValue();

@@ -16,20 +16,17 @@ class MarkManager
     private $entityManager;
     private $calendarManager;
     private $studentsGroupManager;
-    private $subjectSchedulesGroupManager;
     private $quarterManager;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         CalendarManager $calendarManager,
         StudentsGroupManager $studentsGroupManager,
-        SubjectSchedulesGroupManager $subjectSchedulesGroupManager,
         QuarterManager $quarterManager
     ) {
         $this->entityManager = $entityManager;
         $this->calendarManager = $calendarManager;
         $this->studentsGroupManager = $studentsGroupManager;
-        $this->subjectSchedulesGroupManager = $subjectSchedulesGroupManager;
         $this->quarterManager = $quarterManager;
     }
 
@@ -124,7 +121,7 @@ class MarkManager
     ) {
         $markRepository = $this->entityManager->getRepository(Mark::class);
         $students = $this->studentsGroupManager->getStudents($studentsGroup);
-        $dates = $this->getDates($subject, $studentsGroup, $beginDate, $endDate);
+        $dates = $this->quarterManager->getDates($subject, $studentsGroup, $beginDate, $endDate);
 
         foreach ($students as $student) {
             foreach ($dates as $date) {
@@ -142,33 +139,6 @@ class MarkManager
         }
     }
 
-    public function getDates(
-        Subject $subject,
-        StudentsGroup $studentsGroup,
-        \DateTime $beginDate,
-        \DateTime $endDate
-    ) {
-        $schedulesGroup = $this->subjectSchedulesGroupManager->getActiveGroup();
-        $subjectSchedule = $this->subjectSchedulesGroupManager->getSchedule($schedulesGroup, $studentsGroup);
-        $schedule = $subjectSchedule->getSchedule();
-        $dates = [];
-        foreach ($schedule as $dayNum => $day) {
-            for ($date = $beginDate->getTimestamp(); $date <= $endDate->getTimestamp(); $date += 3600*24) {
-                foreach ($day as $subjectId) {
-                    if (date('N', $date) == $dayNum && $subjectId == $subject->getId()) {
-                        if (isset($dates[date('Y-m-d',$date)])) {
-                            $dates[date('Y-m-d', $date)]++;
-                        } else {
-                            $dates[date('Y-m-d',$date)] = 1;
-                        }
-                    }
-                }
-            }
-        }
-        ksort($dates);
-        return $dates;
-    }
-
     public function getDatesTree(
         Subject $subject,
         StudentsGroup $studentsGroup,
@@ -177,7 +147,7 @@ class MarkManager
         $calendar = $this->calendarManager->getActiveCalendar();
         $beginDate = $calendar->getBeginDate($quarter);
         $endDate = $calendar->getEndDate($quarter);
-        $dates = $this->getDates($subject, $studentsGroup, $beginDate, $endDate);
+        $dates = $this->quarterManager->getDates($subject, $studentsGroup, $beginDate, $endDate);
         $tree = [];
 
         foreach ($dates as $date) {
@@ -200,7 +170,7 @@ class MarkManager
     ) {
         $repository = $this->entityManager->getRepository(Mark::class);
 
-        if ($studentsGroup) {
+        if ($studentsGroup != null) {
             $students = $this->studentsGroupManager->getStudents($studentsGroup);
             $student_ids = [];
             foreach ($students as $student) {
@@ -210,14 +180,14 @@ class MarkManager
 
         $marks = $repository->createQueryBuilder('m');
 
-        if ($beginDate) {
-            $marks->andwhere('m.createdAt >= :beginDate')->setParameter('beginDate', $beginDate->format('Y-m-d H:i:s'));
+        if ($beginDate != null) {
+            $marks->andwhere('m.date >= :beginDate')->setParameter('beginDate', $beginDate->format('Y-m-d H:i:s'));
         }
-        if ($endDate) {
-            $marks->andWhere('m.createdAt <= :endDate')->setParameter('endDate', $endDate->format('Y-m-d H:i:s'));
+        if ($endDate != null) {
+            $marks->andWhere('m.date <= :endDate')->setParameter('endDate', $endDate->format('Y-m-d H:i:s'));
         }
-        if ($subject) {
-            $marks->andWhere('m.subject = :subject')->setParameter('subject', $subject);
+        if ($subject != null) {
+            $marks->andWhere('m.date = :subject')->setParameter('subject', $subject);
         }
         if (isset($student_ids)) {
             $marks->andWhere($marks->expr()->in('m.user', $student_ids));

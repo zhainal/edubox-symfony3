@@ -13,7 +13,7 @@ services:
 
   edubox.quarter_manager:
     class: EduBoxBundle\DomainManager\QuarterManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager', '@edubox.students_group_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.calendar_manager', '@edubox.students_group_manager', '@edubox.subject_schedules_group_manager']
 
   edubox.mark_manager:
     class: EduBoxBundle\DomainManager\MarkManager
@@ -21,7 +21,6 @@ services:
       - '@doctrine.orm.entity_manager'
       - '@edubox.calendar_manager'
       - '@edubox.students_group_manager'
-      - '@edubox.subject_schedules_group_manager'
       - '@edubox.quarter_manager'
 
   edubox.setting_manager:
@@ -64,6 +63,10 @@ services:
     class: EduBoxBundle\DomainManager\ParentManager
     arguments: ['@doctrine.orm.entity_manager']
 
+  edubox.lesson_manager:
+    class: EduBoxBundle\DomainManager\LessonManager
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.quarter_manager', '@edubox.students_group_manager']
+
 
   edubox.user_form_handler:
     class: EduBoxBundle\Form\Handler\UserFormHandler
@@ -92,6 +95,10 @@ services:
   edubox.subject_schedules_group_form_handler:
     class: EduBoxBundle\Form\Handler\SubjectSchedulesGroupFormHandler
     arguments: ['@edubox.subject_schedules_group_manager']
+
+  edubox.lesson_form_handler:
+    class: EduBoxBundle\Form\Handler\LessonFormHandler
+    arguments: ['@edubox.lesson_manager']
 
   edubox.admin.student.pre_create_listener:
     class: EduBoxBundle\EventListener\StudentAdminPreCreateListener

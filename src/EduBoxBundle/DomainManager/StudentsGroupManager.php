@@ -31,6 +31,18 @@ class StudentsGroupManager
         $this->entityManager->flush();
     }
 
+    public function getObject($studentsGroupId = null)
+    {
+        if ($studentsGroupId == null) {
+            return null;
+        }
+        $studentsGroup = $this->entityManager->getRepository(StudentsGroup::class)->find($studentsGroupId);
+        if ($studentsGroup) {
+            return $studentsGroup;
+        }
+        return null;
+    }
+
     public function getSubectScheduleStatus(StudentsGroup $studentsGroup, SubjectSchedulesGroup $subjectSchedulesGroup)
     {
         $subjectScheduleRepository = $this->entityManager->getRepository(SubjectSchedule::class);

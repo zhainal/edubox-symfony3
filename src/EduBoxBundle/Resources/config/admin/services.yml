@@ -121,6 +121,17 @@ services:
         icon: '<i class="fa fa-bar-chart"></i>'
         on_top: true
 
+  edubox.admin.lesson:
+    class: EduBoxBundle\Admin\LessonAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\LessonCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Lessons'
+        label: 'Lessons'
+        icon: '<i class="fa fa-list"></i>'
+        on_top: true
+
   edubox.admin.message:
     class: EduBoxBundle\Admin\MessageAdmin
     arguments: [~, ~, EduBoxBundle:Admin\MessageCRUD]

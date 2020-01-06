@@ -62,10 +62,9 @@ class TeacherManager
         }
     }
 
-    public function getSubjects(User $user)
+    public function getSubjects(User $teacher)
     {
-        $subjectRepository = $this->entityManager->getRepository(Subject::class);
-        return $subjectRepository->findBy(['user'=>$user]);
+        return $teacher->getSubjects();
     }
 
     public function getStudentsGroups()
