@@ -132,6 +132,17 @@ services:
         icon: '<i class="fa fa-list"></i>'
         on_top: true
 
+  edubox.admin.homework:
+    class: EduBoxBundle\Admin\HomeworkAdmin
+    arguments: [~, EduBoxBundle\Entity\Homework, EduBoxBundle:Admin\HomeworkCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        group: 'Homework'
+        label: 'Homework'
+        icon: '<i class="fa fa-home"></i>'
+        on_top: true
+
   edubox.admin.message:
     class: EduBoxBundle\Admin\MessageAdmin
     arguments: [~, ~, EduBoxBundle:Admin\MessageCRUD]

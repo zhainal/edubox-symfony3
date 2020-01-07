@@ -7,7 +7,7 @@
 
 {% block actions %}
     <li>
-        <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_show', {'subjectId':lesson.subject.id, 'studentsGroupId':lesson.studentsGroup.id}) }}">
+        <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_listLesson', {'subjectId':lesson.subject.id, 'studentsGroupId':lesson.studentsGroup.id}) }}">
             <i class="fa fa-list" aria-hidden="true"></i>
             Lessons list
         </a>
@@ -24,6 +24,11 @@
         <div class="col-md-12">
             <div class="form-group">
                 {% include '@EduBox/Field/input.html.twig' with {'field':form.content} %}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':form.homeworks} %}
             </div>
         </div>
     </div>

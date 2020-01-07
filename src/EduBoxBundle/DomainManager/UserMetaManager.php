@@ -45,6 +45,10 @@ class UserMetaManager
         return $repository->find($id);
     }
 
+    /**
+     * @param User $user
+     * @return StudentsGroup|null
+     */
     public function getStudentsGroup(User $user)
     {
         $id = $this->getValue($user, UserMeta::STUDENT_GROUP_ID);

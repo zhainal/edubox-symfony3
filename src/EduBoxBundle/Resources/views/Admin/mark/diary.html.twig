@@ -1,0 +1,11 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set title = 'Diary' %}
+
+{% set box_body %}
+
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

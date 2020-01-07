@@ -17,7 +17,7 @@ class LessonAdmin extends AbstractAdmin
         $collection->clear();
 
         $collection->add('list');
-        $collection->add('show', '{subjectId}/{studentsGroupId}/show');
+        $collection->add('listLesson', 'show/{subjectId}/{studentsGroupId}', ['subjectId' => null,'studentsGroupId' => null]);
         $collection->add('edit', '{id}/edit');
     }
 }

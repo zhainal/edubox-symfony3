@@ -12,10 +12,12 @@ use EduBoxBundle\Entity\User;
 class SubjectScheduleManager
 {
     private $entityManager;
+    private $settingManager;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, SettingManager $settingManager)
     {
         $this->entityManager = $entityManager;
+        $this->settingManager = $settingManager;
     }
 
     public function create(SubjectSchedule $subjectSchedule)

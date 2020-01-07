@@ -4,6 +4,7 @@
 namespace EduBoxBundle\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -68,7 +69,7 @@ class User extends BaseUser
     protected $userMeta;
 
     /**
-     * @var
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Subject", mappedBy="user")
      */
     protected $subjects;
@@ -79,6 +80,15 @@ class User extends BaseUser
      */
     protected $quarters;
 
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->subjects = new ArrayCollection();
+        parent::__construct();
+
+    }
 
     /**
      * @return string
@@ -219,6 +229,9 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSubjects()
     {
         return $this->subjects;
@@ -233,18 +246,6 @@ class User extends BaseUser
             return 'Male';
         }
         return null;
-    }
-
-
-
-
-    /**
-     * User constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
     }
 
     public function __toString()

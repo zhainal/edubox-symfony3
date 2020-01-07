@@ -1,0 +1,62 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set title = 'Teacher subject schedule' %}
+
+{% macro subject(item) %}
+    {% if item.subject != null %}
+        {{ item.subject.name }}
+    {% else %}
+        -
+    {% endif %}
+    {{ item.studentsGroup.name }}
+{% endmacro %}
+{% set box_body %}
+    <thead>
+    <tr>
+        <th>{{ date(4*3600*24).format('D') }}</th>
+        <th>{{ date(5*3600*24).format('D') }}</th>
+        <th>{{ date(6*3600*24).format('D') }}</th>
+    </tr>
+    <thead>
+    <tbody>
+    {% for hour in 1..6 %}
+        <tr>
+            {% for day in 1..3 %}
+                <td>
+                    {% if schedule[day][hour] is defined %}
+                        {{ _self.subject(schedule[day][hour]) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    <thead>
+    <tr>
+        <th>{{ date(7*3600*24).format('D') }}</th>
+        <th>{{ date(8*3600*24).format('D') }}</th>
+        <th>{{ date(9*3600*24).format('D') }}</th>
+    </tr>
+    <thead>
+    <tbody>
+    {% for hour in 1..6 %}
+        <tr>
+            {% for day in 4..6 %}
+                <td>
+                    {% if schedule[day][hour] is defined %}
+                        {{ _self.subject(schedule[day][hour]) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

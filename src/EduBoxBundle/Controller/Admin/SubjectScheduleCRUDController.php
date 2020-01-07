@@ -15,6 +15,27 @@ class SubjectScheduleCRUDController extends  CRUDController
 {
     public function listAction()
     {
+        $this->admin->checkAccess('list');
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->listSubjectSchedulesGroup();
+        }
+        elseif ($this->isGranted('ROLE_TEACHER')) {
+            $this->admin->setLabel('Subject schedule');
+            return $this->teacherSubjectSchedule();
+        }
+    }
+
+    public function teacherSubjectSchedule()
+    {
+        $user = $this->getUser();
+        $schedule = $this->get('edubox.teacher_manager')->getSubjectSchedule($user);
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:subject_schedule/teacher_show.html.twig', [
+            'schedule' => $schedule
+        ]);
+    }
+
+    public function listSubjectSchedulesGroup()
+    {
         $repository = $this->get('doctrine.orm.entity_manager')->getRepository(SubjectSchedulesGroup::class);
         return $this->renderWithExtraParams('EduBoxBundle:Admin:subject_schedule/list.html.twig', [
             'subject_schedules_groups' => $repository->findAll(),

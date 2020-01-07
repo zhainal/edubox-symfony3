@@ -1,0 +1,29 @@
+{% extends '@EduBox/admin_layout.html.twig' %}
+
+{% set title = 'Subjects list' %}
+
+{% set box_body %}
+    <thead>
+    <tr>
+        <th>Subject</th>
+        <th>Students group</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if subjects is defined %}
+        {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.name }}</td>
+                <td>
+                    <a href="{{ path('edubox.admin.lesson_listLesson', {'subjectId': subject.id}) }}" class="btn btn-success">Lessons</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+{% endset %}
+
+{% block content %}
+    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+{% endblock %}

@@ -14,11 +14,19 @@ class TeacherManager
 {
     private $entityManager;
     private $subjectScheduleManager;
+    private $subjectSchedulesGroupManager;
+    private $subjectManager;
 
-    public function __construct(EntityManager $entityManager, SubjectScheduleManager $subjectScheduleManager)
-    {
+    public function __construct(
+        EntityManager $entityManager,
+        SubjectScheduleManager $subjectScheduleManager,
+        SubjectSchedulesGroupManager $subjectSchedulesGroupManager,
+        SubjectManager $subjectManager
+    ) {
         $this->entityManager = $entityManager;
         $this->subjectScheduleManager = $subjectScheduleManager;
+        $this->subjectSchedulesGroupManager = $subjectSchedulesGroupManager;
+        $this->subjectManager = $subjectManager;
     }
 
     public function create(User $user)
@@ -71,5 +79,36 @@ class TeacherManager
     {
         $subjectRepository = $this->entityManager->getRepository(Subject::class);
         return $subjectRepository->findBy([]);
+    }
+
+    public function getSubjectSchedule(User $teacher)
+    {
+        $group = $this->subjectSchedulesGroupManager->getActiveGroup();
+        if (!$group instanceof SubjectSchedulesGroup) {
+            throw new \Exception('The system has not selected a schedule, inform the administrator about it.');
+        }
+        $subjects = $teacher->getSubjects();
+        $subjectIds = [];
+        foreach ($subjects as $subject) {
+            if (!$subject instanceof Subject) continue;
+            $subjectIds[] = $subject->getId();
+        }
+        $subjectSchedules = $group->getSubjectSchedules();
+        $teacherSchedule = [];
+        foreach ($subjectSchedules as $subjectSchedule) {
+            if (!$subjectSchedule instanceof SubjectSchedule) continue;
+            $schedule = $subjectSchedule->getSchedule();
+            foreach ($schedule as $day => $hours) {
+                foreach ($hours as $hour => $subjectId) {
+                    if (in_array($subjectId, $subjectIds)) {
+                        $teacherSchedule[$day][$hour] = [
+                            'subject' => $this->subjectManager->getObject($subjectId),
+                            'studentsGroup' => $subjectSchedule->getStudentsGroup()
+                        ];
+                    }
+                }
+            }
+        }
+        return $teacherSchedule;
     }
 }

@@ -1,39 +1,44 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Lessons list' %}
+{% set title = 'Show lesson' %}
+{% set box_title %}
+    {{ lesson.studentsGroup.name }} | {{ lesson.subject.name }} | {{ lesson.date.format('d.m.Y') }} | {{ lesson.hour }}
+{% endset %}
 
 {% block actions %}
     <li>
-        <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_list') }}">
+        <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_listLesson', {'subjectId':lesson.subject.id, 'studentsGroupId':lesson.studentsGroup.id}) }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            Subjects list
+            Lessons list
         </a>
     </li>
 {% endblock %}
 
 {% set box_body %}
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Hour</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for lesson in lessons %}
-        <tr>
-            <td>{% if lesson.name == null %}-{% else %} {{ lesson.name }} {% endif %}</td>
-            <td>{{ lesson.date.format('d.m.Y') }}</td>
-            <td>{{ lesson.hour }}</td>
-            <td>
-                <a href="{{ path('edubox.admin.lesson_edit', {'id':lesson.id}) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':form.name} %}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':form.content} %}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {% include '@EduBox/Field/input.html.twig' with {'field':form.homeworks} %}
+            </div>
+        </div>
+    </div>
 {% endset %}
 
 {% block content %}
-    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+    {{ form_start(form) }}
+    {% include '@EduBox/Block/box.html.twig' with {'box_body':box_body, 'box_title':box_title} only %}
+    <div class="sonata-ba-form-actions well well-small form-actions">
+        <button type="submit" class="btn btn-success">Save lesson</button>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

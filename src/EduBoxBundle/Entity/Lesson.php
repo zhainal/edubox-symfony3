@@ -2,6 +2,7 @@
 
 namespace EduBoxBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +62,19 @@ class Lesson
      * @ORM\Column(name="hour", type="integer")
      */
     private $hour = 1;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="EduBoxBundle\Entity\Homework", mappedBy="lesson")
+     */
+    private $homeworks;
+
+
+    public function __construct()
+    {
+        $this->homeworks = new ArrayCollection();
+    }
 
 
     /**
@@ -211,5 +225,35 @@ class Lesson
     {
         return $this->hour;
     }
+
+    /**
+     * @param ArrayCollection $homeworks
+     * @return $this
+     */
+    public function setHomeworks(ArrayCollection $homeworks)
+    {
+        $this->homeworks = $homeworks;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getHomeworks()
+    {
+        return $this->homeworks;
+    }
+
+    public function nameWithDate()
+    {
+        return $this->name . ' - '. $this->date->format('d.m.Y') . ' (' . $this->hour . ')';
+    }
+
+    public function __toString()
+    {
+        return $this->name ? $this->name : 'Lesson';
+    }
+
 }
 

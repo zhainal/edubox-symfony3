@@ -16,10 +16,33 @@ class MarkCRUDController extends CRUDController
 {
     public function listAction()
     {
+        $this->admin->checkAccess('list');
+        if ($this->isGranted('ROLE_TEACHER')) {
+            return $this->teacherJournals();
+        }
+        elseif ($this->isGranted('ROLE_STUDENT')) {
+            return $this->studentDiary();
+        }
+    }
+
+    public function studentDiary()
+    {
+        $user = $this->getUser();
+        $diary = $this->get('edubox.student_manager')->getDiary($user);
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/diary.html.twig', [
+            'diary' => $diary,
+        ]);
+    }
+
+    /**
+     * Get teacher subject-students group (journal)
+     */
+    public function teacherJournals()
+    {
         $user = $this->getUser();
         $teacher_manager = $this->get('edubox.teacher_manager');
         $subjects = $teacher_manager->getSubjects($user);
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:marks/list.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/journal_list.html.twig', [
             'subjects' => $subjects,
         ]);
     }
@@ -57,7 +80,7 @@ class MarkCRUDController extends CRUDController
         });
         $twig->addFunction($function);
 
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:marks/edit.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/edit.html.twig', [
             'subject' => $subject,
             'studentsGroup' => $studentsGroup,
             'students' => $students,
