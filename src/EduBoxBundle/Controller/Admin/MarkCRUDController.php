@@ -10,27 +10,65 @@ use EduBoxBundle\Entity\User;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class MarkCRUDController extends CRUDController
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function listAction()
     {
         $this->admin->checkAccess('list');
+        $request = $this->getRequest();
         if ($this->isGranted('ROLE_TEACHER')) {
             return $this->teacherJournals();
         }
         elseif ($this->isGranted('ROLE_STUDENT')) {
-            return $this->studentDiary();
+            $this->admin->setLabel('Diary');
+            return $this->studentDiary((int)$request->get('next'));
         }
+        elseif ($this->isGranted('ROLE_PARENT')) {
+            $this->admin->setLabel('Diary');
+            return $this->parentDiary((int)$request->get('next'), (int)$request->get('student'));
+        }
+        throw $this->createAccessDeniedException();
     }
 
-    public function studentDiary()
+    public function parentDiary($next = 0, $student = 0)
+    {
+        $parentManager = $this->get('edubox.parent_manager');
+        $parent = $this->getUser();
+
+        $oneStudent = $parentManager->hasOneStudent($parent);
+        if ($oneStudent instanceof  User) {
+            $student = $oneStudent;
+        }
+        else {
+            $student = $this->getDoctrine()->getRepository(User::class)->find($student);
+        }
+        if ($student instanceof User) {
+            if ($parentManager->hasStudent($parent, $student)) {
+                $diary = $this->get('edubox.diary_manager')->getDiary($student, $next);
+                return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/parent/diary.html.twig', [
+                    'diary' => $diary,
+                    'next' => $next,
+                    'user' => $student,
+                ]);
+            }
+        }
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/parent/list.html.twig', [
+            'students' => $parentManager->getStudents($parent),
+        ]);
+
+    }
+
+    public function studentDiary($next = 0)
     {
         $user = $this->getUser();
-        $diary = $this->get('edubox.student_manager')->getDiary($user);
+        $diary = $this->get('edubox.diary_manager')->getDiary($user, $next);
         return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/diary.html.twig', [
             'diary' => $diary,
+            'next' => $next,
         ]);
     }
 

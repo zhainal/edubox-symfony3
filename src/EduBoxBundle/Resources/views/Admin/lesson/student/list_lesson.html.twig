@@ -6,7 +6,7 @@
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_list') }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            Subjects list
+            Return to list
         </a>
     </li>
 {% endblock %}
@@ -27,7 +27,7 @@
             <td>{{ lesson.date.format('d.m.Y') }}</td>
             <td>{{ lesson.hour }}</td>
             <td>
-                <a href="{{ path('edubox.admin.lesson_edit', {'id':lesson.id}) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                <a href="{{ path('edubox.admin.lesson_show', {'id':lesson.id}) }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
             </td>
         </tr>
     {% endfor %}

@@ -89,4 +89,15 @@ class LessonManager
         return $lessons->getQuery()->getResult();
     }
 
+    public function getLesson(Subject $subject, StudentsGroup $studentsGroup, \DateTime $date, $hour)
+    {
+        $repository = $this->entityManager->getRepository(Lesson::class);
+        return $repository->findOneBy([
+            'subject' => $subject,
+            'studentsGroup' => $studentsGroup,
+            'date' => $date,
+            'hour' => $hour,
+        ]);
+    }
+
 }

@@ -166,7 +166,7 @@ class Subject
 
     public function __toString()
     {
-        return (string)$this->id;
+        return $this->name ? $this->name : 'Subject';
     }
 }
 

@@ -41,7 +41,7 @@ services:
 
   edubox.subject_schedule_manager:
     class: EduBoxBundle\DomainManager\SubjectScheduleManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager', '@edubox.subject_schedules_group_manager']
 
   edubox.subject_schedules_group_manager:
     class: EduBoxBundle\DomainManager\SubjectSchedulesGroupManager
@@ -61,7 +61,7 @@ services:
 
   edubox.parent_manager:
     class: EduBoxBundle\DomainManager\ParentManager
-    arguments: ['@doctrine.orm.entity_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_manager']
 
   edubox.lesson_manager:
     class: EduBoxBundle\DomainManager\LessonManager
@@ -69,7 +69,11 @@ services:
 
   edubox.student_manager:
     class: EduBoxBundle\DomainManager\StudentManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_meta_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_meta_manager', '@edubox.subject_schedule_manager']
+
+  edubox.diary_manager:
+    class: EduBoxBundle\DomainManager\DiaryManager
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.subject_schedule_manager', '@edubox.subject_manager', '@edubox.lesson_manager', '@edubox.student_manager', '@edubox.mark_manager']
 
 
   edubox.user_form_handler:

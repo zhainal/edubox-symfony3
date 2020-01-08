@@ -48,6 +48,7 @@ class LessonCRUDController extends CRUDController
 
     public function listLessonAction($quarter = null, $subjectId = null, $studentsGroupId = null)
     {
+        $this->admin->checkAccess('list');
         if ($this->isGranted('ROLE_TEACHER')) {
             return $this->listLessonTeacher($subjectId, $studentsGroupId, $quarter);
         }
@@ -107,6 +108,35 @@ class LessonCRUDController extends CRUDController
         }
         return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/edit.html.twig', [
             'form' => $form->createView(),
+            'lesson' => $lesson,
+        ]);
+    }
+
+    public function showAction($id = null)
+    {
+        $this->admin->checkAccess('show');
+        $lesson = $this->get('edubox.lesson_manager')->getObject($id);
+        if (!$lesson instanceof Lesson) {
+            $this->createNotFoundException('Lesson not found');
+        }
+        if ($this->isGranted('ROLE_TEACHER')) {
+            return $this->showTeacher($lesson);
+        }
+        elseif ($this->isGranted('ROLE_STUDENT')) {
+            return $this->showStudent($lesson);
+        }
+    }
+
+    public function showTeacher(Lesson $lesson)
+    {
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/show.html.twig', [
+            'lesson' => $lesson,
+        ]);
+    }
+
+    public function showStudent(Lesson $lesson)
+    {
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/student/show.html.twig', [
             'lesson' => $lesson,
         ]);
     }

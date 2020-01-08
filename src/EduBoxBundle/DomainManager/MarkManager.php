@@ -18,6 +18,13 @@ class MarkManager
     private $studentsGroupManager;
     private $quarterManager;
 
+    /**
+     * MarkManager constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param CalendarManager $calendarManager
+     * @param StudentsGroupManager $studentsGroupManager
+     * @param QuarterManager $quarterManager
+     */
     public function __construct(
         EntityManagerInterface $entityManager,
         CalendarManager $calendarManager,
@@ -254,5 +261,16 @@ class MarkManager
         ]);
         $quarter_q->setMark($mark);
         $this->quarterManager->store($quarter_q);
+    }
+
+    public function getMark(Subject $subject, User $user, \DateTime $date, $hour)
+    {
+        $repository = $this->entityManager->getRepository(Mark::class);
+        return $repository->findOneBy([
+            'subject' => $subject,
+            'user' => $user,
+            'date' => $date,
+            'hour' => $hour,
+        ]);
     }
 }

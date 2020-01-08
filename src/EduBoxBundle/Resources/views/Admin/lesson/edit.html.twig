@@ -2,7 +2,7 @@
 
 {% set title = 'Edit lesson' %}
 {% set box_title %}
-    {{ lesson.studentsGroup.name }} | {{ lesson.subject.name }} | {{ lesson.date.format('d.m.Y') }} | {{ lesson.hour }}
+    Lesson in class {{ lesson.studentsGroup.name }} of the subject of {{ lesson.subject.name }} on {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
 {% endset %}
 
 {% block actions %}

@@ -6,6 +6,7 @@ namespace EduBoxBundle\DomainManager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use EduBoxBundle\Entity\StudentsGroup;
+use EduBoxBundle\Entity\SubjectSchedule;
 use EduBoxBundle\Entity\User;
 
 class StudentManager
@@ -13,15 +14,12 @@ class StudentManager
     private $entityManager;
     private $userMetaManager;
 
-    public function __construct(EntityManagerInterface $entityManager, UserMetaManager $userMetaManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserMetaManager $userMetaManager
+    ) {
         $this->entityManager = $entityManager;
         $this->userMetaManager = $userMetaManager;
-    }
-
-    public function getDiary(User $student)
-    {
-        $studentsGroup = $this->getStudentsGroup($student);
     }
 
     /**

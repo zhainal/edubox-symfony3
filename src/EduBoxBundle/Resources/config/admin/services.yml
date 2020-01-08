@@ -123,7 +123,7 @@ services:
 
   edubox.admin.lesson:
     class: EduBoxBundle\Admin\LessonAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\LessonCRUD]
+    arguments: [~, EduBoxBundle\Entity\Lesson, EduBoxBundle:Admin\LessonCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm

@@ -1,8 +1,12 @@
 
-{% set box_body = box_body is defined ? box_body : '' %}
-{% set box_title = box_title is defined ? box_title : '' %}
+{% set table_content = table_content is defined ? table_content : '' %}
 
 <div class="box box-primary">
+    {% if box_title is defined %}
+        <div class="box-header">
+            <div class="box-title">{{ box_title }}</div>
+        </div>
+    {% endif %}
     <div class="box-body table-responsive no-padding">
         <table class="table table-bordered table-striped table-hover sonata-ba-list">
             {{ table_content }}

@@ -5,6 +5,7 @@ namespace EduBoxBundle\DomainManager;
 
 
 use Doctrine\ORM\EntityManager;
+use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\SubjectSchedule;
 use EduBoxBundle\Entity\User;
@@ -13,11 +14,13 @@ class SubjectScheduleManager
 {
     private $entityManager;
     private $settingManager;
+    protected $subjectSchedulesGroupManager;
 
-    public function __construct(EntityManager $entityManager, SettingManager $settingManager)
+    public function __construct(EntityManager $entityManager, SettingManager $settingManager, SubjectSchedulesGroupManager $subjectSchedulesGroupManager)
     {
         $this->entityManager = $entityManager;
         $this->settingManager = $settingManager;
+        $this->subjectSchedulesGroupManager = $subjectSchedulesGroupManager;
     }
 
     public function create(SubjectSchedule $subjectSchedule)
@@ -29,6 +32,21 @@ class SubjectScheduleManager
     public function store(SubjectSchedule $subjectSchedule, array $data = null)
     {
         $this->entityManager->flush();
+    }
+
+    public function getSubjectSchedule(StudentsGroup $studentsGroup)
+    {
+        $subjectSchedules = $this->subjectSchedulesGroupManager->getActiveGroup()->getSubjectSchedules();
+        $subjectScheduleIds = [];
+        foreach ($subjectSchedules as $subjectSchedule) {
+            $subjectScheduleIds[] = $subjectSchedule->getId();
+        }
+        $repository = $this->entityManager->getRepository(SubjectSchedule::class);
+        $qb = $repository->createQueryBuilder('s');
+        $qb
+            ->andWhere('s.studentsGroup = :studentsGroup')->setParameter('studentsGroup', $studentsGroup)
+            ->andWhere($qb->expr()->in('s.id', $subjectScheduleIds));
+        return $qb->getQuery()->getResult()[0] ? $qb->getQuery()->getResult()[0] : null;
     }
 
     public function hasDay(SubjectSchedule $subjectSchedule, $day)

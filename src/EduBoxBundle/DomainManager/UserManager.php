@@ -5,6 +5,7 @@ namespace EduBoxBundle\DomainManager;
 
 
 use Doctrine\ORM\EntityManager;
+use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\User;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
@@ -15,6 +16,18 @@ class UserManager
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function getObject($userId = null)
+    {
+        if ($userId == null) {
+            return null;
+        }
+        $user = $this->entityManager->getRepository(User::class)->find($userId);
+        if ($user) {
+            return $user;
+        }
+        return null;
     }
 
     public function createUser()

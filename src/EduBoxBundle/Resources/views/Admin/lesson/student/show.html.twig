@@ -2,7 +2,7 @@
 
 {% set title = 'Show lesson' %}
 {% set box_title %}
-    Lesson in class {{ lesson.studentsGroup.name }} of the subject of {{ lesson.subject.name }} on {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
+    Lesson of the subject of {{ lesson.subject.name }} on {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
 {% endset %}
 
 {% block actions %}
@@ -16,28 +16,28 @@
 
 {% set table_content %}
     <tbody>
-        <tr class="sonata-ba-view-container">
-            <th>Name</th>
-            <td>{{ lesson.name }}</td>
-        </tr>
-        <tr class="sonata-ba-view-container">
-            <th colspan="2">Content</th>
-        </tr>
-        <tr class="sonata-ba-view-container">
-            <th colspan="2">{{ lesson.content|raw }}</th>
-        </tr>
-        <tr class="sonata-ba-view-container">
-            <th>Homework</th>
-            <td>
-                <ul>
+    <tr class="sonata-ba-view-container">
+        <th>Name</th>
+        <td>{{ lesson.name }}</td>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th colspan="2">Content</th>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th colspan="2">{{ lesson.content|raw }}</th>
+    </tr>
+    <tr class="sonata-ba-view-container">
+        <th>Homework</th>
+        <td>
+            <ul>
                 {% for homework in lesson.homeworks %}
                     <l>
                         <a href="{{ path('edubox.admin.homework_show', {'id':homework.id}) }}">{{ homework.name }}</a>
                     </l>
                 {% endfor %}
-                </ul>
-            </td>
-        </tr>
+            </ul>
+        </td>
+    </tr>
     </tbody>
 {% endset %}
 
