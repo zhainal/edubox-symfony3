@@ -14,14 +14,15 @@ class QuarterController extends CRUDController
 {
     public function listAction($studentsGroupId = null)
     {
+        $request = $this->getRequest();
         $this->admin->checkAccess('list');
         $user = $this->getUser();
         if ($user instanceof User) {
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TEACHER')) {
-                return $this->quartersList($studentsGroupId);
+                return $this->quartersList($request->get('studentsGroupId') != '' ? $request->get(studentsGroupId) : null );
             }
             elseif ($user->hasRole('ROLE_PARENT')) {
-                return $this->parentQuartersList();
+                return $this->parentQuarter((int)$request->get('student'));
             }
             elseif ($user->hasRole('ROLE_STUDENT')) {
                 return $this->show($user);
@@ -95,20 +96,27 @@ class QuarterController extends CRUDController
         ]);
     }
 
-    public function parentQuartersList()
+    public function parentQuarter($student = 0)
     {
-        $parent = $this->getUser();
-        if (!$parent instanceof User) {
-            throw new \Exception('Access is denied');
-        }
-        if (!$parent->hasRole('ROLE_PARENT')) {
-            throw new \Exception('You do not have enough rights');
-        }
         $parentManager = $this->get('edubox.parent_manager');
-        $students = $parentManager->getStudents($parent);
-        return $this->renderWithExtraParams('@EduBox/Admin/quarter/list.html.twig', [
-            'students' => $students,
+        $parent = $this->getUser();
+
+        $oneStudent = $parentManager->hasOneStudent($parent);
+        if ($oneStudent instanceof  User) {
+            $student = $oneStudent;
+        }
+        else {
+            $student = $this->getDoctrine()->getRepository(User::class)->find($student);
+        }
+        if ($student instanceof User) {
+            if ($parentManager->hasStudent($parent, $student)) {
+                return $this->show($student);
+            }
+        }
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:quarter/parent/list.html.twig', [
+            'students' => $parentManager->getStudents($parent),
         ]);
+
     }
 
 }
