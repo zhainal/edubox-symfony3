@@ -114,3 +114,8 @@ services:
     tags: [{ name: kernel.event_listener, event: edubox.admin.student.pre_create, method: onAdminPreCreate }]
 
 
+  edubox.tblprefix_subscriber:
+    class: EduBoxBundle\Subscriber\TablePrefixSubscriber
+    arguments: ['%edubox.db.table_prefix%']
+    tags:
+      - { name: doctrine.event_subscriber }

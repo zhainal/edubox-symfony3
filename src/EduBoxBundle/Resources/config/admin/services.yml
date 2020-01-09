@@ -88,17 +88,6 @@ services:
         icon: '<i class="fa fa-list"></i>'
         on_top: true
 
-  edubox.admin.call_schedule:
-    class: EduBoxBundle\Admin\CallScheduleAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\CallScheduleCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Call schedules'
-        label: 'Call schedules'
-        icon: '<i class="fa fa-bell"></i>'
-        on_top: true
-
   edubox.admin.mark:
     class: EduBoxBundle\Admin\MarkAdmin
     arguments: [~, ~, EduBoxBundle:Admin\MarkCRUD]
@@ -141,26 +130,4 @@ services:
         group: 'Homework'
         label: 'Homework'
         icon: '<i class="fa fa-home"></i>'
-        on_top: true
-
-  edubox.admin.message:
-    class: EduBoxBundle\Admin\MessageAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\MessageCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Messages'
-        label: 'Messages'
-        icon: '<i class="fa fa-comments"></i>'
-        on_top: true
-
-  edubox.admin.notice:
-    class: EduBoxBundle\Admin\NoticeAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\NoticeCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Notices'
-        label: 'Notices'
-        icon: '<i class="fa fa-commenting"></i>'
         on_top: true

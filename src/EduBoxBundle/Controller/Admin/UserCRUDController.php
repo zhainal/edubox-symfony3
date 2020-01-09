@@ -4,10 +4,7 @@
 namespace EduBoxBundle\Controller\Admin;
 
 
-use EduBoxBundle\Entity\StudentsGroup;
-use EduBoxBundle\Entity\User;
 use EduBoxBundle\Form\Type\UserType;
-use FOS\UserBundle\FOSUserBundle;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 class UserCRUDController extends CRUDController

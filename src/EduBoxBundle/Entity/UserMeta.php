@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserMeta
  *
- * @ORM\Table(name="box_user_meta")
+ * @ORM\Table(name="user_meta")
  * @ORM\Entity(repositoryClass="EduBoxBundle\Repository\UserMetaRepository")
  */
 class UserMeta

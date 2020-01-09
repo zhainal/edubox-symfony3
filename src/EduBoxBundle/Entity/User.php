@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class User
  * @package EduBoxBundle\Entity
  * @ORM\Entity()
- * @ORM\Table(name="box_user")
+ * @ORM\Table(name="user")
  */
 class User extends BaseUser
 {
