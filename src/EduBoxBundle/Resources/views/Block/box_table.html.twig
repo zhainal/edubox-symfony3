@@ -2,6 +2,11 @@
 {% set table_content = table_content is defined ? table_content : '' %}
 
 <div class="box box-primary">
+    {% if box_header is defined %}
+        <div class="box-header">
+            {{ box_header }}
+        </div>
+    {% endif %}
     {% if box_title is defined %}
         <div class="box-header">
             <div class="box-title">{{ box_title }}</div>

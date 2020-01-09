@@ -41,6 +41,15 @@ class QuarterManager
         $this->entityManager->flush();
     }
 
+    public function getQuarter($quarter)
+    {
+        if (!$this->hasQuarter($quarter)) {
+            return $this->getCurrentQuarter();
+        }
+        return $quarter;
+    }
+
+
     /**
      * @param $quarter
      * @throws \Exception
@@ -145,7 +154,7 @@ class QuarterManager
         throw new \Exception('Cannot find quarter for a given date');
     }
 
-    public function getQuarter(User $user, Subject $subject, $quarter)
+    public function getQuarterMark(User $user, Subject $subject, $quarter)
     {
         $quarterRepository = $this->entityManager->getRepository(Quarter::class);
         $quarter = $quarterRepository->findOneBy([

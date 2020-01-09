@@ -153,6 +153,11 @@ class Subject
         return $this->studentsGroups;
     }
 
+    public function hasStudentsGroup(StudentsGroup $studentsGroup)
+    {
+        return $this->studentsGroups->contains($studentsGroup);
+    }
+
     /**
      * @param ArrayCollection $studentsGroups
      * @return $this

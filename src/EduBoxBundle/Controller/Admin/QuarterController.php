@@ -116,7 +116,6 @@ class QuarterController extends CRUDController
         return $this->renderWithExtraParams('EduBoxBundle:Admin:quarter/parent/list.html.twig', [
             'students' => $parentManager->getStudents($parent),
         ]);
-
     }
 
 }

@@ -61,7 +61,7 @@ services:
 
   edubox.parent_manager:
     class: EduBoxBundle\DomainManager\ParentManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_manager', '@edubox.student_manager']
 
   edubox.lesson_manager:
     class: EduBoxBundle\DomainManager\LessonManager

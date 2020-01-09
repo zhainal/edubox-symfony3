@@ -5,6 +5,7 @@ namespace EduBoxBundle\DomainManager;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Entity\UserMeta;
 
@@ -12,11 +13,13 @@ class ParentManager
 {
     private $entityManager;
     private $userManager;
+    private $studentManager;
 
-    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager)
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager, StudentManager $studentManager)
     {
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->studentManager = $studentManager;
     }
 
     public function getStudents(User $parent)
@@ -32,6 +35,19 @@ class ParentManager
             }
         }
         return $students;
+    }
+
+    public function getStudent(User $parent, $studentId)
+    {
+        $students = $this->getStudents($parent);
+        $studentIds = [];
+        foreach ($students as $student) {
+            $studentIds[] = $student->getId();
+        }
+        if (!in_array($studentId, $studentIds)) {
+            return null;
+        }
+        return $this->userManager->getObject($studentId);
     }
 
 
@@ -52,5 +68,15 @@ class ParentManager
             return reset($students);
         }
         else return false;
+    }
+
+    public function hasStudentsGroup(User $parent, StudentsGroup $studentsGroup)
+    {
+        $students = $this->getStudents($parent);
+        $result = false;
+        foreach ($students as $student) {
+            $result = $result || $this->studentManager->hasStudentsGroup($student, $studentsGroup);
+        }
+        return $result;
     }
 }

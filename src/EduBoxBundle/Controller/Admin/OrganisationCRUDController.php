@@ -27,7 +27,7 @@ class OrganisationCRUDController extends CRUDController
             $settings[$name] = $settingManager->getSetting($name);
         }
 
-        $form = $this->createForm(OrganisationType::class);
+        $form = $this->createForm(OrganisationType::class, null, ['userManager' => $this->get('edubox.user_manager')]);
 
         foreach ($settings as $key => $value)
         {

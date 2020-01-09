@@ -40,4 +40,13 @@ class StudentManager
         return $studentsGroup->getSubjects();
     }
 
+    public function hasStudentsGroup(User $student, StudentsGroup $studentsGroup)
+    {
+        $currentStudentsGroup = $this->getStudentsGroup($student);
+        if (!$currentStudentsGroup instanceof StudentsGroup) {
+            return false;
+        }
+        return $currentStudentsGroup->getId() == $studentsGroup->getId();
+    }
+
 }

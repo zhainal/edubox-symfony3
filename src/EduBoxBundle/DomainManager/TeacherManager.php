@@ -5,6 +5,7 @@ namespace EduBoxBundle\DomainManager;
 
 
 use Doctrine\ORM\EntityManager;
+use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\SubjectSchedule;
 use EduBoxBundle\Entity\SubjectSchedulesGroup;
@@ -40,12 +41,30 @@ class TeacherManager
         $this->entityManager->flush();
     }
 
+    public function hasStudentsGroup(User $parent, StudentsGroup $studentsGroup, Subject $subject = null) {
+        $subjects = $this->getSubjects($parent);
+        $studentsGroupIds = [];
+        $subjectIds = [];
+        foreach ($subjects as $subject) {
+            $subjectIds[] = $subject->getId();
+            $studentsGroups = $subject->getStudentsGroups();
+            foreach ($studentsGroups as $studentsGroup) {
+                $studentsGroupIds[] = $studentsGroup->getId();
+            }
+        }
+        $result = in_array($studentsGroup->getId(), $studentsGroupIds);
+        if ($subject instanceof Subject) {
+            $result = $result && in_array($subject->getId(), $subjectIds);
+        }
+        return $result;
+    }
+
     public function getLessonsBy(
         User $user,
         Subject $subject,
-        SubjectSchedulesGroup $subjectSchedulesGroup,
         $day,
-        $hour
+        $hour,
+        SubjectSchedulesGroup $subjectSchedulesGroup = null
     ) {
         $result = [];
         foreach ($subjectSchedulesGroup->getSubjectSchedules() as $subjectSchedule) {
