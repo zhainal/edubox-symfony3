@@ -30,6 +30,8 @@ framework:
     fragments: ~
     http_method_override: true
     assets: ~
+    templating:
+        engines: ['twig']
     php_errors:
         log: true
 
@@ -39,7 +41,6 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         journal_manager: '@edubox.journal_manager'
-
 # Doctrine Configuration
 doctrine:
     dbal:

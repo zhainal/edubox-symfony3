@@ -131,11 +131,11 @@ services:
       - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
 
   # Subscribers
-  #edubox.tblprefix_subscriber:
-  #  class: EduBoxBundle\Subscriber\TablePrefixSubscriber
-  #  arguments: ['%edubox.db.table_prefix%']
-  #  tags:
-  #    - { name: doctrine.event_subscriber }
+  edubox.tblprefix_subscriber:
+    class: EduBoxBundle\Subscriber\TablePrefixSubscriber
+    arguments: ['%edubox.db.table_prefix%']
+    tags:
+      - { name: doctrine.event_subscriber }
 
   # Commands
   EduBoxBundle\Command\ResetLessonsCommand:
