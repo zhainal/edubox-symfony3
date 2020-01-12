@@ -118,10 +118,6 @@ services:
     class: EduBoxBundle\Form\Handler\LessonFormHandler
     arguments: ['@edubox.lesson_manager']
 
-  edubox.admin.student.pre_create_listener:
-    class: EduBoxBundle\EventListener\StudentAdminPreCreateListener
-    arguments: ['@doctrine.orm.entity_manager']
-    tags: [{ name: kernel.event_listener, event: edubox.admin.student.pre_create, method: onAdminPreCreate }]
 
   # Event listeners
   EduBoxBundle\EventListener\SendMessageToParentListener:

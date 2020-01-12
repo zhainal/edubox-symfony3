@@ -46,7 +46,7 @@ services:
 
   edubox.admin.students_group:
     class: EduBoxBundle\Admin\StudentsGroupAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\StudentsGroupCRUD, '@event_dispatcher']
+    arguments: [~, EduBoxBundle\Entity\StudentsGroup, EduBoxBundle:Admin\StudentsGroupCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
