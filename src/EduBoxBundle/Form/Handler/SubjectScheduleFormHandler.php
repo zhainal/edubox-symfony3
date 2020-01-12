@@ -56,9 +56,9 @@ class SubjectScheduleFormHandler
                             $lessons = $this->teacherManager->getLessonsBy(
                                 $user,
                                 $subject,
-                                $valid_subject_schedule->getSubjectSchedulesGroup(),
                                 $day,
-                                $hour
+                                $hour,
+                                $valid_subject_schedule->getSubjectSchedulesGroup()
                             );
                             if (count($lessons) > 1) {
                                 $form->get('schedule')

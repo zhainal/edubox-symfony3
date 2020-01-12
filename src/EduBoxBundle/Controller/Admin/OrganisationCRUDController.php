@@ -3,6 +3,7 @@
 
 namespace EduBoxBundle\Controller\Admin;
 
+use Cassandra\Set;
 use EduBoxBundle\Entity\Setting;
 use EduBoxBundle\Form\Type\OrganisationType;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -21,18 +22,18 @@ class OrganisationCRUDController extends CRUDController
             'phone',
             'email',
             'director',
+            'smsEnabled',
+            'smsApiId',
+            'smsBalance',
         );
         $settings = [];
+        $data = [];
         foreach ($names as $name) {
             $settings[$name] = $settingManager->getSetting($name);
+            $data[$name] = $settings[$name]->getSettingValue();
         }
 
-        $form = $this->createForm(OrganisationType::class, null, ['userManager' => $this->get('edubox.user_manager')]);
-
-        foreach ($settings as $key => $value)
-        {
-            $form->get($key)->setData($value->getSettingValue());
-        }
+        $form = $this->createForm(OrganisationType::class, $data, ['userManager' => $this->get('edubox.user_manager')]);
 
         $form->handleRequest($this->getRequest());
 

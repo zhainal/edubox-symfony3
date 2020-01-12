@@ -3,12 +3,13 @@
 {% set title = 'Teacher subject schedule' %}
 
 {% macro subject(item) %}
+    {{ item.studentsGroup.name }}
+    -
     {% if item.subject != null %}
         {{ item.subject.name }}
     {% else %}
-        -
+        ?
     {% endif %}
-    {{ item.studentsGroup.name }}
 {% endmacro %}
 {% set box_body %}
     <thead>

@@ -10,6 +10,8 @@ use EduBoxBundle\Entity\Quarter;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\User;
+use EduBoxBundle\Event\MarkCreatedEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MarkManager
 {
@@ -17,6 +19,7 @@ class MarkManager
     private $calendarManager;
     private $studentsGroupManager;
     private $quarterManager;
+    private $eventDispatcher;
 
     /**
      * MarkManager constructor.
@@ -24,17 +27,20 @@ class MarkManager
      * @param CalendarManager $calendarManager
      * @param StudentsGroupManager $studentsGroupManager
      * @param QuarterManager $quarterManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         CalendarManager $calendarManager,
         StudentsGroupManager $studentsGroupManager,
-        QuarterManager $quarterManager
+        QuarterManager $quarterManager,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->entityManager = $entityManager;
         $this->calendarManager = $calendarManager;
         $this->studentsGroupManager = $studentsGroupManager;
         $this->quarterManager = $quarterManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function create(Mark $mark)
@@ -92,22 +98,30 @@ class MarkManager
     public function getMarks(Subject $subject, StudentsGroup $studentsGroup, $quarter)
     {
         $calendar = $this->calendarManager->getActiveCalendar();
+        $quarter = $this->quarterManager->getQuarter($quarter);
         $beginDate = $calendar->getBeginDate($quarter);
         $endDate = $calendar->getEndDate($quarter);
-        $this->createNotExistsMarks($subject, $studentsGroup, $beginDate, $endDate);
-        return $this->groupByStudents(
-                $this->getMarksBy($studentsGroup, $subject, $beginDate, $endDate)
+        return $this->formatForJournal(
+            $this->getMarksBy($studentsGroup, $subject, $beginDate, $endDate)
         );
 
     }
 
-    public function indexByDateHour($marksArr)
+    public function formatForJournal($marksArr)
     {
-        $marks = [];
+        $result = [];
         foreach ($marksArr as $mark) {
-            $marks[$mark->getDate()->format('Y-m-d').'-'.$mark->getHour()] = $mark;
+            if ($mark instanceof Mark) {
+                $date = $mark->getDate();
+                $result
+                    [$mark->getUser()->getId()]
+                    [$date->format('Y')]
+                    [$date->format('m')]
+                    [$date->format('d')]
+                    [$mark->getHour()] = $mark;
+            }
         }
-        return $marks;
+        return $result;
     }
 
     public function groupByStudents($marks)
@@ -169,6 +183,13 @@ class MarkManager
         return $tree;
     }
 
+    /**
+     * @param StudentsGroup|null $studentsGroup
+     * @param Subject|null $subject
+     * @param \DateTime|null $beginDate
+     * @param \DateTime|null $endDate
+     * @return array
+     */
     public function getMarksBy(
         StudentsGroup $studentsGroup = null,
         Subject $subject = null,
@@ -177,7 +198,7 @@ class MarkManager
     ) {
         $repository = $this->entityManager->getRepository(Mark::class);
 
-        if ($studentsGroup != null) {
+        if ($studentsGroup instanceof StudentsGroup) {
             $students = $this->studentsGroupManager->getStudents($studentsGroup);
             $student_ids = [];
             foreach ($students as $student) {
@@ -187,16 +208,16 @@ class MarkManager
 
         $marks = $repository->createQueryBuilder('m');
 
-        if ($beginDate != null) {
-            $marks->andwhere('m.date >= :beginDate')->setParameter('beginDate', $beginDate->format('Y-m-d H:i:s'));
+        if ($beginDate instanceof \DateTime) {
+            $marks->andwhere('m.date >= :beginDate')->setParameter('beginDate', $beginDate->format('Y-m-d'));
         }
-        if ($endDate != null) {
-            $marks->andWhere('m.date <= :endDate')->setParameter('endDate', $endDate->format('Y-m-d H:i:s'));
+        if ($endDate instanceof \DateTime) {
+            $marks->andWhere('m.date <= :endDate')->setParameter('endDate', $endDate->format('Y-m-d'));
         }
-        if ($subject != null) {
-            $marks->andWhere('m.date = :subject')->setParameter('subject', $subject);
+        if ($subject instanceof Subject) {
+            $marks->andWhere('m.subject = :subject')->setParameter('subject', $subject);
         }
-        if (isset($student_ids)) {
+        if (isset($student_ids) && is_array($student_ids)) {
             $marks->andWhere($marks->expr()->in('m.user', $student_ids));
         }
 
@@ -212,7 +233,6 @@ class MarkManager
         $comment
     ) {
         $mark = $this->getSourceMark($mark);
-        $quarter = $this->quarterManager->getQuarterByDate($date);
         $cell = $this->entityManager->getRepository(Mark::class)->findOneByOrCreate([
             'date' => $date,
             'hour' => $hour,
@@ -223,44 +243,11 @@ class MarkManager
         $cell->setComment($comment);
         $this->store($cell);
 
-        $this->updateQuarter($subject, $user, $quarter);
-    }
+        $event = new MarkCreatedEvent($cell);
+        $this->eventDispatcher->dispatch(MarkCreatedEvent::MARK_CREATED, $event);
 
-    public function updateQuarter(Subject $subject, User $user, $quarter)
-    {
-        $marks = $this->entityManager->getRepository(Mark::class)->createQueryBuilder('m');
-        $marks->select(['sum(m.mark) as x', 'count(m.id) as y']);
-        $begin_date = $this->quarterManager->getBeginDate($quarter);
-        $end_date = $this->quarterManager->getEndDate($quarter);
-        $source_marks = $this->getSourceMarks();
-        $marks
-            ->where($marks->expr()->in('m.mark', $source_marks));
-        $marks
-            ->andWhere('m.subject = :subject')
-            ->andWhere('m.user = :user')
-            ->andWhere('m.date >= :beginDate')
-            ->andWhere('m.date <= :endDate');
-        $marks
-            ->setParameter('subject', $subject)
-            ->setParameter('user', $user)
-            ->setParameter('beginDate', $begin_date)
-            ->setParameter('endDate', $end_date);
-        $marks = $marks->getQuery()->getResult()[0];
-        $sum = (int)$marks['x'];
-        $count = (int)$marks['y'];
-        if ($count < 1 || $sum < 1) {
-            $mark = null;
-        }
-        else {
-            $mark = $sum / $count;
-        }
-        $quarter_q = $this->entityManager->getRepository(Quarter::class)->findOneByOrCreate([
-            'number' => $quarter,
-            'user' => $user,
-            'subject' => $subject,
-        ]);
-        $quarter_q->setMark($mark);
-        $this->quarterManager->store($quarter_q);
+        $quarter = $this->quarterManager->getQuarterByDate($date);
+        return $this->quarterManager->getQuarterMark($user, $subject, $quarter);
     }
 
     public function getMark(Subject $subject, User $user, \DateTime $date, $hour)

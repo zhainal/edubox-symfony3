@@ -59,6 +59,10 @@ class StudentsGroupManager
         }
     }
 
+    /**
+     * @param StudentsGroup $studentsGroup
+     * @return array
+     */
     public function getStudents(StudentsGroup $studentsGroup)
     {
         $userRepository = $this->entityManager->getRepository(User::class);

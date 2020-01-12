@@ -40,6 +40,9 @@ class SettingManager
             'director' => 'director',
             'calendar' => 'calendar_id',
             'subjectSchedulesGroup' => 'subject_schedules_group_id',
+            'smsEnabled' => 'sms_enabled',
+            'smsApiId' => 'sms_api_id',
+            'smsBalance' => 'sms_balance',
         );
     }
 
@@ -61,11 +64,30 @@ class SettingManager
     public function getCalendar()
     {
         $calendar_id = $this->getSetting('calendar')->getSettingValue();
+        $calendarRepository = $this->entityManager->getRepository(Calendar::class);
         if ($calendar_id) {
-            $calendarRepository = $this->entityManager->getRepository(Calendar::class);
             $calendar = $calendarRepository->find($calendar_id);
             if ($calendar) {
                 return $calendar;
+            }
+        }
+        else {
+            $qb = $calendarRepository->createQueryBuilder('c');
+            $qb
+                ->where('c.year >= :year-1')
+                ->andWhere('c.year <= :year+1')
+                ->setParameter('year', date('Y'))
+                ->orderBy('c.year', 'DESC');
+            $calendars = $qb->getQuery()->getResult();
+            foreach ($calendars as $calendar) {
+                if ($calendar instanceof Calendar) {
+                    $endDate = $calendar->getQuarterFourEnd();
+                    if ($endDate instanceof \DateTime) {
+                        if ($endDate->getTimestamp() > time()) {
+                            return $calendar;
+                        }
+                    }
+                }
             }
         }
         throw new \Exception('The organization has not yet selected a calendar, please contact the administration.');

@@ -1,11 +1,8 @@
 services:
+  # Domain managers
   edubox.calendar_manager:
     class: EduBoxBundle\DomainManager\CalendarManager
     arguments: ['@doctrine.orm.entity_manager', '@edubox.setting_manager']
-
-  edubox.call_schedule_manager:
-    class: EduBoxBundle\DomainManager\CallScheduleManager
-    arguments: ['@doctrine.orm.entity_manager']
 
   edubox.holiday_manager:
     class: EduBoxBundle\DomainManager\HolidayManager
@@ -13,7 +10,12 @@ services:
 
   edubox.quarter_manager:
     class: EduBoxBundle\DomainManager\QuarterManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.calendar_manager', '@edubox.students_group_manager', '@edubox.subject_schedules_group_manager']
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.calendar_manager'
+      - '@edubox.students_group_manager'
+      - '@edubox.subject_schedules_group_manager'
+
 
   edubox.mark_manager:
     class: EduBoxBundle\DomainManager\MarkManager
@@ -22,6 +24,7 @@ services:
       - '@edubox.calendar_manager'
       - '@edubox.students_group_manager'
       - '@edubox.quarter_manager'
+      - '@event_dispatcher'
 
   edubox.setting_manager:
     class: EduBoxBundle\DomainManager\SettingManager
@@ -69,13 +72,20 @@ services:
 
   edubox.student_manager:
     class: EduBoxBundle\DomainManager\StudentManager
-    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_meta_manager', '@edubox.subject_schedule_manager']
+    arguments: ['@doctrine.orm.entity_manager', '@edubox.user_meta_manager', '@edubox.user_manager']
 
   edubox.diary_manager:
     class: EduBoxBundle\DomainManager\DiaryManager
     arguments: ['@doctrine.orm.entity_manager', '@edubox.subject_schedule_manager', '@edubox.subject_manager', '@edubox.lesson_manager', '@edubox.student_manager', '@edubox.mark_manager']
 
+  edubox.journal_manager:
+    class: EduBoxBundle\DomainManager\JournalManager
 
+  edubox.sms_manager:
+    class: EduBoxBundle\DomainManager\SMSManager
+    arguments: ['@edubox.setting_manager']
+
+  # Form handlers
   edubox.user_form_handler:
     class: EduBoxBundle\Form\Handler\UserFormHandler
     arguments: ['@edubox.user_manager', '@doctrine.orm.entity_manager', '@security.password_encoder']
@@ -113,9 +123,30 @@ services:
     arguments: ['@doctrine.orm.entity_manager']
     tags: [{ name: kernel.event_listener, event: edubox.admin.student.pre_create, method: onAdminPreCreate }]
 
+  # Event listeners
+  EduBoxBundle\EventListener\SendMessageToParentListener:
+    arguments: ['@edubox.student_manager', '@edubox.sms_manager']
+    tags:
+      - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
 
+  EduBoxBundle\EventListener\UpdateQuarterListener:
+    arguments: ['@edubox.quarter_manager']
+    tags:
+      - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
+
+  # Subscribers
   edubox.tblprefix_subscriber:
     class: EduBoxBundle\Subscriber\TablePrefixSubscriber
     arguments: ['%edubox.db.table_prefix%']
     tags:
       - { name: doctrine.event_subscriber }
+
+  # Commands
+  EduBoxBundle\Command\ResetLessonsCommand:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.lesson_manager'
+      - '@edubox.mark_manager'
+      - '@edubox.quarter_manager'
+    tags:
+      - {name: 'console.command', command: 'edubox:reset-lessons'}

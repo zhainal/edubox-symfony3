@@ -45,7 +45,7 @@ class LessonManager
         $this->quarterManager->isQuarterCorrect($quarter);
         $beginDate = $this->quarterManager->getBeginDate($quarter);
         $endDate = $this->quarterManager->getEndDate($quarter);
-        $this->createNotExistsLessons($subject, $studentsGroup, $beginDate, $endDate);
+        #$this->createNotExistsLessons($subject, $studentsGroup, $beginDate, $endDate);
         return $this->getLessonsBy($subject, $studentsGroup, $beginDate, $endDate);
     }
 

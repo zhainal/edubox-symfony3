@@ -9,7 +9,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
 class TablePrefixSubscriber implements EventSubscriber
 {
-    protected $prefix = '';
+    protected $prefix = '_box';
 
     public function __construct($prefix)
     {

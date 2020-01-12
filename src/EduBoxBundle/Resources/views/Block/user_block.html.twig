@@ -1,20 +1,20 @@
+{% trans_default_domain 'EduBoxBundle' %}
+
 <!-- User image -->
 <li class="user-header">
+    <img src="{{ asset('assets/img/user.jpg') }}" class="img-circle" alt="User Image">
     <p>
-        {{ app.user.fullname }}
-    </p>
-    <hr>
-    <p>
-        (@{{ app.user.username }})
+        {{ app.user.fullname }} (@{{ app.user.username }})
         <small>
-            {% for role in app.user.roles %}
+            {% for role in app.user.rolesWithoutRoleUser %}
+                {% set role = 'user.'~role %}
                 {{ role|trans }} {% if not loop.last %}, {% endif %}
             {% endfor %}
         </small>
     </p>
 </li>
 <!-- Menu Body -->
-<li class="user-body">
+<li class="user-body">{#
     <div class="row">
         <div class="col-xs-4 text-center">
             <a href="#">Messages</a>
@@ -25,7 +25,7 @@
         <div class="col-xs-4 text-center">
             <a href="#">Logs</a>
         </div>
-    </div>
+    </div>#}
     <!-- /.row -->
 </li>
 <!-- Menu Footer-->

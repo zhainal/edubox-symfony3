@@ -248,6 +248,16 @@ class User extends BaseUser
         return null;
     }
 
+    public function getRolesWithoutRoleUser()
+    {
+        $roles = $this->getRoles();
+        $index = @array_flip($roles)['ROLE_USER'];
+        if (isset($roles[$index])) {
+            unset($roles[$index]);
+        }
+        return $roles;
+    }
+
     public function __toString()
     {
         return 'User';

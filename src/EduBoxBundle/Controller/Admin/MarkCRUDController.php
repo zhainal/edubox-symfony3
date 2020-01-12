@@ -99,9 +99,7 @@ class MarkCRUDController extends CRUDController
             throw $this->createNotFoundException('Students group not found');
         }
         $quarter_manager = $this->get('edubox.quarter_manager');
-        if (!$quarter_manager->hasQuarter($quarter)) {
-            $quarter = $quarter_manager->getCurrentQuarter();
-        }
+        $quarter = $quarter_manager->getQuarter($quarter);
 
         $students_group_manager = $this->get('edubox.students_group_manager');
         $students = $students_group_manager->getStudents($studentsGroup);
@@ -111,13 +109,6 @@ class MarkCRUDController extends CRUDController
         $averages = $quarter_manager->formatResult($quarter_manager->getAverages($subject, $students, $quarter));
         $dates = $mark_manager->getDatesTree($subject, $studentsGroup, $quarter);
 
-        // Add daysCount
-        $twig = $this->get('twig');
-        $function = new \Twig_SimpleFunction('days_count', function (array $days) {
-            return count($days, COUNT_RECURSIVE);
-        });
-        $twig->addFunction($function);
-
         return $this->renderWithExtraParams('EduBoxBundle:Admin:mark/edit.html.twig', [
             'subject' => $subject,
             'studentsGroup' => $studentsGroup,
@@ -126,6 +117,7 @@ class MarkCRUDController extends CRUDController
             'quarterNumber' => $quarter,
             'marks' => $marks,
             'dates' => $dates,
+            'quarter' => $quarter,
         ]);
     }
 
@@ -137,30 +129,34 @@ class MarkCRUDController extends CRUDController
         $userId = (int)$request->request->get('userId');
         $subjectId = (int)$subjectId;
         $studentsGroupId = (int)$studentsGroupId;
+
         if (!$userId || !$mark || !$date || !$hour || !isset($comment) || !$subjectId || !$studentsGroupId) {
             throw new \Exception('Required attributes not found', 500);
         }
-        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
-        if (!$user) {
-            throw $this->createNotFoundException('Student not found');
+        $user = $this->get('edubox.user_manager')->getObject($userId);
+        if (!$user instanceof User) {
+            throw $this->createNotFoundException('User not found');
         }
-        $subject = $this->getDoctrine()->getRepository(Subject::class)->find($subjectId);
-        if (!$subject) {
+        elseif (!$user->hasRole('ROLE_STUDENT')) {
+            throw new \Exception('Given user does not student');
+        }
+        $subject = $this->get('edubox.subject_manager')->getObject($subjectId);
+        if (!$subject instanceof Subject) {
             throw $this->createNotFoundException('Subject not found');
         }
-        $studentsGroup = $this->getDoctrine()->getRepository(StudentsGroup::class)->find($studentsGroupId);
-        if (!$studentsGroup) {
+        $studentsGroup = $this->get('edubox.students_group_manager')->getObject($studentsGroupId);
+        if (!$studentsGroup instanceof StudentsGroup) {
             throw $this->createNotFoundException('Students group not found');
         }
         $date = new \DateTime($date);
-        $mark_manager = $this->get('edubox.mark_manager');
         $quarter_manager = $this->get('edubox.quarter_manager');
-        $students_group_manager = $this->get('edubox.students_group_manager');
-        $students = $students_group_manager->getStudents($studentsGroup);
+        $students = $this->get('edubox.students_group_manager')->getStudents($studentsGroup);
         $quarter = $quarter_manager->getQuarterByDate($date);
 
-        $mark_manager->createMark($subject, $user, $mark, $date, $hour, $comment);
-        $averages = $quarter_manager->formatResult($quarter_manager->getAverages($subject, $students, $quarter), true);
-        return new JsonResponse($averages);
+
+
+        return new JsonResponse(
+            round($this->get('edubox.mark_manager')->createMark($subject, $user, $mark, $date, $hour, $comment))
+        );
     }
 }

@@ -6,10 +6,14 @@
 
 {% set breadcrumbs = [{'label':'Test1'},{'label':'Test2'}] %}
 
-{% set box_body %}
-    <h3>Test Content!</h3>
-{% endset %}
-
 {% block content %}
-    {% include 'EduBoxBundle:Block:box.html.twig' with {'box_body': 'body'} only %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.organisation_list') }}">
+    {% elseif is_granted('ROLE_TEACHER') %}
+        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.subject_schedule_list') }}">
+    {% elseif is_granted('ROLE_STUDENT') %}
+        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.mark_list') }}">
+    {% elseif is_granted('ROLE_PARENT') %}
+        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.mark_list') }}">
+    {% endif %}
 {% endblock %}

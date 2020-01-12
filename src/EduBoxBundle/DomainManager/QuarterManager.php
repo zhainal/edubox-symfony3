@@ -185,15 +185,18 @@ class QuarterManager
         $subjects = $studentsGroup->getSubjects();
         $subjectsWithQuarter = [];
         foreach ($subjects as $subject) {
-            $subjectsWithQuarter[] = [
-                'name' => $subject->getName(),
-                'quarter' => [
-                    1 => $this->getQuarter($user, $subject, 1),
-                    2 => $this->getQuarter($user, $subject, 2),
-                    3 => $this->getQuarter($user, $subject, 3),
-                    4 => $this->getQuarter($user, $subject, 4),
-                ]
-            ];
+            if ($subject instanceof Subject) {
+                $subjectsWithQuarter[] = [
+                    'name' => $subject->getName(),
+                    'quarter' => [
+                        1 => $this->getQuarterMark($user, $subject, 1),
+                        2 => $this->getQuarterMark($user, $subject, 2),
+                        3 => $this->getQuarterMark($user, $subject, 3),
+                        4 => $this->getQuarterMark($user, $subject, 4),
+                    ],
+                    'teacher' => $subject->getUser()->getFullname(),
+                ];
+            }
         }
         return $subjectsWithQuarter;
     }
@@ -223,5 +226,42 @@ class QuarterManager
         }
         ksort($dates);
         return $dates;
+    }
+
+    public function updateQuarter(Subject $subject, User $user, $quarter)
+    {
+        $marks = $this->entityManager->getRepository(Mark::class)->createQueryBuilder('m');
+        $marks->select(['sum(m.mark) as x', 'count(m.id) as y']);
+        $begin_date = $this->getBeginDate($quarter);
+        $end_date = $this->getEndDate($quarter);
+        $marks
+            ->where($marks->expr()->in('m.mark', [1,2,3,4,5]));
+        $marks
+            ->andWhere('m.subject = :subject')
+            ->andWhere('m.user = :user')
+            ->andWhere('m.date >= :beginDate')
+            ->andWhere('m.date <= :endDate');
+        $marks
+            ->setParameter('subject', $subject)
+            ->setParameter('user', $user)
+            ->setParameter('beginDate', $begin_date)
+            ->setParameter('endDate', $end_date);
+        $marks = $marks->getQuery()->getResult()[0];
+        $sum = (int)$marks['x'];
+        $count = (int)$marks['y'];
+        if ($count < 1 || $sum < 1) {
+            $mark = null;
+        }
+        else {
+            $mark = $sum / $count;
+        }
+        $quarter_q = $this->entityManager->getRepository(Quarter::class)->findOneByOrCreate([
+            'number' => $quarter,
+            'user' => $user,
+            'subject' => $subject,
+        ]);
+        $quarter_q->setMark($mark);
+        $this->store($quarter_q);
+        return $quarter_q->getMark();
     }
 }

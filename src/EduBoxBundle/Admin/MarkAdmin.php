@@ -16,7 +16,7 @@ class MarkAdmin extends AbstractAdmin
     {
         $collection->clear();
         $collection->add('list', 'list');
-        $collection->add('editJournal', '{subjectId}/{studentsGroupId}/edit');
+        $collection->add('editJournal', 'edit/{subjectId}/{studentsGroupId}/{quarter}', ['quarter' => null]);
         $collection->add('createMark', '{subjectId}/{studentsGroupId}/add_mark');
         $collection->add('showJournal', '{subjectId}/{studentsGroupId}/show');
     }

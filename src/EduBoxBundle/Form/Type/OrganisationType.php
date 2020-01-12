@@ -11,6 +11,9 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -64,8 +67,27 @@ class OrganisationType extends AbstractType
                 },
                 'required' => false,
             ])
+
+            ->add('smsApiId', TextType::class, [
+                'required' => false
+            ])
+            ->add('smsEnabled', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('smsBalance', NumberType::class, [
+                'disabled' => true,
+            ])
+
             ->add('submit', SubmitType::class);
 
+        $builder->get('smsEnabled')->addModelTransformer(new CallbackTransformer(
+            function ($boolAsInt) {
+                return (bool)$boolAsInt;
+            },
+            function ($bool) {
+                return $bool;
+            }
+        ));
         $builder->get('director')->addModelTransformer(new CallbackTransformer(
             function ($userAsId) use ($options) {
                 return $options['userManager'] instanceof UserManager ? $options['userManager']->getObject($userAsId) : null;

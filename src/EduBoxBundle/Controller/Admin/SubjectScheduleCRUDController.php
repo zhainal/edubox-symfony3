@@ -29,7 +29,7 @@ class SubjectScheduleCRUDController extends  CRUDController
     {
         $user = $this->getUser();
         $schedule = $this->get('edubox.teacher_manager')->getSubjectSchedule($user);
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:subject_schedule/teacher_show.html.twig', [
+        return $this->renderWithExtraParams('EduBoxBundle:Admin:subject_schedule/teacher/show.html.twig', [
             'schedule' => $schedule
         ]);
     }

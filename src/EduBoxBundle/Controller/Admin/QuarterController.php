@@ -19,7 +19,7 @@ class QuarterController extends CRUDController
         $user = $this->getUser();
         if ($user instanceof User) {
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TEACHER')) {
-                return $this->quartersList($request->get('studentsGroupId') != '' ? $request->get(studentsGroupId) : null );
+                return $this->quartersList($studentsGroupId != null ? $studentsGroupId : null );
             }
             elseif ($user->hasRole('ROLE_PARENT')) {
                 return $this->parentQuarter((int)$request->get('student'));

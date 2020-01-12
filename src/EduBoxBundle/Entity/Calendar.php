@@ -144,22 +144,33 @@ class Calendar
         return $this;
     }
 
+    /**
+     * @param $quarter
+     * @return \DateTime
+     * @throws \Exception
+     */
     public function getBeginDate($quarter) {
         switch ($quarter) {
             case 1: return $this->getQuarterOneBegin();
             case 2: return $this->getQuarterTwoBegin();
             case 3: return $this->getQuarterThreeBegin();
             case 4: return $this->getQuarterFourBegin();
-            default: return null;
+            default: throw new \Exception('Unable find begin date for '.$quarter);
         }
     }
+
+    /**
+     * @param $quarter
+     * @return \DateTime
+     * @throws \Exception
+     */
     public function getEndDate($quarter) {
         switch ($quarter) {
             case 1: return $this->getQuarterOneEnd();
             case 2: return $this->getQuarterTwoEnd();
             case 3: return $this->getQuarterThreeEnd();
             case 4: return $this->getQuarterFourEnd();
-            default: return null;
+            default: throw new \Exception('Unable find end date for '.$quarter);
         }
     }
 

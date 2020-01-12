@@ -4,16 +4,16 @@
 <div class="box box-primary">
     {% if box_header is defined %}
         <div class="box-header">
-            {{ box_header }}
+            {{ box_header|raw }}
         </div>
     {% endif %}
     {% if box_title is defined %}
         <div class="box-header">
-            <div class="box-title">{{ box_title }}</div>
+            <div class="box-title">{{ box_title|raw }}</div>
         </div>
     {% endif %}
     <div class="box-body table-responsive no-padding">
-        <table class="table table-bordered table-striped table-hover sonata-ba-list">
+        <table class="table table-bordered table-striped table-hover">
             {{ table_content }}
         </table>
     </div>
