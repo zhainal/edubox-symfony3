@@ -1,15 +1,46 @@
-# EduBox – Mekdep maglumat dolandyryş ulgamy
-Bu sistema mekdebi dolandyrmakda, gündeki kagyz işleri azaltmakda, okuwçylaryň ýetişigine gözegçilik etmekde, ene-atalaryň öz çagasyndan habarly bolmakda we mekdep bilen elmydama aragatnaşykda bolmagy üçin şert döredýän innowasion täze ulgamdyr. Bu taslamada biz mugallymlaryň alyp barýan gündelik işleriniň ýeňil bolmagy üçin täze ulgam esasynda olara tanyş bolan öňki synp dergisiniň durkyny sakladyk. Düşnükli interfeýs ene-atalara, mugallymlara we okuwçylara bu ulgamyň täzeçilligine uýgunlaşmagyna ýeňillik bilen ýardam berer. Edubox esasan-da mugallymlara synp dergisini doldurmak üçin az wagt sarp etmeklerine, yzygider hasabatlar üçin güýç we wagt tygşytlamaklaryna ýakyndan ýardam berer.
-## Esasy maksady
-Biziň öňde goýan baş maksadymyz Elektron dergiden we gündelikden başlap, dürli bilim edaralarynyň agzalary bilen aragatnaşykda bolup, olara berilýän bilimiň hiline gözegçilik etmeklerini, ulgamy dolandyryp bilmeklerini gazanmak, şeýle hem özlerine degişli hasabatdyr maglumatlary berip, okuwyň gidişine degişli dürli resminamalary dolandyrmak üçin ýönekeý we goragly ulgam döretmek bolup durýar.
-## Elýeterliligi
-Bu ulgamy internet bar bolan ähli ýerde ulanmak mümkindir. Mugallymlaryň her günki žurnal doldurmak üçin “nobata durmaklaryny” aradan aýyrmak, her çärýegiň ahyrynda ýolbaşçylaryň žurnallar bilen işlemesinde döredýän ýeňillikleri taslamamymyzyň elýeterliligini üpjün edýär.
-## Maglumatlar
-Maglumatlar mekdep administrasiýasyna, mugallymlara, ene-atalara we okuwçylara öz hukuklaryna laýyklykda berilýär. Maglumatlar üýtgedilen mahaly, ýagny sapaklaryň rejesi üýtgedilende, täze üýtgeşmeler gönüden-göni tutuş ulgama baryp ýetýär. Şeýle hem, haçan-da mugallym köp žurnal bilen işlände haýsy žurnalyň haýsy synpa degişlidigini, haýsynyň dolduryp-doldurmandygyny aýdyň görkezmegi taslamymyzyň ýene-de bir gowy tarapydyr.
-## Statistika
-Ulgamda doly hasabatlar bar we ähli hasabatlar awtomatiki usulda hasaplanylyp, şu wagtky maglumatlara esaslanyp iň täze netijeleri görkezýär. Hasabatlaryň netijeleri dinamiki usulda täzelenip, grafiklerde görkezilýär. Sistemanyň bu ugurdan başarnyklary öňki kagyz görnüşi gürrüňsiz aradan aýyrýar.
-## Dolandyrmak
-Administrasiýa üçin žurnallaryň mugallymlar tarapyndan doldurylyşy we ähli ugurdan, ähli bar bolan ulanyjylaryň ýetişiginiň görnüşleriniň ählisi (synp, ders, aýratyn okuwçy ýa-da mugallym boýunça) görkezilýär. Ene-atalar öz çagalaryna goýulan bellikleri, bahalary şol gün görýärler, olar hemişe okuwça berlen öý işinden, gatnaşmadyk sapaklaryndan habarly bolup durýar. Ulanyjylar özleriniň islegine görä, SMS ýa-da elektron poçta arkaly dürli habarlar bilen habar edilýär.
-## Bilimiň ösüşinde geljekki ädim
-Häzirki kagyz görnüşiniň deregine elektron sistema geljekde ähli mekdeplerde täze standart bolar. Ol ähli mekdepler üçin Informasiýa Kommunikasiýa we Innowasion Tehnologiýalaryň ähli talaplaryna laýyk bolup, onuň döwrebap basgançagyna çykar.
-
+# EduBox – School Management System
+This system is an innovative system which allows school management by reducing paperwork, controlling attendance and performance of students, informing parents of their children and ensuring their constant communication. In the novel system, we maintained previous design of class-book which is familiar to teachers so that their daily works are facilitated.  User-friendly interface will help parents, teachers, and students to adapt their new design and features. Edubox mainly helps to save time to fill in the class-books as well as time and power for regular reports.
+## Our Mission
+Our mission consists of introducing members of various educational bodies with electronic journal and record books, ensuring their control of the quality of the educational services provided, management of system, and establishing simplistic and secure system for management of various documents relating to academic affairs. 
+## Availability
+The system can be used at places where Internet is available. Elimination of queues for filling up their magazines, facilities of working with the journals for the heads of school at the end of each quarter proves availability of the project. 
+## Information
+The information is provided for the school administration, teachers, partners and students according to their rights. Changes to the information e.g. table of subjects and other changes instantly appear in the system. Besides, the system shows teachers to fill which journals pertain to the specific classes and need to be completed clearly showing their status which present another advantage of the platform. 
+## Statistics
+The system features a suite of reporting tools; therefore all reports are automatically calculated and presented with updated results based on present data. Results of reports are updated with dynamic methods and represented in graphics. This advantageous features of the system absolutely removes paperwork. 
+## Management
+Completion of journals by teachers, and all types of performance of users (as per class, course, specific student or teacher) are shown to the administration. Parents can see the remarks and marks given to their children, and are informed about homework and unattended classes. The users according to their preferences are notified with SMS and electronic mail on various topics. 
+Next Step in the Growth of Education
+Digital system will become a new standard disrupting current paper-based tradition. It will comply with the all requirements for information & communication and innovation technologies at all schools enabling them to reach new heights.
+## Project Summary
+### Admin panel 
+- About school
+- Calendars
+- Holidays
+- Subject schedules
+- Subject areas
+- Subjects
+- Users
+- Classes
+### Teacher panel 
+- Subject schedules
+- Journals
+- Lessons
+- Homework
+- Quarters
+- Students rating
+- Attendance
+### Student panel 
+- Diary
+- Lessons
+- Homework
+- Quarters
+### Parent panel 
+- Students list
+- Student diary
+- Student lessons
+- Student homework
+- Student quarter
+### Other pages
+- Login
+- Profile
