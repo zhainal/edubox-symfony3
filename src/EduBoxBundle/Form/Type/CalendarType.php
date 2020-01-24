@@ -21,7 +21,9 @@ class CalendarType extends AbstractType
     {
         $builder->add('year', NumberType::class, [
             'constraints' => [
-            ]
+            ],
+            'label' => 'calendar.year',
+            'translation_domain' => 'forms',
         ]);
 
         if (!$options['new']) {
@@ -30,9 +32,13 @@ class CalendarType extends AbstractType
                 'multiple' => true,
                 'choice_label' => 'name',
                 'required' => false,
+                'label' => 'calendar.holidays',
+                'translation_domain' => 'forms',
             ]);
             $builder->add('quarterOneBegin', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_1_begin',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterOneBegin')
@@ -54,6 +60,8 @@ class CalendarType extends AbstractType
             
             $builder->add('quarterOneEnd', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_1_end',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterOneEnd')
@@ -75,6 +83,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterTwoBegin', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_2_begin',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterTwoBegin')
@@ -96,6 +106,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterTwoEnd', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_2_end',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterTwoEnd')
@@ -117,6 +129,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterThreeBegin', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_3_begin',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterThreeBegin')
@@ -138,6 +152,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterThreeEnd', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_3_end',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterThreeEnd')
@@ -159,6 +175,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterFourBegin', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_4_begin',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterFourBegin')
@@ -180,6 +198,8 @@ class CalendarType extends AbstractType
 
             $builder->add('quarterFourEnd', TextType::class, [
                 'required' => false,
+                'label' => 'calendar.quarter_4_end',
+                'translation_domain' => 'forms',
             ]);
             $builder
                 ->get('quarterFourEnd')
@@ -201,7 +221,10 @@ class CalendarType extends AbstractType
 
         }
 
-        $builder->add('submit', SubmitType::class);
+        $builder->add('submit', SubmitType::class, [
+            'label' => $options['new'] ? 'create' : 'save',
+            'translation_domain' => 'forms',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

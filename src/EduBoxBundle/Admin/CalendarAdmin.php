@@ -14,19 +14,18 @@ class CalendarAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'calendar';
     protected $baseRouteName = 'edubox.admin.calendar';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clear();
-        $collection->add('list', 'list');
-        $collection->add('create', 'create');
-        $collection->add('edit', '{id}/edit');
     }
 
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('year', TextType::class);
+            ->addIdentifier('year', TextType::class, ['label' => 'calendar.year', 'translation_domain' => 'forms']);
     }
+
+
 
 }

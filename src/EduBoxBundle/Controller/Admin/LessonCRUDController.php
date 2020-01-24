@@ -141,9 +141,11 @@ class LessonCRUDController extends CRUDController
         if (!$student instanceof User) {
             throw $this->createAccessDeniedException();
         }
+        $studentsGroup = $this->get('edubox.student_manager')->getStudentsGroup($student);
         $subjects = $this->get('edubox.student_manager')->getSubjects($student);
         return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/student/subject_list.html.twig', [
             'subjects' => $subjects,
+            'studentsGroup' => $studentsGroup,
         ]);
     }
 

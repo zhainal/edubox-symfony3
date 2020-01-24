@@ -2,7 +2,7 @@
 
 <!-- User image -->
 <li class="user-header">
-    <img src="{{ asset('assets/img/user.jpg') }}" class="img-circle" alt="User Image">
+    <img src="{{ app.user.webProfilePicturePath }}" class="img-circle" alt="User Image">
     <p>
         {{ app.user.fullname }} (@{{ app.user.username }})
         <small>
@@ -31,9 +31,9 @@
 <!-- Menu Footer-->
 <li class="user-footer">
     <div class="pull-left">
-        <a href="{{ path('fos_user_profile_show') }}" class="btn btn-default btn-flat">Profile</a>
+        <a href="{{ path('fos_user_profile_show') }}" class="btn btn-default btn-flat">{{ 'user.profile'|trans([], 'EduBoxBundle') }}</a>
     </div>
     <div class="pull-right">
-        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Sign out</a>
+        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">{{ 'layout.logout'|trans([], 'FOSUserBundle') }}</a>
     </div>
 </li>

@@ -32,30 +32,40 @@ class OrganisationType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 3, 'max' => '32'])
-                ]
+                ],
+                'label' => 'organisation.short_name',
+                'translation_domain' => 'forms'
             ])
             ->add('fullName', TextareaType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 3, 'max' => '256']),
-                ]
+                ],
+                'label' => 'organisation.full_name',
+                'translation_domain' => 'forms'
             ])
             ->add('address', TextareaType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 3, 'max' => '256']),
-                ]
+                ],
+                'label' => 'organisation.address',
+                'translation_domain' => 'forms'
             ])
             ->add('phone', TextType::class, [
                 'constraints' => [
                     new PhoneNumber()
-                ]
+                ],
+                'label' => 'organisation.phone',
+                'translation_domain' => 'forms'
             ])
             ->add('email', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
-                ]
+                ],
+                'label' => 'organisation.email',
+                'translation_domain' => 'forms'
             ])
             ->add('director', EntityType::class, [
                 'class' => User::class,
@@ -66,19 +76,30 @@ class OrganisationType extends AbstractType
                     return $qb;
                 },
                 'required' => false,
+                'label' => 'organisation.administrator',
+                'translation_domain' => 'forms'
             ])
 
             ->add('smsApiId', TextType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'organisation.sms_api_id',
+                'translation_domain' => 'forms'
             ])
             ->add('smsEnabled', CheckboxType::class, [
-                'required' => false
+                'required' => false,
+                'label' => 'organisation.sms_enabled',
+                'translation_domain' => 'forms'
             ])
             ->add('smsBalance', NumberType::class, [
                 'disabled' => true,
+                'label' => 'organisation.sms_balance',
+                'translation_domain' => 'forms'
             ])
 
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'save',
+                'translation_domain' => 'forms',
+            ]);
 
         $builder->get('smsEnabled')->addModelTransformer(new CallbackTransformer(
             function ($boolAsInt) {

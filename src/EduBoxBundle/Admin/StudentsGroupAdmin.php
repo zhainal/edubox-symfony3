@@ -12,7 +12,7 @@ class StudentsGroupAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'group';
     protected $baseRouteName = 'edubox.admin.students_group';
-    protected $studentClassRepository;
+    protected $translationDomain = 'EduBoxBundle';
 
 
     protected function configureRoutes(RouteCollection $collection)

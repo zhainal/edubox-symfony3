@@ -1,3 +1,2 @@
 edubox:
   resource: '@EduBoxBundle/Resources/config/routing.yml'
-

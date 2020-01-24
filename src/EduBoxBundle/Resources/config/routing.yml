@@ -16,4 +16,4 @@ fos_user:
 
 fos_user_profile:
   resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-  prefix: "panel/profile"
+  prefix: /panel/profile

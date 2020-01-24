@@ -1,0 +1,23 @@
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {% if app.request.getLocale() == 'en' %}
+            EN
+        {% elseif app.request.getLocale() == 'tm' %}
+            TM
+        {% else %}
+            {{ locale }}
+        {% endif %}
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{{ path(app.request.attributes.get('_route'), {'_locale':'en'}+app.request.attributes.get('_route_params')) }}">
+                EN
+            </a>
+        </li>
+        <li>
+            <a href="{{ path(app.request.attributes.get('_route'), {'_locale':'tm'}+app.request.attributes.get('_route_params')) }}">
+                TM
+            </a>
+        </li>
+    </ul>
+</li>

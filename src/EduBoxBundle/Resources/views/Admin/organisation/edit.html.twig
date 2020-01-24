@@ -1,8 +1,9 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
+{% trans_default_domain 'EduBoxBundle' %}
 
-{% set edit_box_title = 'Organisation' %}
+{% set title = 'organisation'|trans %}
 
-{% set about_tab_title = 'About' %}
+{% set about_tab_title = 'organisation.about' %}
 {% set about_tab_content %}
     <div class="row">
         <div class="col-md-6">
@@ -42,7 +43,7 @@
     </div>
 {% endset %}
 
-{% set setting_tab_title = 'Settings' %}
+{% set setting_tab_title = 'organisation.setting' %}
 {% set setting_tab_content %}
     <div class="row">
         <div class="col-md-6">

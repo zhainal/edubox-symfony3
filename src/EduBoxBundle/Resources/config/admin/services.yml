@@ -6,20 +6,11 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Organisation'
-        label: 'Organisation'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'organisation'
+        label: 'organisation'
         icon: '<i class="fa fa-graduation-cap"></i>'
-        on_top: true
-
-  edubox.admin.user:
-    class: EduBoxBundle\Admin\UserAdmin
-    arguments: [~, EduBoxBundle:User, EduBoxBundle:Admin\UserCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Users'
-        label: 'Users'
-        icon: '<i class="fa fa-users"></i>'
         on_top: true
 
   edubox.admin.calendar:
@@ -28,8 +19,10 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Calendars'
-        label: 'Calendars'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'calendars'
+        label: 'calendars'
         icon: '<i class="fa fa-calendar"></i>'
         on_top: true
 
@@ -39,42 +32,11 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Holidays'
-        label: 'Holidays'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'holidays'
+        label: 'holidays'
         icon: '<i class="fa fa-gift"></i>'
-        on_top: true
-
-  edubox.admin.students_group:
-    class: EduBoxBundle\Admin\StudentsGroupAdmin
-    arguments: [~, EduBoxBundle\Entity\StudentsGroup, EduBoxBundle:Admin\StudentsGroupCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Classes'
-        label: 'Classes'
-        icon: '<i class="fa fa-address-book"></i>'
-        on_top: true
-
-  edubox.admin.subject:
-    class: EduBoxBundle\Admin\SubjectAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\SubjectCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Subjects'
-        label: 'Subjects'
-        icon: '<i class="fa fa-book"></i>'
-        on_top: true
-
-  edubox.admin.subject_area:
-    class: EduBoxBundle\Admin\SubjectAreaAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\SubjectAreaCRUD]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Subject areas'
-        label: 'Subject areas'
-        icon: '<i class="fa fa-bookmark"></i>'
         on_top: true
 
   edubox.admin.subject_schedule:
@@ -83,9 +45,63 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Subject schedules'
-        label: 'Subject schedules'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'subject_schedules'
+        label: 'subject_schedules'
         icon: '<i class="fa fa-list"></i>'
+        on_top: true
+
+  edubox.admin.subject_area:
+    class: EduBoxBundle\Admin\SubjectAreaAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\SubjectAreaCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'subject_areas'
+        label: 'subject_areas'
+        icon: '<i class="fa fa-bookmark"></i>'
+        on_top: true
+
+  edubox.admin.subject:
+    class: EduBoxBundle\Admin\SubjectAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\SubjectCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'subjects'
+        label: 'subjects'
+        icon: '<i class="fa fa-book"></i>'
+        on_top: true
+
+  edubox.admin.user:
+    class: EduBoxBundle\Admin\UserAdmin
+    arguments: [~, EduBoxBundle:User, EduBoxBundle:Admin\UserCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'users'
+        label: 'users'
+        icon: '<i class="fa fa-users"></i>'
+        on_top: true
+
+  edubox.admin.students_group:
+    class: EduBoxBundle\Admin\StudentsGroupAdmin
+    arguments: [~, EduBoxBundle\Entity\StudentsGroup, EduBoxBundle:Admin\StudentsGroupCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'students_groups'
+        label: 'students_groups'
+        icon: '<i class="fa fa-address-book"></i>'
         on_top: true
 
   edubox.admin.mark:
@@ -94,19 +110,10 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Marks'
-        label: 'Marks'
-        icon: '<i class="fa fa-bar-chart"></i>'
-        on_top: true
-
-  edubox.admin.quarter:
-    class: EduBoxBundle\Admin\QuarterAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\Quarter]
-    tags:
-      - name: sonata.admin
-        manager_type: orm
-        group: 'Quarters'
-        label: 'Quarters'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'marks'
+        label: 'marks'
         icon: '<i class="fa fa-bar-chart"></i>'
         on_top: true
 
@@ -116,8 +123,10 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Lessons'
-        label: 'Lessons'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'lessons'
+        label: 'lessons'
         icon: '<i class="fa fa-list"></i>'
         on_top: true
 
@@ -127,7 +136,51 @@ services:
     tags:
       - name: sonata.admin
         manager_type: orm
-        group: 'Homework'
-        label: 'Homework'
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'homework'
+        label: 'homework'
         icon: '<i class="fa fa-home"></i>'
         on_top: true
+
+  edubox.admin.statistic:
+    class: EduBoxBundle\Admin\StatisticAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\StatisticCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'statistics'
+        label: 'statistics'
+        icon: '<i class="fa fa-line-chart"></i>'
+        on_top: true
+
+  edubox.admin.quarter:
+    class: EduBoxBundle\Admin\QuarterAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\Quarter]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'quarters'
+        label: 'quarters'
+        icon: '<i class="fa fa-bar-chart"></i>'
+        on_top: true
+
+  edubox.admin.student_rating:
+    class: EduBoxBundle\Admin\StudentRatingAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\StudentRatingCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'rating'
+        label: 'rating'
+        icon: '<i class="fa fa-rocket"></i>'
+        on_top: true
+
+
+

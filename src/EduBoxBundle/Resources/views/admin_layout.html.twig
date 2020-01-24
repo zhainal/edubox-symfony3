@@ -10,12 +10,20 @@
     {{ block('title') }}
 {% endblock %}
 
+{% block content %}
+    {{  parent() }}
+{% endblock %}
+
+
 {% block sonata_top_nav_menu_add_block %}
     {% include '@EduBox/Block/add_block.html.twig' %}
 {% endblock %}
 
 {% block sonata_sidebar_search %}
     {% include '@EduBox/Block/sidebar_top_block.html.twig' %}
+{% endblock %}
+
+{% block sonata_breadcrumb %}
 {% endblock %}
 
 {% block body_attributes %}
@@ -25,6 +33,3 @@
     {%- endif -%}"
 {% endblock %}
 
-{% block content %}
-    {{  parent() }}
-{% endblock %}

@@ -19,15 +19,19 @@
             </div>
         </div>
     </div>
-        {% for day in 1..6 %}
-            <hr>
-            <h4>Day {{ day }}</h4>
-            {% for hour in 1..hours %}
-                <div class="form-group  {% if not attribute(attribute(subject_schedule_form.schedule, day), hour).vars.valid %}has-error{% endif %}">
-                    {% include '@EduBox/Field/input.html.twig' with {'field':attribute(attribute(subject_schedule_form.schedule, day), hour)} %}
+    <div class="row">
+            {% for day in 1..6 %}
+                <div class="col-md-4">
+                    <h4>Day {{ day }}</h4>
+                    {% for hour in 1..hours %}
+                        <div class="form-group  {% if not attribute(attribute(subject_schedule_form.schedule, day), hour).vars.valid %}has-error{% endif %}">
+                            {% include '@EduBox/Field/input.html.twig' with {'field':attribute(attribute(subject_schedule_form.schedule, day), hour)} %}
+                        </div>
+                    {% endfor %}
+                    <br><br>
                 </div>
             {% endfor %}
-        {% endfor %}
+    </div>
 {% endset %}
 
 {% block content %}

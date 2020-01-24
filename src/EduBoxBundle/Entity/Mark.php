@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Mark
 {
+    const MARK_DC = 'DC';
     /**
      * @var int
      *

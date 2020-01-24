@@ -7,7 +7,10 @@ namespace EduBoxBundle\DomainManager;
 use Doctrine\ORM\EntityManager;
 use EduBoxBundle\Entity\Calendar;
 use EduBoxBundle\Entity\Setting;
+use EduBoxBundle\Entity\StudentsGroup;
+use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\SubjectSchedulesGroup;
+use EduBoxBundle\Entity\User;
 
 class SettingManager
 {
@@ -55,6 +58,75 @@ class SettingManager
             return $repository->findOneByOrCreate(['settingKey'=>$keys[$name]]);
         }
         return null;
+    }
+
+    public function getPerformance($quarter, StudentsGroup $studentsGroup, Subject $subject = null, User $student = null)
+    {
+        $repository = $this->entityManager->getRepository(Setting::class);
+        if ($studentsGroup instanceof StudentsGroup && $subject instanceof Subject && $student instanceof User) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'performance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_SU'.$subject->getId().'_ST'.$student->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup && $subject instanceof Subject) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'performance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_SU'.$subject->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup && $student instanceof User) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'performance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_ST'.$student->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'performance_Q'.$quarter.'_CL'.$studentsGroup->getId()
+            ]);
+        }
+        return null;
+    }
+
+    public function getAttendance($quarter, StudentsGroup $studentsGroup, Subject $subject = null, User $student = null)
+    {
+        $repository = $this->entityManager->getRepository(Setting::class);
+        if ($studentsGroup instanceof StudentsGroup && $subject instanceof Subject && $student instanceof User) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'attendance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_SU'.$subject->getId().'_ST'.$student->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup && $subject instanceof Subject) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'attendance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_SU'.$subject->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup && $student instanceof User) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'attendance_Q'.$quarter.'_CL'.$studentsGroup->getId().'_ST'.$student->getId()
+            ]);
+        }
+        elseif ($studentsGroup instanceof StudentsGroup) {
+            return $repository->findOneByOrCreate([
+                'settingKey' => 'attendance_Q'.$quarter.'_CL'.$studentsGroup->getId()
+            ]);
+        }
+        return null;
+    }
+
+    public function getPercent(Setting $row, $reverse = false) {
+        $row = json_decode($row->getSettingValue());
+        if (is_object($row)) {
+            $max = (int)$row->max;
+            $current = (int)$row->current;
+        }
+        else {
+            return $reverse ? 100 :0;
+        }
+        if ($max < 1 || $current < 1) {
+            return $reverse ? 100 : 0;
+        }
+        $percent = round($current / $max * 100);
+        if ($percent > 100) $percent = 100;
+        return $reverse ? 100-$percent : $percent;
     }
 
     /**
@@ -105,5 +177,8 @@ class SettingManager
         }
         throw new \Exception('The organization has not yet selected a subject schedules group, please contact the administration.');
     }
+
+
+
 
 }

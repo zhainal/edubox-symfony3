@@ -16,7 +16,6 @@ services:
       - '@edubox.students_group_manager'
       - '@edubox.subject_schedules_group_manager'
 
-
   edubox.mark_manager:
     class: EduBoxBundle\DomainManager\MarkManager
     arguments:
@@ -85,6 +84,15 @@ services:
     class: EduBoxBundle\DomainManager\SMSManager
     arguments: ['@edubox.setting_manager']
 
+  edubox.statistic_manager:
+    class: EduBoxBundle\DomainManager\StatisticManager
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.setting_manager'
+      - '@edubox.student_manager'
+      - '@edubox.quarter_manager'
+      - '@edubox.students_group_manager'
+
   # Form handlers
   edubox.user_form_handler:
     class: EduBoxBundle\Form\Handler\UserFormHandler
@@ -118,7 +126,6 @@ services:
     class: EduBoxBundle\Form\Handler\LessonFormHandler
     arguments: ['@edubox.lesson_manager']
 
-
   # Event listeners
   EduBoxBundle\EventListener\SendMessageToParentListener:
     arguments: ['@edubox.student_manager', '@edubox.sms_manager']
@@ -129,6 +136,11 @@ services:
     arguments: ['@edubox.quarter_manager']
     tags:
       - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
+
+  EduBoxBundle\EventListener\DetermineLocaleListener:
+    arguments: ['@security.token_storage']
+    tags:
+      - { name: kernel.event_listener, event: kernel.request , method: onKernelRequest, priority: 17 }
 
   # Subscribers
   edubox.tblprefix_subscriber:
@@ -146,3 +158,11 @@ services:
       - '@edubox.quarter_manager'
     tags:
       - {name: 'console.command', command: 'edubox:reset-lessons'}
+
+  EduBoxBundle\Command\UpdateStatisticsCommand:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.statistic_manager'
+      - '@edubox.quarter_manager'
+    tags:
+      - {name: 'console.command', command: 'edubox:statistic:update'}

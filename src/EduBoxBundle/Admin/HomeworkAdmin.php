@@ -18,6 +18,7 @@ class HomeworkAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.homework';
     protected $baseRoutePattern = 'homework';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

@@ -14,6 +14,15 @@ class MainController extends Controller
      */
     public function homeAction()
     {
+        return $this->redirectToRoute('sonata_admin_dashboard');
         return $this->render('EduBoxBundle:Page:home.html.twig');
+    }
+
+    /**
+     * @Route(path="test", name="")
+     */
+    public function testAction()
+    {
+
     }
 }

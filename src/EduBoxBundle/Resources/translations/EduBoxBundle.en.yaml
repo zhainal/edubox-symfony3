@@ -1,0 +1,5 @@
+user.ROLE_ADMIN: Administration
+user.ROLE_TEACHER: Teacher
+user.ROLE_STUDENT: Student
+user.ROLE_USER: User
+user.ROLE_PARENT: Parent

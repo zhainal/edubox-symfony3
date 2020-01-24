@@ -1,11 +1,13 @@
 {% set tabs = not tabs is defined ? {} : tabs %}
 
+{% trans_default_domain 'forms' %}
+
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs" role="tablist">
         {% for tab in tabs %}
             <li class="{% if loop.first %}active{% endif %}">
                 <a href="#{{ tab.id }}" class="changer-tab" aria-controls="{{ tab.id }}" data-toggle="tab" aria-expanded="{% if loop.first %}true{% else %}false{% endif %}">
-                    {{ tab.title }}
+                    {{ tab.title|trans }}
                 </a>
             </li>
         {% endfor %}

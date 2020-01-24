@@ -1,12 +1,12 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Subject schedules' %}
+{% set title = 'Subject_schedules_list'|trans([], 'EduBoxBundle') %}
 
 {% block actions %}
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.subject_schedule_list') }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            List schedules groups
+            {{ 'link_action_list'|trans([], 'SonataAdminBundle') }}
         </a>
     </li>
 {% endblock %}

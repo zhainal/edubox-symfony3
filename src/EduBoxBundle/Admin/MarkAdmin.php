@@ -11,6 +11,7 @@ class MarkAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.mark';
     protected $baseRoutePattern = 'mark';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

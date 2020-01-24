@@ -11,6 +11,7 @@ class QuarterAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.quarter';
     protected $baseRoutePattern = 'quarter';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

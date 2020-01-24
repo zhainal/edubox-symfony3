@@ -1,0 +1,35 @@
+user.ROLE_ADMIN: Müdir
+user.ROLE_TEACHER: Mugallym
+user.ROLE_STUDENT: Okuwçy
+user.ROLE_USER: Ulanyjy
+user.ROLE_PARENT: Ene-ata
+user.profile: 'Profil'
+
+
+subject_areas: 'Ders ugurlary'
+subjects: Dersler
+users: Ulanyjylar
+students_groups: Synplar
+marks: Bahalar
+lessons: Temalar
+homework: 'Öý iş'
+statistics: Hasabatlar
+quarters: Çärýekler
+rating: 'Iň ökde okuwçylar'
+
+
+organisation: Mekdep
+organisation_saved: 'Maglumatlar üstünlikli ýatda saklandy.'
+
+calendars: Kalendarlar
+Calendar_list: 'Kalendarlar sanawy'
+Calendar_edit: 'Kalendary üýtgetmek'
+Calendar_create: 'Täze kalendar'
+
+holidays: 'Dynç günler'
+Holiday_list: 'Dynç günler sanawy'
+
+Subject_schedules_group_list: 'Ders rejeler toparlar sanawy'
+
+subject_schedules: 'Dersler rejesi'
+Subject_schedules_list: 'Ders rejeler sanawy'

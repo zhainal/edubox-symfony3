@@ -1,7 +1,7 @@
 {% extends '@EduBox/system_layout.html.twig' %}
-{% set title = 'Login' %}
 {% set body_attr = 'class="hold-transition login-page"' %}
 {% trans_default_domain 'FOSUserBundle' %}
+{% set title = 'layout.login'|trans %}
 
 {% block body %}
     <div class="login-box">
@@ -21,7 +21,7 @@
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">{{ 'security.login.title'|trans }}</p>
             {% if error %}
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

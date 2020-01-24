@@ -83,8 +83,8 @@ class ResetLessonsCommand extends Command
                             $beginDate = $this->quarterManager->getBeginDate($quarter);
                             $endDate = $this->quarterManager->getEndDate($quarter);
                             $this->lessonManager->createNotExistsLessons($subject, $studentsGroup, $beginDate, $endDate);
-                            $output->writeln('Marks for '.$quarter.' quarter created.');
-                            $this->markManager->createNotExistsMarks($subject, $studentsGroup, $beginDate, $endDate);
+                            //$output->writeln('Marks for '.$quarter.' quarter created.');
+                            //$this->markManager->createNotExistsMarks($subject, $studentsGroup, $beginDate, $endDate);
                             $output->writeln('Lessons for '.$quarter.' quarter created.');
                         } else {
                             $output->writeln('Quarter '.$quarter.' not found');

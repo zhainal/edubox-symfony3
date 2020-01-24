@@ -4,7 +4,8 @@
 namespace EduBoxBundle\DomainManager;
 
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
+use EduBoxBundle\Entity\Mark;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Entity\UserMeta;
@@ -17,12 +18,12 @@ class StudentManager
 
     /**
      * StudentManager constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManager $entityManager
      * @param UserMetaManager $userMetaManager
      * @param UserManager $userManager
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityManager $entityManager,
         UserMetaManager $userMetaManager,
         UserManager $userManager
     ) {
@@ -63,6 +64,37 @@ class StudentManager
         $parentId = $this->userMetaManager->getValue($user, UserMeta::STUDENT_PARENT_ID);
         $parent = $this->userManager->getObject($parentId);
         return $parent;
+    }
+
+    public function withParent(User $user)
+    {
+        $user->parent = $this->getParent($user);
+        return $user;
+    }
+
+    public function getRating()
+    {
+        $qb = $this->entityManager->getRepository(Mark::class)->createQueryBuilder('m');
+        $qb
+            ->select(['u.id as userId', 'COUNT(m.id) as total'])
+            ->innerJoin('m.user','u')
+            ->where('m.mark = 5')
+            ->groupBy('m.user')
+            ->orderBy('total','desc')
+            ->setMaxResults(50);
+        $studentIds = $qb->getQuery()->getResult();
+
+        $students = [];
+        foreach ($studentIds as $studentId) {
+            $student = $this->userManager->getObject($studentId['userId']);
+            if ($student instanceof User) {
+                if ($student->hasRole('ROLE_STUDENT')) {
+                    $student->score = $studentId['total'];
+                    $students[] = $student;
+                }
+            }
+        }
+        return $students;
     }
 
 }

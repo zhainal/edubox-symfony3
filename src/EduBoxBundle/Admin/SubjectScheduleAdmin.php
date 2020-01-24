@@ -11,7 +11,7 @@ class SubjectScheduleAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.subject_schedule';
     protected $baseRoutePattern = 'subject_schedule';
-    protected $label = 'Subject scheles d';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

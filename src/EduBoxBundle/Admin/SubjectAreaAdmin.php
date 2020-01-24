@@ -11,6 +11,7 @@ class SubjectAreaAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.subject_area';
     protected $baseRoutePattern = 'subject_area';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

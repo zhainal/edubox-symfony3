@@ -27,6 +27,7 @@ sonata_admin:
       - bundles/sonataadmin/css/styles.css
       - bundles/sonataadmin/css/layout.css
       - bundles/sonataadmin/css/tree.css
+      - assets/add.css
       #- bundles/sonataadmin/css/colors.css
     extra_javascripts:
-      - 'assets/js/main.js'
+      - assets/add.js

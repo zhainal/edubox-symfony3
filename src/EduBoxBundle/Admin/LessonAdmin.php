@@ -16,6 +16,7 @@ class LessonAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'edubox.admin.lesson';
     protected $baseRoutePattern = 'lesson';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

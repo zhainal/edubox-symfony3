@@ -11,6 +11,7 @@ class MessageAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'message';
     protected $baseRouteName = 'message';
+    protected $translationDomain = 'EduBoxBundle';
 
     protected function configureRoutes(RouteCollection $collection)
     {

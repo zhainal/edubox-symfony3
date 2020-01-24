@@ -3,7 +3,6 @@
 
 namespace EduBoxBundle\Controller\Admin;
 
-use Cassandra\Set;
 use EduBoxBundle\Entity\Setting;
 use EduBoxBundle\Form\Type\OrganisationType;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -12,6 +11,7 @@ class OrganisationCRUDController extends CRUDController
 {
     public function listAction()
     {
+        $this->admin->checkAccess('list');
         $em = $this->getDoctrine()->getManager();
         $respository = $em->getRepository(Setting::class);
         $settingManager = $this->get('edubox.setting_manager');
@@ -43,7 +43,7 @@ class OrganisationCRUDController extends CRUDController
                 $value->setSettingValue($form->get($key)->getData());
             }
             $em->flush();
-            $this->addFlash('success', 'Settings saved successfully');
+            $this->addFlash('success', $this->trans('organisation_saved',[],'EduBoxBundle'));
         }
 
         return $this->renderWithExtraParams('EduBoxBundle:Admin:organisation/edit.html.twig', [
