@@ -1,6 +1,0 @@
-user:
-  ROLE_ADMIN: 'Administration'
-  ROLE_TEACHER: 'Teacher'
-  ROLE_STUDENT: 'Student'
-  ROLE_USER: 'User'
-  ROLE_PARENT: 'Parent'

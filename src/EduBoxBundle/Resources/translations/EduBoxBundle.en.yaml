@@ -3,3 +3,36 @@ user.ROLE_TEACHER: Teacher
 user.ROLE_STUDENT: Student
 user.ROLE_USER: User
 user.ROLE_PARENT: Parent
+user.profile: 'Profil'
+
+sms.student_marked: 'Student %name% received a mark of %mark% for the subject %subject% in %date%'
+
+
+subject_areas: 'Ders ugurlary'
+subjects: Dersler
+users: Ulanyjylar
+students_groups: Synplar
+marks: Bahalar
+lessons: Temalar
+homework: 'Öý iş'
+statistics: Hasabatlar
+quarters: Çärýekler
+rating: 'Iň ökde okuwçylar'
+
+
+organisation: Mekdep
+organisation_saved: 'Maglumatlar üstünlikli ýatda saklandy.'
+
+calendars: Kalendarlar
+Calendar_list: 'Kalendarlar sanawy'
+Calendar_edit: 'Kalendary üýtgetmek'
+Calendar_create: 'Täze kalendar'
+
+holidays: 'Dynç günler'
+Holiday_list: 'Dynç günler sanawy'
+
+Subject_schedules_group_list: 'Ders rejeler toparlar sanawy'
+
+subject_schedules: 'Dersler rejesi'
+Subject_schedules_list: 'Ders rejeler sanawy'
+

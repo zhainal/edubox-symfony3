@@ -17,6 +17,7 @@ statistics: Hasabatlar
 quarters: Çärýekler
 rating: 'Iň ökde okuwçylar'
 
+sms.student_marked: 'Okuwçy %name% %subject% sapagynda %date% senesinde %mark% aldy'
 
 organisation: Mekdep
 organisation_saved: 'Maglumatlar üstünlikli ýatda saklandy.'

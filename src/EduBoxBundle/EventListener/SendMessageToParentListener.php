@@ -9,16 +9,25 @@ use EduBoxBundle\DomainManager\SMSManager;
 use EduBoxBundle\DomainManager\StudentManager;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Event\MarkCreatedEvent;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class SendMessageToParentListener
 {
     private $studentManager;
     private $SMSManager;
+    private $translator;
 
-    public function __construct(StudentManager $studentManager, SMSManager $SMSManager)
+    /**
+     * SendMessageToParentListener constructor.
+     * @param StudentManager $studentManager
+     * @param SMSManager $SMSManager
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(StudentManager $studentManager, SMSManager $SMSManager, TranslatorInterface $translator)
     {
         $this->studentManager = $studentManager;
         $this->SMSManager = $SMSManager;
+        $this->translator = $translator;
     }
 
     public function onMarkCreated(MarkCreatedEvent $markCreatedEvent)
@@ -27,7 +36,12 @@ class SendMessageToParentListener
         $student = $mark->getUser();
         $parent = $this->studentManager->getParent($student);
         if ($parent instanceof User) {
-            $this->SMSManager->sendMsg($parent, 'Student '.$student->getFullName().' received a mark of '.$mark->getMark().' for the subject '.$mark->getSubject()->getName().' in '.$mark->getDate()->format('F j'));
+            $this->SMSManager->sendMsg($parent, $this->translator->trans('sms.student_marked', [
+                '%name%' => $student->getFullName(),
+                '%mark%' => $mark->getMark(),
+                '%subject%' => $mark->getSubject()->getName(),
+                '%date%' => $mark->getDate()->format('Y.m.d'),
+            ], 'EduBoxBundle'));
         }
     }
 }

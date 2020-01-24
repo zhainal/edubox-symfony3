@@ -128,7 +128,7 @@ services:
 
   # Event listeners
   EduBoxBundle\EventListener\SendMessageToParentListener:
-    arguments: ['@edubox.student_manager', '@edubox.sms_manager']
+    arguments: ['@edubox.student_manager', '@edubox.sms_manager', '@translator']
     tags:
       - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
 

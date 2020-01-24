@@ -197,11 +197,12 @@
                 url: '{{ path('edubox.admin.mark_createMark', {'studentsGroupId':studentsGroup.id, 'subjectId':subject.id}) }}',
                 data: {'userId':userId, 'subjectId':subjectId, 'mark':mark, 'date':date, 'hour':hour, 'comment':comment},
                 success: function (data, textStatus) {
+                    console.log(data);
                     updateQuarter(data, userId);
                     setCellMark(cell, mark);
                 },
-                error: function (date, textStatus) {
-
+                error: function (data, textStatus) {
+                    console.log(data);
                 }
             });
         }
