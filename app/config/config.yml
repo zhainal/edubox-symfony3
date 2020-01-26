@@ -41,6 +41,9 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         journal_manager: '@edubox.journal_manager'
+        user_manager: '@edubox.user_manager'
+        parent_manager: '@edubox.parent_manager'
+
 # Doctrine Configuration
 doctrine:
     dbal:

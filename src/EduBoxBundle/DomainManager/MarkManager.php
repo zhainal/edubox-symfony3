@@ -81,6 +81,12 @@ class MarkManager
         return round($mark);
     }
 
+    /**
+     * @param Subject $subject
+     * @param User $user
+     * @param $number
+     * @return string
+     */
     public function getAverageFloat(Subject $subject, User $user, $number)
     {
         $quarterRepository = $this->entityManager->getRepository(Quarter::class);
@@ -160,6 +166,13 @@ class MarkManager
         }
     }
 
+    /**
+     * @param Subject $subject
+     * @param StudentsGroup $studentsGroup
+     * @param $quarter
+     * @return array
+     * @throws \Exception
+     */
     public function getDatesTree(
         Subject $subject,
         StudentsGroup $studentsGroup,
@@ -222,6 +235,13 @@ class MarkManager
         }
 
         return $marks->getQuery()->getResult();
+    }
+
+    public function hasDateHour(Subject $subject, StudentsGroup $studentsGroup, $quarter, \DateTime $date, $hour)
+    {
+        $dates = $this->getDatesTree($subject, $studentsGroup, $quarter);
+        $date = $date->getTimestamp();
+        return isset($dates[date('Y', $date)][date('m', $date)][date('d', $date)][$hour]);
     }
 
     public function createMark(

@@ -104,16 +104,29 @@ services:
         icon: '<i class="fa fa-address-book"></i>'
         on_top: true
 
-  edubox.admin.mark:
-    class: EduBoxBundle\Admin\MarkAdmin
-    arguments: [~, ~, EduBoxBundle:Admin\MarkCRUD]
+  edubox.admin.journal:
+    class: EduBoxBundle\Admin\JournalAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\JournalCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm
         label_translator_strategy: sonata.admin.label.strategy.form_component
         label_catalogue: 'EduBoxBundle'
-        group: 'marks'
-        label: 'marks'
+        group: 'journal'
+        label: 'journal'
+        icon: '<i class="fa fa-bar-chart"></i>'
+        on_top: true
+
+  edubox.admin.diary:
+    class: EduBoxBundle\Admin\DiaryAdmin
+    arguments: [~, ~, EduBoxBundle:Admin\DiaryCRUD]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label_translator_strategy: sonata.admin.label.strategy.form_component
+        label_catalogue: 'EduBoxBundle'
+        group: 'diary'
+        label: 'diary'
         icon: '<i class="fa fa-bar-chart"></i>'
         on_top: true
 

@@ -38,49 +38,49 @@
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover table-bordered text-nowrap">
                 <thead>
-                    <tr>
-                        <th rowspan="2">Full name</th>
-                        <th rowspan="2">Average</th>
-                        {% if dates is defined %}
-                            {% for year,months in dates %}
-                                {% for month,days in months %}
-                                    <th class="text-center" colspan="{{ journal_manager.daysCount(days)-days|length }}">{{ month }}</th>
-                                {% endfor %}
+                <tr>
+                    <th rowspan="2">Full name</th>
+                    <th rowspan="2">Average</th>
+                    {% if dates is defined %}
+                        {% for year,months in dates %}
+                            {% for month,days in months %}
+                                <th class="text-center" colspan="{{ journal_manager.daysCount(days)-days|length }}">{{ month }}</th>
                             {% endfor %}
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        {% if dates is defined %}
-                            {% for year,months in dates %}
-                                {% for month,days in months %}
-                                    {% for day,hours in days %}
-                                        {% for hour,week in hours %}
-                                            <th class="text-center">{{ day }}</th>
-                                        {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if dates is defined %}
+                        {% for year,months in dates %}
+                            {% for month,days in months %}
+                                {% for day,hours in days %}
+                                    {% for hour,week in hours %}
+                                        <th class="text-center">{{ day }}</th>
                                     {% endfor %}
                                 {% endfor %}
                             {% endfor %}
-                        {% endif %}
-                    </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
                 </thead>
                 <tbody>
-                    {% for student in students %}
-                        <tr>
-                            <td id="student-{{ student.id }}">{{ student.fullname }}</td>
-                            <td class="text-center text-bold" id="student-{{ student.id }}-quarter">{% if averages[student.id] is defined %} {{ averages[student.id]|round }} {% else %} - {% endif %}</td>
-                            {# All dates for this journal #}
-                            {% if dates is defined %}
-                                {# All years for this journal #}
-                                {% for year,months in dates %}
-                                    {# All months for this journal #}
-                                    {% for month,days in months %}
-                                        {# All days for this journal #}
-                                        {% for day,hours in days %}
-                                            {# All hours for this journal #}
-                                            {% for hour,week in hours %}
+                {% for student in students %}
+                    <tr>
+                        <td id="student-{{ student.id }}">{{ student.fullname }}</td>
+                        <td class="text-center text-bold" id="student-{{ student.id }}-quarter">{% if averages[student.id] is defined %} {{ averages[student.id]|round }} {% else %} - {% endif %}</td>
+                        {# All dates for this journal #}
+                        {% if dates is defined %}
+                            {# All years for this journal #}
+                            {% for year,months in dates %}
+                                {# All months for this journal #}
+                                {% for month,days in months %}
+                                    {# All days for this journal #}
+                                    {% for day,hours in days %}
+                                        {# All hours for this journal #}
+                                        {% for hour,week in hours %}
 
-                                                {% set mark = marks[student.id][year][month][day][hour] is defined ? marks[student.id][year][month][day][hour] : null %}
-                                                <td class="mark-box text-center
+                                            {% set mark = marks[student.id][year][month][day][hour] is defined ? marks[student.id][year][month][day][hour] : null %}
+                                            <td class="mark-box text-center
                                                     {% if mark == null %} no-mark
                                                     {% elseif mark.mark == 5 %} mark-5 has-mark
                                                     {% elseif mark.mark == 4 %} mark-4 has-mark
@@ -89,18 +89,18 @@
                                                     {% elseif mark.mark == 'dc' %} mark-dc has-mark
                                                     {% else %} no-mark
                                                     {% endif %}"
-                                                    data-user="{{ student.id }}"
-                                                    data-date="{{ year }}-{{ month }}-{{ day }}"
-                                                    data-hour="{{ hour }}"
-                                                > {% if mark == null %} {% else %} {{ mark.mark }} {% endif %} </td>
+                                                data-user="{{ student.id }}"
+                                                data-date="{{ year }}-{{ month }}-{{ day }}"
+                                                data-hour="{{ hour }}"
+                                            > {% if mark == null %} {% else %} {{ mark.mark }} {% endif %} </td>
 
-                                            {% endfor %}
                                         {% endfor %}
                                     {% endfor %}
                                 {% endfor %}
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -115,8 +115,6 @@
             <a href="{{ path(app.request.attributes.get('_route'), {'quarter': 4}+app.request.attributes.get('_route_params')) }}" class="btn {% if quarter == 4 %}btn-primary{% else %}btn-default{% endif %}">4</a>
         </div>
     </div>
-
-
 
     <script>
         $(function () {
@@ -193,8 +191,8 @@
             window.result = false;
             cell.html('<div class="overlay"><i class="fa fa-refresh fa-spin" style="position: static; font-size: 20px; margin: -10px"></i></div>');
             $.ajax({
-                type: "POST",
-                url: '{{ path('edubox.admin.mark_createMark', {'studentsGroupId':studentsGroup.id, 'subjectId':subject.id}) }}',
+                type: "GET",
+                url: '{{ path('edubox.admin.journal_edit', {'studentsGroupId':studentsGroup.id, 'subjectId':subject.id}) }}',
                 data: {'userId':userId, 'subjectId':subjectId, 'mark':mark, 'date':date, 'hour':hour, 'comment':comment},
                 success: function (data, textStatus) {
                     console.log(data);

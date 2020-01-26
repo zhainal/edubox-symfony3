@@ -31,7 +31,9 @@ class ParentManager
         foreach ($rows as $row) {
             $student = $row->getUser();
             if ($student instanceof User) {
-                $students[] = $student;
+                if ($student->hasRole('ROLE_STUDENT')) {
+                    $students[] = $student;
+                }
             }
         }
         return $students;

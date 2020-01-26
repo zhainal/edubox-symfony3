@@ -12,7 +12,7 @@
     {% elseif is_granted('ROLE_TEACHER') %}
         <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.subject_schedule_list') }}">
     {% elseif is_granted('ROLE_STUDENT') %}
-        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.mark_list') }}">
+        <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.diary_list') }}">
     {% elseif is_granted('ROLE_PARENT') %}
         <meta http-equiv="refresh" content="0;url={{ path('edubox.admin.mark_list') }}">
     {% endif %}
