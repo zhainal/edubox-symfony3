@@ -5,7 +5,7 @@
 
 {% set box_body %}
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-4">
             <div class="form-group {% if not calendar.year.vars.valid %}has-error{% endif %}">
                 {% include 'EduBoxBundle:Field:input.html.twig' with {'field':calendar.year} %}
             </div>

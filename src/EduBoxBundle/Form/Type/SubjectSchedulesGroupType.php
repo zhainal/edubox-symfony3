@@ -15,11 +15,13 @@ class SubjectSchedulesGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+        $builder->add('name', TextType::class, ['label' => 'subject_schedules_group.name', 'translation_domain' => 'forms']);
         $builder->add('active', CheckboxType::class, [
             'required' => false,
             'mapped' => false,
             'data' => $options['active'],
+            'label' => 'subject_schedules_group.active',
+            'translation_domain' => 'forms'
         ]);
         $builder->add('submit', SubmitType::class);
     }

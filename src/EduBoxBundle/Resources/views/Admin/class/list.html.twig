@@ -1,12 +1,12 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Class groups' %}
+{% set title = 'Students_group_list'|trans([], 'EduBoxBundle') %}
 
 {% block actions %}
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.students_group_create') }}">
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
-            Add new
+            {{ 'link_action_create'|trans([], 'SonataAdminBundle') }}
         </a>
     </li>
 {% endblock %}
@@ -14,9 +14,9 @@
 {% set box_body %}
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Students count</th>
-            <th>Actions</th>
+            <th>{{ 'students_group.name'|trans([], 'forms') }}</th>
+            <th>{{ 'students_group.students_count'|trans([], 'forms') }}</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,10 +27,14 @@
                 <td>
                     <a href="{{ path('edubox.admin.students_group_edit', {'id':students_group.id}) }}" class="btn btn-success">
                         <i class="fa fa-edit"></i>
+                        {{ 'link_edit'|trans([], 'SonataAdminBundle') }}
                     </a>
                     <form action="{{ path('edubox.admin.students_group_delete', {'id':students_group.id}) }}" method="post" style="display: inline">
                         <input type="hidden", name="token" value="{{ csrf_token('delete') }}">
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                            {{ 'link_delete'|trans([], 'SonataAdminBundle') }}
+                        </button>
                     </form>
                 </td>
             </tr>

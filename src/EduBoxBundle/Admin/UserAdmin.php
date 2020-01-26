@@ -24,8 +24,8 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list)
     {
         $list
-            ->addIdentifier('fullname')
-            ->add('enabled');
+            ->addIdentifier('fullname', null, ['label' => 'user.full_name', 'translation_domain' => 'forms'])
+            ->add('enabled', null, ['label' => 'user.enabled', 'translation_domain' => 'forms']);
     }
 
 

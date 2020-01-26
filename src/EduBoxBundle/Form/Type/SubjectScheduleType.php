@@ -20,8 +20,10 @@ class SubjectScheduleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('submit', SubmitType::class);
+        $builder->add('submit', SubmitType::class, ['label' => 'save', 'translation_domain' => 'forms']);
         $builder->add('studentsGroup', EntityType::class, [
+            'label' => 'subject_schedule.class',
+            'translation_domain' => 'forms',
             'class' => StudentsGroup::class,
             'choice_label' => 'name',
             'required' => true,
@@ -41,6 +43,7 @@ class SubjectScheduleType extends AbstractType
                     $builder->get('schedule')
                         ->get($day)
                         ->add($hour, EntityType::class, [
+                            'label' => 'subject_schedule.hour',
                             'class' => Subject::class,
                             'query_builder' => function (EntityRepository $er) use ($options) {
                                 return $er->createQueryBuilder('s')
@@ -49,7 +52,6 @@ class SubjectScheduleType extends AbstractType
                             },
                             'choice_label' => 'name',
                             'required' => false,
-                            'label' => 'Subject '.$hour,
                         ]);
                     $builder->get('schedule')
                         ->get($day)

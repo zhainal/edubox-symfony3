@@ -39,5 +39,5 @@ form.email: Email
 form.current_password: 'Current password'
 form.password: Password
 form.password_confirmation: 'Repeat password'
-form.new_password: 'New password'
-form.new_password_confirmation: 'Repeat new password'
+form.new_password: 'Täze açar söz'
+form.new_password_confirmation: 'Täze açar sözi gaýtala'

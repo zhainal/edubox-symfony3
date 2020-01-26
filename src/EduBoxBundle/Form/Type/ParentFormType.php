@@ -17,6 +17,8 @@ class ParentFormType extends AbstractType
     {
         $builder
             ->add('children', EntityType::class, [
+                'translation_domain' => 'forms',
+                'label' => 'user.students',
                 'class' => User::class,
                 'choice_label' => 'full_name',
                 'required' => false,

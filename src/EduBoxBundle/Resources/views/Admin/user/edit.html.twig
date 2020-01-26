@@ -1,7 +1,18 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set user_tab_title = 'User data' %}
 
+{% set title = 'User_edit'|trans([], 'EduBoxBundle') %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('edubox.admin.user_list') }}">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            {{ 'link_action_list'|trans([], 'SonataAdminBundle') }}
+        </a>
+    </li>
+{% endblock %}
+
+{% set user_tab_title = 'user.tab_user'|trans([], 'forms') %}
 {% set user_tab_content %}
     <div class="row">
         <div class="col-md-4">
@@ -22,6 +33,11 @@
     </div>
     <div class="row">
         <div class="col-md-4">
+            <div class="form-group {% if not user.lastName.vars.valid %}has-error{% endif %}">
+                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.lastName} %}
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group {% if not user.firstName.vars.valid %}has-error{% endif %}">
                 {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.firstName} %}
             </div>
@@ -29,11 +45,6 @@
         <div class="col-md-4">
             <div class="form-group {% if not user.middleName.vars.valid %}has-error{% endif %}">
                 {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.middleName} %}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group {% if not user.lastName.vars.valid %}has-error{% endif %}">
-                {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.lastName} %}
             </div>
         </div>
     </div>
@@ -62,8 +73,9 @@
 {% endset %}
 
 {% if user.admin_form is defined %}
-    {% set admin_tab_title = 'Admin data' %}
+    {% set admin_tab_title = 'user.tab_admin'|trans([], 'forms') %}
     {% set admin_tab_content %}
+        {{ form_widget(user.admin_form) }}
         <div class="row">
 
         </div>
@@ -71,8 +83,9 @@
 {% endif %}
 
 {% if user.teacher_form is defined %}
-    {% set teacher_tab_title = 'Teacher data' %}
+    {% set teacher_tab_title = 'user.tab_teacher'|trans([], 'forms') %}
     {% set teacher_tab_content %}
+        {{ form_widget(user.teacher_form) }}
         <div class="row">
 
         </div>
@@ -80,8 +93,9 @@
 {% endif %}
 
 {% if user.parent_form is defined %}
-    {% set parent_tab_title = 'Parent data' %}
+    {% set parent_tab_title = 'user.tab_teacher'|trans([], 'forms') %}
     {% set parent_tab_content %}
+        {{ form_widget(user.parent_form) }}
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group {% if not user.parent_form.children.vars.valid %}has-error{% endif %}">
@@ -93,8 +107,9 @@
 {% endif %}
 
 {% if user.student_form is defined %}
-    {% set student_tab_title = 'Student data' %}
+    {% set student_tab_title = 'user.tab_student'|trans([], 'forms') %}
     {% set student_tab_content %}
+        {{ form_widget(user.student_form) }}
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group {% if not user.student_form.group.vars.valid %}has-error{% endif %}">
@@ -135,8 +150,8 @@
             'tabs': tabs,
         } only %}
 
-    <div class="sonata-ba-form-actions well well-small form-actions">
-        {% include 'EduBoxBundle:Field:input.html.twig' with {'field':user.submit,'field_attr':{'class':'btn btn-success'}} %}
-    </div>
+        <div class="sonata-ba-form-actions well well-small form-actions">
+            {{ form_widget(user.submit, {'attr':{'class':'btn btn-success'},'label':'btn_update'|trans([], 'SonataAdminBundle') }) }}
+        </div>
     {{ form_end(user) }}
 {% endblock %}

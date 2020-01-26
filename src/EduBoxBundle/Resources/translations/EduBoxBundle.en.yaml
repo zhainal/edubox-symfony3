@@ -3,36 +3,57 @@ user.ROLE_TEACHER: Teacher
 user.ROLE_STUDENT: Student
 user.ROLE_USER: User
 user.ROLE_PARENT: Parent
-user.profile: 'Profil'
+user.profile: Profile
 
 sms.student_marked: 'Student %name% received a mark of %mark% for the subject %subject% in %date%'
 
+subject_areas: 'Subject areas'
+Subject_areas_list: 'Subject areas list'
+Subject_areas_edit: 'Edit subject area'
+Subject_areas_create: 'Create subject area'
 
-subject_areas: 'Ders ugurlary'
-subjects: Dersler
-users: Ulanyjylar
-students_groups: Synplar
-marks: Bahalar
-lessons: Temalar
-homework: 'Öý iş'
-statistics: Hasabatlar
-quarters: Çärýekler
-rating: 'Iň ökde okuwçylar'
+subjects: Subjects
+Subject_list: 'Subjects list'
+Subject_edit: 'Edit Subject'
+Subject_create: 'Create subject'
 
+users: Users
+User_list: 'Users list'
+User_edit: 'Edit user'
+User_create: 'Create user'
 
-organisation: Mekdep
-organisation_saved: 'Maglumatlar üstünlikli ýatda saklandy.'
+students_groups: Classes
+Students_group_list: 'Classes list'
+Students_group_edit: 'Edit class'
+Students_group_create: 'Create class'
 
-calendars: Kalendarlar
-Calendar_list: 'Kalendarlar sanawy'
-Calendar_edit: 'Kalendary üýtgetmek'
-Calendar_create: 'Täze kalendar'
+lessons: Lessons
 
-holidays: 'Dynç günler'
-Holiday_list: 'Dynç günler sanawy'
+homework: Homework
 
-Subject_schedules_group_list: 'Ders rejeler toparlar sanawy'
+statistics: Statistics
 
-subject_schedules: 'Dersler rejesi'
-Subject_schedules_list: 'Ders rejeler sanawy'
+quarters: Quarters
+
+rating: 'Students rating'
+
+organisation: School
+organisation_saved: 'School saved successfully.'
+
+calendars: Calendars
+Calendar_list: 'Calendars list'
+Calendar_edit: 'Calendar edit'
+Calendar_create: 'Create calendar'
+
+holidays: 'Holidays'
+Holiday_list: 'Holidays list'
+
+Subject_schedules_group_list: 'Subject schedules groups list'
+Subject_schedules_group_edit: 'Edit subject schedules groups'
+Subject_schedules_group_create: 'Create subject schedules groups'
+
+subject_schedules: 'Subject schedules'
+Subject_schedules_list: 'Subject schedules list'
+Subject_schedules_edit: 'Edit Subject schedules'
+
 

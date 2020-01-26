@@ -3,21 +3,39 @@ user.ROLE_TEACHER: Mugallym
 user.ROLE_STUDENT: Okuwçy
 user.ROLE_USER: Ulanyjy
 user.ROLE_PARENT: Ene-ata
-user.profile: 'Profil'
-
-
-subject_areas: 'Ders ugurlary'
-subjects: Dersler
-users: Ulanyjylar
-students_groups: Synplar
-marks: Bahalar
-lessons: Temalar
-homework: 'Öý iş'
-statistics: Hasabatlar
-quarters: Çärýekler
-rating: 'Iň ökde okuwçylar'
+user.profile: Profil
 
 sms.student_marked: 'Okuwçy %name% %subject% sapagynda %date% senesinde %mark% aldy'
+
+subject_areas: 'Ders ugurlary'
+Subject_areas_list: 'Ders ugurlar sanawy'
+Subject_areas_edit: 'Ders ugur üýtgedilýär'
+Subject_areas_create: 'Täze ders ugur'
+
+subjects: Dersler
+Subject_list: 'Dersler sanawy'
+Subject_edit: 'Ders üýtgedilýär'
+Subject_create: 'Täze ders'
+
+users: Ulanyjylar
+User_list: 'Ulanyjylar sanawy'
+User_edit: 'Ulanyjy üýtgedilýär'
+User_create: 'Täze ulanyjy'
+
+students_groups: Synplar
+Students_group_list: 'Synplar sanawy'
+Students_group_edit: 'Synp üýtgedilýär'
+Students_group_create: 'Täze synp'
+
+lessons: Temalar
+
+homework: 'Öý iş'
+
+statistics: Hasabatlar
+
+quarters: Çärýekler
+
+rating: 'Iň ökde okuwçylar'
 
 organisation: Mekdep
 organisation_saved: 'Maglumatlar üstünlikli ýatda saklandy.'
@@ -31,6 +49,9 @@ holidays: 'Dynç günler'
 Holiday_list: 'Dynç günler sanawy'
 
 Subject_schedules_group_list: 'Ders rejeler toparlar sanawy'
+Subject_schedules_group_edit: 'Ders rejeler topary üýtgedilýär'
+Subject_schedules_group_create: 'Täze ders rejeler topary'
 
 subject_schedules: 'Dersler rejesi'
 Subject_schedules_list: 'Ders rejeler sanawy'
+Subject_schedules_edit: 'Ders reje üýtgedilýär'

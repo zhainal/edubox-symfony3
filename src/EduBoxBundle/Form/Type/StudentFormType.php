@@ -18,12 +18,16 @@ class StudentFormType extends AbstractType
     {
         $builder
             ->add('group', EntityType::class, [
+                'translation_domain' => 'forms',
+                'label' => 'user.class',
                 'class' => StudentsGroup::class,
                 'choice_label' => 'name',
                 'required' => false,
             ]);
         $builder
             ->add('parent', EntityType::class, [
+                'translation_domain' => 'forms',
+                'label' => 'user.parent',
                 'class' => User::class,
                 'choice_label' => 'full_name',
                 'required' => false,

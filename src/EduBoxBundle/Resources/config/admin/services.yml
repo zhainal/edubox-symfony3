@@ -80,7 +80,7 @@ services:
 
   edubox.admin.user:
     class: EduBoxBundle\Admin\UserAdmin
-    arguments: [~, EduBoxBundle:User, EduBoxBundle:Admin\UserCRUD]
+    arguments: [~, EduBoxBundle\Entity\User, EduBoxBundle:Admin\UserCRUD]
     tags:
       - name: sonata.admin
         manager_type: orm

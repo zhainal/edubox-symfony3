@@ -15,8 +15,10 @@ class SubjectAreaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+        $builder->add('name', TextType::class, ['label' => 'subject_area.name', 'translation_domain' => 'forms']);
         $builder->add('subjects', EntityType::class, [
+            'label' => 'subject_area.subjects',
+            'translation_domain' => 'forms',
             'disabled' => true,
             'class' => Subject::class,
             'choice_label' => 'name',

@@ -15,15 +15,22 @@ class StudentsGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('number', NumberType::class);
-        $builder->add('letter', TextType::class);
+        $builder->add('number', NumberType::class, [
+            'translation_domain' => 'forms',
+            'label' => 'students_group.number',
+        ]);
+        $builder->add('letter', TextType::class, [
+            'translation_domain' => 'forms',
+            'label' => 'students_group.letter',
+        ]);
         $builder->add('subjects', EntityType::class, [
+            'translation_domain' => 'forms',
+            'label' => 'students_group.subjects',
             'class' => Subject::class,
             'choice_label' => 'name',
             'required' => false,
             'multiple' => true,
             'disabled' => true,
         ]);
-        $builder->add('submit', SubmitType::class);
     }
 }
