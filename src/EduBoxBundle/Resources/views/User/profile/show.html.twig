@@ -25,7 +25,8 @@
                         {% endfor %}
                     </p>
                     <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-block">
-                        {{ 'profile.edit.submit'|trans([], 'FOSUserBundle') }}
+                        <i class="fa fa-edit"></i>
+                        {{ 'link_edit'|trans([], 'SonataAdminBundle') }}
                     </a>
                 </div>
             </div>
@@ -34,14 +35,14 @@
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a></li>
+                    <li class="active"><a href="#profile" data-toggle="tab" aria-expanded="false">{{ 'user.profile'|trans([], 'EduBoxBundle') }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="profile">
                         <form class="form-horizontal">
-                            {{ _self.single_field('Username', app.user.username) }}
-                            {{ _self.single_field('Email', app.user.email) }}
-                            {{ _self.single_field('Phone', app.user.phone) }}
+                            {{ _self.single_field('user.username'|trans([], 'forms'), app.user.username) }}
+                            {{ _self.single_field('user.email'|trans([], 'forms'), app.user.email) }}
+                            {{ _self.single_field('user.phone'|trans([], 'forms'), app.user.phone) }}
                         </form>
                     </div>
                     <!-- /.tab-pane -->

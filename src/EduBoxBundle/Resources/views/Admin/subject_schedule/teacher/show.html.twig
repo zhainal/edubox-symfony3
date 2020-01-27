@@ -1,63 +1,49 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Teacher subject schedule' %}
-
-{% macro subject(item) %}
-    {{ item.studentsGroup.name }}
-    -
-    {% if item.subject != null %}
-        {{ item.subject.name }}
-    {% else %}
-        ?
-    {% endif %}
-{% endmacro %}
-{% set box_body %}
-    <thead>
-    <tr>
-        <th>{{ date(4*3600*24).format('D') }}</th>
-        <th>{{ date(5*3600*24).format('D') }}</th>
-        <th>{{ date(6*3600*24).format('D') }}</th>
-    </tr>
-    <thead>
-    <tbody>
-    {% for hour in 1..6 %}
-        <tr>
-            {% for day in 1..3 %}
-                <td>
-                    {% if schedule[day][hour] is defined %}
-                        {{ _self.subject(schedule[day][hour]) }}
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    </tbody>
-    <thead>
-    <tr>
-        <th>{{ date(7*3600*24).format('D') }}</th>
-        <th>{{ date(8*3600*24).format('D') }}</th>
-        <th>{{ date(9*3600*24).format('D') }}</th>
-    </tr>
-    <thead>
-    <tbody>
-    {% for hour in 1..6 %}
-        <tr>
-            {% for day in 4..6 %}
-                <td>
-                    {% if schedule[day][hour] is defined %}
-                        {{ _self.subject(schedule[day][hour]) }}
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    </tbody>
-{% endset %}
+{% set title = 'subject_schedules'|trans([], 'EduBoxBundle') %}
 
 {% block content %}
-    {% include '@EduBox/Block/box_table.html.twig' with {'table_content':box_body} %}
+    <div class="row">
+        {% for day in 1..6 %}
+            <div class="col-md-6 diary">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            {{ ('subject_schedule.day_'~day)|trans([], 'forms') }}
+                        </h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th style="width: 5%">№</th>
+                                <th style="width: 5%">{{ 'subject_schedule.class'|trans([], 'forms') }}</th>
+                                <th style="width: 5%">{{ 'subject_schedule.subject'|trans([], 'forms') }}</th>
+                            </tr>
+                                {% for hour in 1..7 %}
+                                    <tr>
+                                        <td>{{ hour }}</td>
+                                        <td>
+                                            {% if schedule[day][hour].studentsGroup.name is defined %}
+                                                {{ schedule[day][hour].studentsGroup.name }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if schedule[day][hour].subject.name is defined %}
+                                                {{ schedule[day][hour].subject.name }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

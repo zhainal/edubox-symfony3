@@ -1,15 +1,16 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Show lesson' %}
+{% set title = 'Lesson_show'|trans([], 'EduBoxBundle') %}
+
 {% set box_title %}
-    Lesson of the subject of {{ lesson.subject.name }} on {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
+    {{ lesson.subject.name }} | {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
 {% endset %}
 
 {% block actions %}
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_listLesson', {'subjectId':lesson.subject.id, 'studentsGroupId': lesson.studentsGroup.id}) }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            Return to list
+            {{ 'link_action_list'|trans([], 'SonataAdminBundle') }}
         </a>
     </li>
 {% endblock %}
@@ -17,23 +18,23 @@
 {% set table_content %}
     <tbody>
     <tr class="sonata-ba-view-container">
-        <th>Name</th>
+        <th>{{ 'lesson.name'|trans([], 'forms') }}</th>
         <td>{{ lesson.name }}</td>
     </tr>
     <tr class="sonata-ba-view-container">
-        <th colspan="2">Content</th>
+        <th>{{ 'lesson.content'|trans([], 'forms') }}</th>
     </tr>
     <tr class="sonata-ba-view-container">
-        <th colspan="2">{{ lesson.content|raw }}</th>
+        <td colspan="2">{{ lesson.content|raw }}</td>
     </tr>
     <tr class="sonata-ba-view-container">
-        <th>Homework</th>
+        <th>{{ 'lesson.homeworks'|trans([], 'forms') }}</th>
         <td>
             <ul>
                 {% for homework in lesson.homeworks %}
-                    <l>
+                    <li>
                         <a href="{{ path('edubox.admin.homework_show', {'id':homework.id}) }}">{{ homework.name }}</a>
-                    </l>
+                    </li>
                 {% endfor %}
             </ul>
         </td>

@@ -259,6 +259,9 @@ class MarkManager
             'user' => $user,
             'subject' => $subject,
         ]);
+        if ($this->hasSourceMark($cell->getMark())) {
+            return false;
+        }
         $cell->setMark($mark);
         $cell->setComment($comment);
         $this->store($cell);

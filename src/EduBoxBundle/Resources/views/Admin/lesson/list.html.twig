@@ -1,18 +1,18 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Class '~studentsGroup.name~' lessons in the subject: '~subject.name %}
+{% set title = 'Lesson_list'|trans([], 'EduBoxBundle') %}
 
 {% block actions %}
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_list') }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            Subjects list
+            {{ 'link_action_list'|trans([], 'SonataAdminBundle') }}
         </a>
     </li>
 {% endblock %}
 
 {% set box_header %}
-    <div class="box-title"></div>
+    <div class="box-title">{{ studentsGroup.name ~ ' - ' ~ subject.name }}</div>
     <div class="box-tools pull-right">
         <ul class="pagination pagination-sm inline">
             <li {% if quarter == 1 %}class="active"{% endif %}>
@@ -34,9 +34,9 @@
 {% set table_content %}
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Hour</th>
+        <th>{{ 'lesson.name'|trans([], 'forms') }}</th>
+        <th>{{ 'lesson.date'|trans([], 'forms') }}</th>
+        <th>{{ 'lesson.hour'|trans([], 'forms') }}</th>
         <th></th>
     </tr>
     </thead>
@@ -48,10 +48,16 @@
             <td>{{ lesson.hour }}</td>
             <td>
                 {% if is_granted('ROLE_EDUBOX_ADMIN_LESSON_ALL') or is_granted('ROLE_EDUBOX_ADMIN_LESSON_VIEW') %}
-                    <a href="{{ path('edubox.admin.lesson_show', {'id':lesson.id}) }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+                    <a href="{{ path('edubox.admin.lesson_show', {'id':lesson.id}) }}" class="btn btn-success">
+                        <i class="fa fa-eye"></i>
+                        {{ 'link_action_show'|trans([], 'SonataAdminBundle') }}
+                    </a>
                 {% endif %}
                 {% if is_granted('ROLE_EDUBOX_ADMIN_LESSON_ALL') or is_granted('ROLE_EDUBOX_ADMIN_LESSON_EDIT') %}
-                    <a href="{{ path('edubox.admin.lesson_edit', {'id':lesson.id}) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a href="{{ path('edubox.admin.lesson_edit', {'id':lesson.id}) }}" class="btn btn-success">
+                        <i class="fa fa-edit"></i>
+                        {{ 'link_edit'|trans([], 'SonataAdminBundle') }}
+                    </a>
                 {% endif %}
             </td>
         </tr>

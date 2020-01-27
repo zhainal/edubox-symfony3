@@ -1,17 +1,11 @@
 {% extends 'EduBoxBundle::admin_layout.html.twig' %}
 
-{% set title = 'Quarters' %}
-
+{% set title = 'Quarter_list'|trans([], 'EduBoxBundle') %}
 
 {% block content %}
     {% if studentsGroups is defined %}
         {% set table_content_1 %}
             {% if studentsGroups|length > 0 %}
-                <thead>
-                <tr>
-                    <th>Name</th>
-                </tr>
-                </thead>
                 <tbody>
                 {% for studentsGroup in studentsGroups %}
                     <tr>
@@ -27,17 +21,10 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                <tr>
-                    <th>Students groups not found</th>
-                </tr>
             {% endif %}
         {% endset %}
         {% set table_content_2 %}
             {% if students|length > 0 %}
-                <thead>
-                <th>Name</th>
-                </thead>
                 <tbody>
                 {% for student in students %}
                     <tr>
@@ -45,33 +32,18 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                {% if studentsGroupId == null %}
-                    <tr>
-                        <th>Please select a students group</th>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <th>Students not found</th>
-                    </tr>
-                {% endif %}
             {% endif %}
         {% endset %}
         <div class="row">
             <div class="col-md-4">
-                {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content_1, 'box_title': 'Students groups'} only %}
+                {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content_1, 'box_title':'students_groups'|trans([], 'EduBoxBundle')} only %}
             </div>
             <div class="col-md-8">
-                {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content_2, 'box_title': 'Students'} only %}
+                {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content_2, 'box_title':'students'|trans([], 'EduBoxBundle')} only %}
             </div>
         </div>
     {% elseif students is defined %}
         {% set table_content %}
-            <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-            </thead>
             <tbody>
             {% for student in students %}
                 <tr>
@@ -80,6 +52,6 @@
             {% endfor %}
             </tbody>
         {% endset %}
-        {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content, 'box_title': 'Students groups'} only %}
+        {% include '@EduBox/Block/box_table.html.twig' with {'table_content': table_content, 'box_title':'students'|trans([], 'EduBoxBundle')} only %}
     {% endif %}
     {% endblock %}

@@ -32,14 +32,15 @@ class HomeworkAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list)
     {
-        $list->addIdentifier('name');
-        $list->add('lesson.name');
+        $list->addIdentifier('name', null, ['translation_domain' => 'forms', 'label' => 'homework.name']);
+        $list->add('lesson.name', null, ['translation_domain' => 'forms', 'label' => 'homework.lesson']);
     }
 
     protected function configureFormFields(FormMapper $form)
     {
-        $form->add('name');
+        $form->add('name', null, ['label' => 'homework.name'], ['translation_domain' => 'forms']);
         $form->add('lesson', EntityType::class, [
+            'label' => 'homework.lesson',
             'class' => Lesson::class,
             'choice_label' => 'nameWithDate',
             'query_builder' => function(EntityRepository $qb) {
@@ -49,8 +50,8 @@ class HomeworkAdmin extends AbstractAdmin
                     ->andWhere($qb->expr()->isNotNull('l.name'))
                     ->andWhere($qb->expr()->isNotNull('l.date'));
             }
-        ]);
-        $form->add('content');
+        ], ['translation_domain' => 'forms']);
+        $form->add('content', null, ['label' => 'homework.content'], ['translation_domain' => 'forms']);
     }
 
     protected function configureShowFields(ShowMapper $show)

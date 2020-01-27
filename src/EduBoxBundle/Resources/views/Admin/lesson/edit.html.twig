@@ -1,15 +1,16 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Edit lesson' %}
+{% set title = 'Lesson_edit'|trans([], 'EduBoxBundle') %}
+
 {% set box_title %}
-    Lesson in class {{ lesson.studentsGroup.name }} of the subject of {{ lesson.subject.name }} on {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
+    {{ lesson.studentsGroup.name }} | {{ lesson.subject.name }} | {{ lesson.date.format('d.m.Y') }}-{{ lesson.hour }}
 {% endset %}
 
 {% block actions %}
     <li>
         <a class="sonata-action-element" href="{{ path('edubox.admin.lesson_listLesson', {'subjectId':lesson.subject.id, 'studentsGroupId':lesson.studentsGroup.id}) }}">
             <i class="fa fa-list" aria-hidden="true"></i>
-            Lessons list
+            {{ 'link_action_list'|trans([], 'SonataAdminBundle') }}
         </a>
     </li>
 {% endblock %}
@@ -38,7 +39,10 @@
     {{ form_start(form) }}
     {% include '@EduBox/Block/box.html.twig' with {'box_body':box_body, 'box_title':box_title} only %}
     <div class="sonata-ba-form-actions well well-small form-actions">
-        <button type="submit" class="btn btn-success">Save lesson</button>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-save"></i>
+            {{ 'btn_update'|trans([], 'SonataAdminBundle') }}
+        </button>
     </div>
     {{ form_end(form) }}
 {% endblock %}

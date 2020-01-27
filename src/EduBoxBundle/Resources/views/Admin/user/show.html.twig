@@ -62,7 +62,7 @@
                         {% endif %}
                         <hr>
                         <strong> Parent phone: </strong>
-                        {% if user.parent is defined %}
+                        {% if user.parent.phone is defined %}
                             {{ user.parent.phone }}
                         {% else %}
                             -

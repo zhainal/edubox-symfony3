@@ -3,11 +3,6 @@
 {% set title = 'User_list'|trans([], 'EduBoxBundle') %}
 
 {% set studentsGroupsTableContent %}
-    <thead>
-    <tr>
-        <th>Name</th>
-    </tr>
-    </thead>
     <tbody>
     {% for _studentsGroup in studentsGroups %}
         <tr>
@@ -26,11 +21,6 @@
 {% endset %}
 
 {% set studentsTable %}
-    <thead>
-    <tr>
-        <th>Fullname</th>
-    </tr>
-    </thead>
     <tbody>
         {% for student in students %}
             <tr>
@@ -38,8 +28,6 @@
                     <a href="{{ path('edubox.admin.user_show', {'id': student.id}) }}">{{ student.fullname }}</a>
                 </td>
             </tr>
-        {% else %}
-            <th>Students group not selected or students not found</th>
         {% endfor %}
     </tbody>
 {% endset %}
@@ -47,10 +35,10 @@
 {% block content %}
     <div class="row">
         <div class="col-md-4">
-            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsGroupsTableContent, 'box_title': 'Students groups'} %}
+            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsGroupsTableContent, 'box_title': 'students_groups'|trans([], 'EduBoxBundle')} %}
         </div>
         <div class="col-md-8">
-            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsTable, 'box_title': 'Students'} %}
+            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsTable, 'box_title': 'students'|trans([], 'EduBoxBundle')} %}
         </div>
     </div>
 {% endblock %}

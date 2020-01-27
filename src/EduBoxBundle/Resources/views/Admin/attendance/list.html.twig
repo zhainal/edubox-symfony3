@@ -1,13 +1,8 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Attendance' %}
+{% set title = 'Statistic_list'|trans([], 'EduBoxBundle') %}
 
 {% set studentsGroupsTableContent %}
-    <thead>
-    <tr>
-        <th>Name</th>
-    </tr>
-    </thead>
     <tbody>
     {% for _studentsGroup in studentsGroups %}
         <tr>
@@ -23,18 +18,11 @@
                 {% endif %}
             </td>
         </tr>
-    {% else %}
-        <th>Students groups not found</th>
     {% endfor %}
     </tbody>
 {% endset %}
 
 {% set subjectsTableContent %}
-    <thead>
-    <tr>
-        <th>Name</th>
-    </tr>
-    </thead>
     <tbody>
     {% for _subject in subjects %}
         <tr>
@@ -50,12 +38,6 @@
                 {% endif %}
             </td>
         </tr>
-    {% else %}
-        {% if studentsGroup is not null %}
-            <th>Subjects not found</th>
-        {% else %}
-            <th>Select a students group</th>
-        {% endif %}
     {% endfor %}
     </tbody>
 {% endset %}
@@ -63,8 +45,8 @@
 {% set attendanceTableContent %}
     <thead>
     <tr>
-        <th>Fullname</th>
-        <th>Attendance</th>
+        <th>{{ 'user.full_name'|trans([], 'forms') }}</th>
+        <th>{{ 'attendance'|trans([], 'forms') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -73,19 +55,17 @@
             <td>{{ _attendance.fullname }}</td>
             <td>{{ _attendance.attendance }}</td>
         </tr>
-    {% else %}
-        <th>Students not found</th>
-    {% endfor    %}
+    {% endfor %}
     </tbody>
 {% endset %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-3">
-            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsGroupsTableContent} %}
+            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':studentsGroupsTableContent, 'box_title':'students_groups'|trans([], 'EduBoxBundle')} %}
         </div>
         <div class="col-md-3">
-            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':subjectsTableContent} %}
+            {% include '@EduBox/Block/box_table.html.twig' with {'table_content':subjectsTableContent, 'box_title':'subjects'|trans([], 'EduBoxBundle')} %}
         </div>
         <div class="col-md-6">
             <div class="box box-primary">

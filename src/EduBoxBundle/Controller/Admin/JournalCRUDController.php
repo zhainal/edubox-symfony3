@@ -111,8 +111,10 @@ class JournalCRUDController extends CRUDController
             throw $this->createNotFoundException('Some attributes incorrect');
         }
         $students = $studentsGroupRepository->getStudents($studentsGroup);
+        $mark = $this->get('edubox.mark_manager')->createMark($subject, $user, $mark, $date, $hour, $comment);
+        if (!$mark) throw $this->createAccessDeniedException('Unable create mark');
         return new JsonResponse(
-            round($this->get('edubox.mark_manager')->createMark($subject, $user, $mark, $date, $hour, $comment))
+            round($mark)
         );
     }
 }

@@ -39,7 +39,7 @@ class UserCRUDController extends CRUDController
 
     public function showAction($id = null)
     {
-        $this->admin->checkAccess('view');
+        $this->admin->checkAccess('show');
         $user =  $this->get('edubox.user_manager')->getObject($id);
         if (!$user instanceof User) {
             throw $this->createNotFoundException('User not found');

@@ -114,7 +114,7 @@ services:
         label_catalogue: 'EduBoxBundle'
         group: 'journal'
         label: 'journal'
-        icon: '<i class="fa fa-bar-chart"></i>'
+        icon: '<i class="fa fa-check-circle"></i>'
         on_top: true
 
   edubox.admin.diary:
@@ -127,7 +127,7 @@ services:
         label_catalogue: 'EduBoxBundle'
         group: 'diary'
         label: 'diary'
-        icon: '<i class="fa fa-bar-chart"></i>'
+        icon: '<i class="fa fa-check-circle"></i>'
         on_top: true
 
   edubox.admin.lesson:

@@ -15,9 +15,11 @@ class LessonFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, ['required' => false]);
-        $builder->add('content', TextareaType::class, ['required' => false]);
+        $builder->add('name', TextType::class, ['required' => false, 'label' => 'lesson.name', 'translation_domain' => 'forms']);
+        $builder->add('content', TextareaType::class, ['required' => false, 'label' => 'lesson.content', 'translation_domain' => 'forms']);
         $builder->add('homeworks', EntityType::class, [
+            'label' => 'lesson.homeworks',
+            'translation_domain' => 'forms',
             'disabled' => true,
             'class' => Homework::class,
             'choice_label' => 'name',

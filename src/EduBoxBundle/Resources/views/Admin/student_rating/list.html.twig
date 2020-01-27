@@ -1,13 +1,13 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Students Rating' %}
+{% set title = 'Rating_list'|trans([], 'EduBoxBundle') %}
 
 {% set tableContent %}
     <thead>
     <tr>
-        <th>#</th>
-        <th>Fullname</th>
-        <th>Score</th>
+        <th>№</th>
+        <th>{{ 'user.full_name'|trans([], 'forms') }}</th>
+        <th>{{ 'user.score'|trans([], 'forms') }}</th>
     </tr>
     </thead>
     <tbody>

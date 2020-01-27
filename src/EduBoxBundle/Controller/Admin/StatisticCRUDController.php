@@ -42,7 +42,6 @@ class StatisticCRUDController extends CRUDController
             $attendance = null;
             $studentsGroup = null;
             $subjects = null;
-            $attendance = null;
             $subAttendance = null;
         }
 
