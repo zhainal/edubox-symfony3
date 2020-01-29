@@ -32,9 +32,9 @@
                                 {% if number != 'date' %}
                                     <tr>
                                         <td>{{ number }}</td>
-                                        <td>{% if hour.subject != null %} {{ hour.subject.name }} {% endif %}</td>
+                                        <td style="white-space: nowrap;">{% if hour.subject != null %} {{ hour.subject.name }} {% endif %}</td>
                                         <td>{% if hour.lesson != null %} <a href="{{ path('edubox.admin.lesson_show', {'id':hour.lesson.id}) }}">{{ hour.lesson.name }}</a> {% endif %}</td>
-                                        <td>{% if hour.mark != null %} {{ hour.mark.mark }} {% endif %}</td>
+                                        <td>{% if hour.mark != null %} {{ ('mark_'~hour.mark.mark)|trans([], 'forms') }} {% endif %}</td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}

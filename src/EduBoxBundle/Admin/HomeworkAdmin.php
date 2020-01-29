@@ -22,12 +22,6 @@ class HomeworkAdmin extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->clear();
-
-        $collection->add('list');
-        $collection->add('create');
-        $collection->add('edit');
-        $collection->add('show', '{id}/show');
     }
 
     protected function configureListFields(ListMapper $list)

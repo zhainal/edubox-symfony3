@@ -93,7 +93,7 @@
 {% endif %}
 
 {% if user.parent_form is defined %}
-    {% set parent_tab_title = 'user.tab_teacher'|trans([], 'forms') %}
+    {% set parent_tab_title = 'user.tab_parent'|trans([], 'forms') %}
     {% set parent_tab_content %}
         {{ form_widget(user.parent_form) }}
         <div class="row">
@@ -109,7 +109,6 @@
 {% if user.student_form is defined %}
     {% set student_tab_title = 'user.tab_student'|trans([], 'forms') %}
     {% set student_tab_content %}
-        {{ form_widget(user.student_form) }}
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group {% if not user.student_form.group.vars.valid %}has-error{% endif %}">
@@ -122,6 +121,7 @@
                 </div>
             </div>
         </div>
+        <!--{{ form_widget(user.student_form) }}-->
     {% endset %}
 {% endif %}
 

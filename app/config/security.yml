@@ -44,6 +44,7 @@ security:
             - ROLE_EDUBOX_ADMIN_HOMEWORK_LIST
             - ROLE_EDUBOX_ADMIN_HOMEWORK_VIEW
             - ROLE_EDUBOX_ADMIN_QUARTER_LIST
+            - ROLE_EDUBOX_ADMIN_STUDENT_RATING_LIST
 
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded

@@ -111,8 +111,10 @@ class LessonCRUDController extends CRUDController
         $parentManager = $this->get('edubox.parent_manager');
         $student = $parentManager->getStudent($parent, $studentId);
         if ($student instanceof User) {
-            $subjects = $this->get('edubox.student_manager')->getSubjects($student);
-            return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/teacher/subject_list.html.twig', [
+            $studentsGroup = $this->get('edubox.student_manager')->getStudentsGroup($student);
+            $subjects = $studentsGroup->getSubjects();
+            return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/student/subject_list.html.twig', [
+                'studentsGroup' => $studentsGroup,
                 'subjects' => $subjects
             ]);
         }

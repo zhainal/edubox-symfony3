@@ -67,13 +67,16 @@ class DiaryManager
         $diary = $diary->getSchedule();
         foreach ($diary as $day => &$hours) {
             $date = (new \DateTime())->setTimestamp($beginDateOfWeek + $day*24*3600);
+            $subjectsHour = [];
             foreach ($hours as $hour => &$subjectId) {
-                $subject = $this->subjectManager->getObject($hour);
+                $subject = $this->subjectManager->getObject($subjectId);
                 if ($subject instanceof Subject) {
+                    @$subjectsHour[$subject->getId()]++;
                     $subjectId = [
                         'subject' => $subject,
-                        'lesson' => $this->lessonManager->getLesson($subject, $studentsGroup, $date, $hour),
-                        'mark' => $this->markManager->getMark($subject, $student, $date, $hour),
+                        'subject_hour' => $subjectsHour[$subject->getId()],
+                        'lesson' => $this->lessonManager->getLesson($subject, $studentsGroup, $date, $subjectsHour[$subject->getId()]),
+                        'mark' => $this->markManager->getMark($subject, $student, $date, $subjectsHour[$subject->getId()]),
                         'hour' => $hour,
                     ];
                 }
