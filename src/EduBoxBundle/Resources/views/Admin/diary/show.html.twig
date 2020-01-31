@@ -1,6 +1,6 @@
 {% extends '@EduBox/admin_layout.html.twig' %}
 
-{% set title = 'Diary' %}
+{% set title = 'Diary_list'|trans([], 'EduBoxBundle') %}
 
 {% block sonata_admin_content_actions_wrappers %}
     <ul class="nav navbar-nav navbar-right">
@@ -24,9 +24,9 @@
                             <tbody>
                             <tr>
                                 <th style="width: 5%">№</th>
-                                <th style="width: 30%">Subject</th>
-                                <th style="width: 55%">Lesson</th>
-                                <th style="width: 10%">Mark</th>
+                                <th style="width: 30%">{{ 'subject'|trans([], 'forms') }}</th>
+                                <th style="width: 30%">{{ 'homework.lesson'|trans([], 'forms') }}</th>
+                                <th style="width: 30%">{{ 'mark'|trans([], 'forms') }}</th>
                             </tr>
                             {% for number,hour in hours %}
                                 {% if number != 'date' %}

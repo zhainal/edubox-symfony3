@@ -50,12 +50,14 @@ class HomeworkAdmin extends AbstractAdmin
 
     protected function configureShowFields(ShowMapper $show)
     {
-        $show->add('name');
+        $show->add('name', null, ['label' => 'homework.name', 'translation_domain' => 'forms']);
         $show->add('lesson', EntityType::class, [
+            'label' => 'homework.lesson',
+            'translation_domain' => 'forms',
             'class' => Lesson::class,
             'choice_label' => 'nameWithDate',
         ]);
-        $show->add('content', TextareaType::class);
+        $show->add('content', TextareaType::class, ['label' => 'homework.content', 'translation_domain' => 'forms']);
     }
 
 }

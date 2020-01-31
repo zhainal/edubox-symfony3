@@ -79,11 +79,13 @@ mark_4: 4
 mark_5: 5
 mark_dc: GM
 marks: Bahalar
+mark: 'Baha'
 lesson.name: 'Ady'
 lesson.date: 'Senesi'
 lesson.hour: 'Sagady'
 lesson.content: 'Mazmuny'
 lesson.homeworks: 'Öý işler'
+lessons: 'Temalar'
 homework.name: 'Ady'
 homework.lesson: 'Tema'
 homework.content: 'Mazmuny'

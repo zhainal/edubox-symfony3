@@ -16,16 +16,12 @@ class LessonCRUDController extends CRUDController
     public function listAction()
     {
         $this->admin->checkAccess('list');
-        $request = $this->getRequest();
 
         if ($this->isGranted('ROLE_TEACHER')) {
             return $this->teacherLessonSubjectList();
         }
-        elseif ($this->isGranted('ROLE_STUDENT')) {
+        elseif ($this->isGranted('ROLE_STUDENT') || $this->isGranted('ROLE_PARENT')) {
             return $this->studentLessonSubjectList();
-        }
-        elseif ($this->isGranted('ROLE_PARENT')) {
-            return $this->parentLessonSubjectList((int)$request->get('student'));
         }
         else {
             throw $this->createAccessDeniedException();
@@ -102,29 +98,6 @@ class LessonCRUDController extends CRUDController
         ]);
     }
 
-    private function parentLessonSubjectList($studentId)
-    {
-        $parent = $this->getUser();
-        if (!$parent instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
-        $parentManager = $this->get('edubox.parent_manager');
-        $student = $parentManager->getStudent($parent, $studentId);
-        if ($student instanceof User) {
-            $studentsGroup = $this->get('edubox.student_manager')->getStudentsGroup($student);
-            $subjects = $studentsGroup->getSubjects();
-            return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/student/subject_list.html.twig', [
-                'studentsGroup' => $studentsGroup,
-                'subjects' => $subjects
-            ]);
-        }
-        $students = $parentManager->getStudents($parent);
-        return $this->renderWithExtraParams('EduBoxBundle:Admin:parent/student_list.html.twig', [
-            'route' => 'edubox.admin.lesson_list',
-            'students' => $students
-        ]);
-    }
-
     private function teacherLessonSubjectList()
     {
         $teacher = $this->getUser();
@@ -139,12 +112,20 @@ class LessonCRUDController extends CRUDController
 
     private function studentLessonSubjectList()
     {
-        $student = $this->getUser();
-        if (!$student instanceof User) {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
             throw $this->createAccessDeniedException();
         }
-        $studentsGroup = $this->get('edubox.student_manager')->getStudentsGroup($student);
-        $subjects = $this->get('edubox.student_manager')->getSubjects($student);
+        // if the user has role parent
+        if ($user->hasRole('ROLE_PARENT')) {
+            $student = $this->get('edubox.parent_manager')->getActiveStudent($user, $this->getRequest());
+            if (!$student instanceof User) {
+                throw $this->createNotFoundException('Student not found');
+            }
+            $user = $student;
+        }
+        $studentsGroup = $this->get('edubox.student_manager')->getStudentsGroup($user);
+        $subjects = $this->get('edubox.student_manager')->getSubjects($user);
         return $this->renderWithExtraParams('EduBoxBundle:Admin:lesson/student/subject_list.html.twig', [
             'subjects' => $subjects,
             'studentsGroup' => $studentsGroup,

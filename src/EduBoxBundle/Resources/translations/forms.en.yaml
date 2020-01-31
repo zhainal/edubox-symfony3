@@ -79,11 +79,13 @@ mark_4: 4
 mark_5: 5
 mark_dc: N
 marks: Marks
+mark: 'Mark'
 lesson.name: 'Name'
 lesson.date: 'Date'
 lesson.hour: 'Hour'
 lesson.content: 'Content'
 lesson.homeworks: Homework
+lessons: 'Lessons'
 homework.name: 'Name'
 homework.lesson: 'Lesson'
 homework.content: 'Content'

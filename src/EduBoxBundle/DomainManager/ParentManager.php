@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Entity\UserMeta;
+use Symfony\Component\HttpFoundation\Request;
 
 class ParentManager
 {
@@ -50,6 +51,23 @@ class ParentManager
             return null;
         }
         return $this->userManager->getObject($studentId);
+    }
+
+    public function getActiveStudent(User $parent, Request $request)
+    {
+        $studentId = $request->getSession()->get('_student_id');
+        $student = $this->userManager->getObject($studentId);
+        if (!$student instanceof User) {
+            $students = $this->getStudents($parent);
+            if ($students[0] instanceof User) $student = $students[0];
+        }
+        if (!$student instanceof User)
+            return null;
+        if (!$student->hasRole('ROLE_STUDENT'))
+            return null;
+        if (!$this->hasStudent($parent, $student))
+            return null;
+        return $student;
     }
 
 

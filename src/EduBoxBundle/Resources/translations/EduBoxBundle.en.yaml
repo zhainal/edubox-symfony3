@@ -27,6 +27,7 @@ journal: Journal
 Journal_list: 'Journals list'
 Journal_edit: 'Edit journal'
 diary: Diary
+Diary_list: 'Diary'
 lessons: Lessons
 Lesson_list: 'Lessons list'
 Lesson_edit: 'Edit lesson'

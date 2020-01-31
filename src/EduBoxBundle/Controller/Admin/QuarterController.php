@@ -21,10 +21,14 @@ class QuarterController extends CRUDController
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TEACHER')) {
                 return $this->quartersList($studentsGroupId != null ? $studentsGroupId : null );
             }
-            elseif ($user->hasRole('ROLE_PARENT')) {
-                return $this->parentQuarter((int)$request->get('student'));
-            }
-            elseif ($user->hasRole('ROLE_STUDENT')) {
+            elseif ($user->hasRole('ROLE_STUDENT') || $user->hasRole('ROLE_PARENT')) {
+                if ($user->hasRole('ROLE_PARENT')) {
+                    $student = $this->get('edubox.parent_manager')->getActiveStudent($user, $this->getRequest());
+                    if (!$student instanceof User) {
+                        throw $this->createNotFoundException('Student not found');
+                    }
+                    $user = $student;
+                }
                 return $this->show($user);
             }
             else {
@@ -60,11 +64,11 @@ class QuarterController extends CRUDController
     public function show(User $student)
     {
         if (!$student->hasRole('ROLE_STUDENT')) {
-            throw new \Exception('The specified user is not a student');
+            throw $this->createAccessDeniedException('The specified user is not a student');
         }
         $quarterManager = $this->get('edubox.quarter_manager');
         $subjectsWithQuarter = $quarterManager->getQuartersByUser($student);
-        return $this->renderWithExtraParams('@EduBox/Admin/quarter/show.html.twig', [
+        return $this->renderWithExtraParams('@EduBox/Admin/quarter/student/show.html.twig', [
             'subjectsWithQuarter' => $subjectsWithQuarter,
             'student' => $student,
         ]);

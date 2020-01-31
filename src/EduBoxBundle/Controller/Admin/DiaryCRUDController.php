@@ -20,19 +20,10 @@ class DiaryCRUDController extends CRUDController
 
         // if the user has role parent
         if ($user->hasRole('ROLE_PARENT')) {
-            $parentManager = $this->get('edubox.parent_manager');
-            $studentId = $this->getRequest()->getSession()->get('_student_id');
-            $student = $this->get('edubox.user_manager')->getObject($studentId);
+            $student = $this->get('edubox.parent_manager')->getActiveStudent($user, $this->getRequest());
             if (!$student instanceof User) {
-                $students = $parentManager->getStudents($user);
-                if ($students[0] instanceof User) $student = $students[0];
+                throw $this->createNotFoundException('Student not found');
             }
-            if (!$student instanceof User)
-                throw $this->createNotFoundException('Student not found');
-            if (!$student->hasRole('ROLE_STUDENT'))
-                throw $this->createNotFoundException('Student not found');
-            if (!$this->get('edubox.parent_manager')->hasStudent($user, $student))
-                throw $this->createNotFoundException('Student not found');
             $user = $student;
         }
 
