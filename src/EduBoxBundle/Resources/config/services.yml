@@ -142,7 +142,17 @@ services:
     tags:
       - { name: kernel.event_listener, event: kernel.request , method: onKernelRequest, priority: 17 }
 
+  EduBoxBundle\EventListener\DetermineStudentListener:
+    arguments: ['@edubox.user_manager']
+    tags:
+      - { name: kernel.event_listener, event: kernel.request , method: onKernelRequest }
 
+  # Subscribers
+  edubox.tblprefix_subscriber:
+    class: EduBoxBundle\Subscriber\TablePrefixSubscriber
+    arguments: ['%edubox.db.table_prefix%']
+    tags:
+      - { name: doctrine.event_subscriber }
 
   # Commands
   EduBoxBundle\Command\ResetLessonsCommand:
