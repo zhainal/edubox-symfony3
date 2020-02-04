@@ -9,6 +9,7 @@ imports:
 parameters:
     locale: en
     edubox.db.table_prefix: box_
+    mailer_user: 'noreply@mail.com'
 
 framework:
     #esi: ~
@@ -83,7 +84,7 @@ fos_user:
     firewall_name: main
     user_class: EduBoxBundle\Entity\User
     from_email:
-        address: 'noreply@mail.com'
-        sender_name: 'noreply'
+        address: '%mailer_user%'
+        sender_name: 'unknown'
 
 
