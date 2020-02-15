@@ -1,3 +1,4 @@
+### For demo: http://demo.edx.pw/
 # EduBox – School Management System
 This system is an innovative system which allows school management by reducing paperwork, controlling attendance and performance of students, informing parents of their children and ensuring their constant communication. In the novel system, we maintained previous design of class-book which is familiar to teachers so that their daily works are facilitated.  User-friendly interface will help parents, teachers, and students to adapt their new design and features. Edubox mainly helps to save time to fill in the class-books as well as time and power for regular reports.
 ## Our Mission
