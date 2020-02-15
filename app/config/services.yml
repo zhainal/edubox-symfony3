@@ -21,3 +21,16 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    EduBoxBundle\:
+        resource: '../../src/EduBoxBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/EduBoxBundle/{Entity,Repository,Tests}'
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    EduBoxBundle\Controller\:
+        resource: '../../src/EduBoxBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
