@@ -21,17 +21,9 @@ fos_user_resetting:
 
 fos_user_profile:
   resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-  prefix: /panel/user/profile
+  prefix: /panel/profile
 
 fos_user_change_password:
   resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-  prefix: /panel/user/profile
+  prefix: /panel/profile
 
-
-2fa_login:
-  path: /2fa
-  defaults:
-    _controller: "scheb_two_factor.form_controller:form"
-
-2fa_login_check:
-  path: /2fa_check

@@ -36,7 +36,7 @@ class UserFormHandler
     public function postCreateForm(FormInterface $form, $userId)
     {
         $user = $this->entityManager->getRepository(User::class)->find($userId);
-        if (!$user) {
+        if (!$user instanceof User) {
             throw new NotFoundHttpException('User not found');
         }
         $roles = [

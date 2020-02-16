@@ -53,6 +53,9 @@ class UserCRUDController extends CRUDController
 
     public function editAction($id = null)
     {
+        if ($id == null) {
+            throw $this->createNotFoundException();
+        }
         $this->admin->checkAccess('edit');
         $request = $this->getRequest();
 
