@@ -6,13 +6,23 @@ namespace EduBoxBundle\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use EduBoxBundle\DomainManager\ParentManager;
+use EduBoxBundle\DomainManager\StudentManager;
+use EduBoxBundle\DomainManager\UserManager;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\SubjectArea;
+use EduBoxBundle\Entity\SubjectSchedule;
+use EduBoxBundle\Entity\SubjectSchedulesGroup;
 use EduBoxBundle\Entity\User;
+use EduBoxBundle\Entity\UserMeta;
+use Sonata\Doctrine\Model\ManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EduBoxFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager)
     {
         $studentsGroups = [
@@ -80,7 +90,7 @@ class EduBoxFixtures extends Fixture
             13 => ["username" => "ogulgerek", "email" => "ogulgerek@mail.com", "phone" => "", "lastname" => "Pudakowa", "firstname" => "Ogulgerek", "gender" => "2", "birthday" => "30.01.2002", "role" => "ROLE_STUDENT", "class" => "1"],
             14 => ["username" => "arzuwmyrat", "email" => "arzuwmyrat@mail.com", "phone" => "", "lastname" => "Ilyasow", "firstname" => "Arzuwmyrat", "gender" => "1", "birthday" => "25.10.2002", "role" => "ROLE_STUDENT", "class" => "1"],
             15 => ["username" => "gulsenem", "email" => "gulsenem@mail.com", "phone" => "", "lastname" => "Işangulyýewa", "firstname" => "Gülsenem", "gender" => "2", "birthday" => "04.05.2002", "role" => "ROLE_STUDENT", "class" => "1"],
-            16 => ["username" => "durdygylych", "email" => "durdygylych@mail.com", "phone" => "", "lastname" => "Mergenow", "firstname" => "Durdygylyç", "gender" => "1", "birthday" => "26.08.2002", "role" => "ROLE_STUDENT", "class" => "1"],
+            16 => ["username" => "okuwcy", "parent" => 123, "email" => "durdygylych@mail.com", "phone" => "", "lastname" => "Mergenow", "firstname" => "Durdygylyç", "gender" => "1", "birthday" => "26.08.2002", "role" => "ROLE_STUDENT", "class" => "1"],
             17 => ["username" => "meylis", "email" => "meylis@mail.com", "phone" => "", "lastname" => "Mammedow", "firstname" => "Meylis", "gender" => "1", "birthday" => "01.06.2002", "role" => "ROLE_STUDENT", "class" => "1"],
             18 => ["username" => "sapargul", "email" => "sapargul@mail.com", "phone" => "", "lastname" => "Meredowa", "firstname" => "Sapargül", "gender" => "2", "birthday" => "20.07.2002", "role" => "ROLE_STUDENT", "class" => "1"],
             19 => ["username" => "nurtach", "email" => "nurtach@mail.com", "phone" => "", "lastname" => "Mämmedowa", "firstname" => "Nurtäç", "gender" => "2", "birthday" => "28.02.2002", "role" => "ROLE_STUDENT", "class" => "1"],
@@ -171,7 +181,7 @@ class EduBoxFixtures extends Fixture
             104 => ["username" => "meryem", "email" => "meryem@mail.com", "phone" => "", "lastname" => "Durdyýewa", "firstname" => "Merýem", "gender" => "2", "birthday" => "08.12.2002", "role" => "ROLE_STUDENT", "class" => "4"],
             105 => ["username" => "sahragul", "email" => "sahragul@mail.com", "phone" => "", "lastname" => "Durdyýewa", "firstname" => "Sähragül", "gender" => "2", "birthday" => "29.01.2002", "role" => "ROLE_STUDENT", "class" => "4"],
             106 => ["username" => "omar2", "email" => "omar2@mail.com", "phone" => "", "lastname" => "Halnepesow", "firstname" => "Omar", "gender" => "1", "birthday" => "22.10.2002", "role" => "ROLE_STUDENT", "class" => "4"],
-            107 => ["username" => "mahriban", "email" => "mahriban@mail.com", "phone" => "", "lastname" => "Temirawa", "firstname" => "Mähriban", "gender" => "2", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
+            107 => ["username" => "mugallym", "email" => "mahriban@mail.com", "phone" => "", "lastname" => "Temirawa", "firstname" => "Mähriban", "gender" => "2", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
             108 => ["username" => "shyhy", "email" => "shyhy@mail.com", "phone" => "", "lastname" => "Şyhyýew", "firstname" => "Şyhy", "gender" => "1", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
             109 => ["username" => "maya", "email" => "maya@mail.com", "phone" => "", "lastname" => "Töre", "firstname" => "Maýa", "gender" => "2", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
             110 => ["username" => "amangul", "email" => "amangul@mail.com", "phone" => "", "lastname" => "Hudaýberdiýewa", "firstname" => "Amangül", "gender" => "2", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
@@ -186,7 +196,8 @@ class EduBoxFixtures extends Fixture
             119 => ["username" => "gurbantach2", "email" => "gurbantach2@mail.com", "phone" => "", "lastname" => "Bagyýewa", "firstname" => "Gurbantäç", "gender" => "2", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
             120 => ["username" => "seyitmyrat", "email" => "seyitmyrat@mail.com", "phone" => "", "lastname" => "Atabalow", "firstname" => "Seýitmyrat", "gender" => "1", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
             121 => ["username" => "saparnepes", "email" => "saparnepes@mail.com", "phone" => "", "lastname" => "Atabaýew", "firstname" => "Saparnepes", "gender" => "1", "birthday" => "", "role" => "ROLE_TEACHER", "class" => ""],
-            122 => ["username" => "admin", "email" => "admin@mail.com", "phone" => "", "lastname" => "Sopyýýew", "firstname" => "Sopy", "gender" => "1", "birthday" => "", "role" => "ROLE_ADMIN", "class" => ""],
+            122 => ["username" => "admin", "email" => "admin@mail.com", "phone" => "", "lastname" => "Sopyýew", "firstname" => "Sopy", "gender" => "1", "birthday" => "", "role" => "ROLE_ADMIN", "class" => ""],
+            123 => ["username" => "eneata", "email" => "eneata@mail.com", "phone" => "", "lastname" => "Mergenow", "firstname" => "Mergen", "gender" => "1", "birthday" => "", "role" => "ROLE_PARENT", "class" => ""],
         ];
         foreach ($users as $key => $item) {
             $user = new User();
@@ -203,6 +214,26 @@ class EduBoxFixtures extends Fixture
             $users[$key]['object'] = $user;
         }
         $manager->flush();
+
+        foreach ($users as $key => $item) {
+            if ($item['object'] instanceof User) {
+                if (isset($item['parent']) && $item['parent'] > 0) {
+                    if (
+                        $users[$item['parent']] &&
+                        $users[$item['parent']]['object'] instanceof User
+                    )
+                        $this->setParent($item['object'], $users[$item['parent']]['object'], $manager);
+                }
+                if (isset($item['class']) && $item['class'] > 0) {
+                    if (
+                        $studentsGroups[$item['class']] &&
+                        $studentsGroups[$item['class']]['object'] instanceof StudentsGroup
+
+                )
+                    $this->setStudentsGroup($item['object'], $manager, $studentsGroups[$item['class']]['object']);
+                }
+            }
+        }
 
 
         // Create subjects
@@ -244,6 +275,65 @@ class EduBoxFixtures extends Fixture
         }
         $manager->flush();
 
+        // Create subject schedule
+        $subjectSchedules = [
+            [
+                "class" => $studentsGroups[1]['object'],
+                "schedule" => [
+                    1 => [
+                        1 => 1,
+                        2 => 2,
+                        3 => 3,
+                        4 => 3,
+                    ]
+                ]
+            ]
+        ];
+        $subjectScheduleGroup = new SubjectSchedulesGroup();
+        $subjectScheduleGroup->setName('Nusga reje');
+        $manager->persist($subjectScheduleGroup);
+        foreach ($subjectSchedules as $key => $item) {
+            $subjectSchedule = new SubjectSchedule();
+            $subjectSchedule->setStudentsGroup($item['class']);
+            $subjectSchedule->setSubjectSchedulesGroup($subjectScheduleGroup);
+            for ($i = 1; $i <= 6; $i++)
+                for ($j = 1; $j <= 7; $j++)
+                    if (empty($item['schedule'][$i][$j])) $item['schedule'][$i][$j] = null;
+                    elseif (isset($subjects[$item['schedule'][$i][$j]]) && $subjects[$item['schedule'][$i][$j]]['object'] instanceof Subject)
+                        $item['schedule'][$i][$j] = $subjects[$item['schedule'][$i][$j]]['object']->getId();
+                    else
+                        $item['schedule'][$i][$j] = null;
+
+            $subjectSchedule->setSchedule($item['schedule']);
+            $manager->persist($subjectSchedule);
+        }
+        $manager->flush();
+
+    }
+
+
+
+    public function setParent(User $student, User $parent, ObjectManager $manager)
+    {
+        if ($student->hasRole('ROLE_STUDENT') && $parent->hasRole('ROLE_PARENT')) {
+            $userMetaRepo = $manager->getRepository('EduBoxBundle:UserMeta');
+            $userMetaRepo->findOneByOrCreate(['user' => $student, 'metaKey' => UserMeta::STUDENT_PARENT_ID])->setMetaValue($parent->getId());
+            return true;
+        }
+        return false;
+    }
+
+    public function setStudentsGroup(User $student, ObjectManager $manager, StudentsGroup $studentsGroup = null)
+    {
+        if ($student->hasRole('ROLE_STUDENT')) {
+            $userMetaRepo = $manager->getRepository('EduBoxBundle:UserMeta');
+            if ($studentsGroup instanceof StudentsGroup) {
+                return $userMetaRepo->findOneByOrCreate(['user' => $student, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->setMetaValue($studentsGroup->getId());
+            } else if ($studentsGroup === null)
+            {
+                return $userMetaRepo->findOneByOrCreate(['user' => $student, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->setMetaValue(null);
+            }
+        }
     }
 
 }

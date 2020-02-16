@@ -97,6 +97,11 @@ class User extends BaseUser
      */
     protected $profilePicturePath;
 
+    /**
+     * @ORM\Column(name="googleAuthenticatorSecret", type="string", nullable=true)
+     */
+    private $googleAuthenticatorSecret;
+
 
 
     /**
@@ -415,6 +420,17 @@ class User extends BaseUser
         if ($file = $this->getProfilePictureAbsolutePath() && file_exists($this->getProfilePictureAbsolutePath())) {
             unlink($file);
         }
+    }
+
+
+    public function getGoogleAuthenticatorSecret()
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret($googleAuthenticatorSecret)
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 
     public function __toString()

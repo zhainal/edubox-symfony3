@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
             new EduBoxBundle\EduBoxBundle(),
         ];
 

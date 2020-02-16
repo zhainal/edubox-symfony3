@@ -1,0 +1,49 @@
+{% extends '@EduBox/system_layout.html.twig' %}
+{% set body_attr = 'class="hold-transition login-page"' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% set title = 'resetting.request.submit'|trans([], 'FOSUserBundle') %}
+
+{% block body %}
+    <div class="login-box">
+        <div class="login-logo">
+            {% block logo %}
+                {% spaceless %}
+                    <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
+                        {% if 'single_image' == sonata_admin.adminPool.getOption('title_mode') or 'both' == sonata_admin.adminPool.getOption('title_mode') %}
+                            <img src="{{ asset(sonata_admin.adminPool.titlelogo) }}" alt="{{ sonata_admin.adminPool.title }}">
+                        {% endif %}
+                        {% if 'single_text' == sonata_admin.adminPool.getOption('title_mode') or 'both' == sonata_admin.adminPool.getOption('title_mode') %}
+                            <span>{{ sonata_admin.adminPool.title }}</span>
+                        {% endif %}
+                    </a>
+                {% endspaceless %}
+            {% endblock %}
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="{{ 'resetting.request.username'|trans([], 'FOSUserBundle') }}" required="required" autocomplete="username">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <input class="btn btn-primary btn-flat" type="submit" value="{{ 'resetting.request.submit'|trans([], 'FOSUserBundle') }}" />
+            </form>
+            <br>
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans([], 'FOSUserBundle') }}</a>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+    </script>
+{% endblock %}
+
+
