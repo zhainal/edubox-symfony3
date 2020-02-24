@@ -5,10 +5,13 @@ namespace EduBoxBundle\DataFixtures;
 
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 use EduBoxBundle\DomainManager\ParentManager;
 use EduBoxBundle\DomainManager\StudentManager;
 use EduBoxBundle\DomainManager\UserManager;
+use EduBoxBundle\Entity\Calendar;
+use EduBoxBundle\Entity\Holiday;
 use EduBoxBundle\Entity\StudentsGroup;
 use EduBoxBundle\Entity\Subject;
 use EduBoxBundle\Entity\SubjectArea;
@@ -281,17 +284,199 @@ class EduBoxFixtures extends Fixture
                 "class" => $studentsGroups[1]['object'],
                 "schedule" => [
                     1 => [
-                        1 => 1,
-                        2 => 2,
-                        3 => 3,
+                        1 => 16,
+                        2 => 12,
+                        3 => 18,
+                        4 => 2,
+                        5 => 17,
+                        6 => 9,
+                    ], 2 => [
+                        1 => 20,
+                        2 => 1,
+                        3 => 7,
+                        4 => 10,
+                        5 => 12,
+
+                    ], 3 => [
+                        1 => 17,
+                        2 => 1,
+                        3 => 8,
+                        4 => 19,
+                        5 => 13,
+                        6 => 5,
+                    ], 4 => [
+                        1 => 11,
+                        2 => 14,
+                        3 => 4,
+                        4 => 1,
+                        5 => 12,
+                        6 => 15,
+                    ], 5 => [
+                        1 => 20,
+                        2 => 12,
+                        3 => 14,
+                        4 => 4,
+                        5 => 15,
+
+                    ], 6 => [
+                        1 => 6,
+                        2 => 21,
+                        3 => 1,
                         4 => 3,
+                        5 => 22,
+
                     ]
                 ]
-            ]
+            ],
+            [
+                "class" => $studentsGroups[2]['object'],
+                "schedule" => [
+                    1 => [
+                        1 => 20,
+                        2 => 19,
+                        3 => 12,
+                        4 => 17,
+                        5 => 15,
+
+                    ], 2 => [
+                        1 => 17,
+                        2 => 5,
+                        3 => 16,
+                        4 => 14,
+                        5 => 15,
+                        6 => 1,
+                    ], 3 => [
+                        1 => 19,
+                        2 => 4,
+                        3 => 18,
+                        4 => 17,
+                        5 => 2,
+
+                    ], 4 => [
+                        1 => 9,
+                        2 => 17,
+                        3 => 3,
+                        4 => 7,
+                        5 => 1,
+                        6 => 4,
+                    ], 5 => [
+                        1 => 10,
+                        2 => 11,
+                        3 => 8,
+                        4 => 17,
+                        5 => 22,
+                        6 => 6,
+                    ], 6 => [
+                        1 => 12,
+                        2 => 14,
+                        3 => 19,
+                        4 => 1,
+                        5 => 13,
+
+                    ]
+                ]
+            ],
+            [
+                "class" => $studentsGroups[3]['object'],
+                "schedule" => [
+                    1 => [
+                        1 => 3,
+                        2 => 4,
+                        3 => 8,
+                        4 => 10,
+                        5 => 6,
+
+                    ], 2 => [
+                        1 => 18,
+                        2 => 17,
+                        3 => 1,
+                        4 => 6,
+                        5 => 4,
+                        6 => 12,
+                    ], 3 => [
+                        1 => 13,
+                        2 => 17,
+                        3 => 16,
+                        4 => 20,
+                        5 => 7,
+
+                    ], 4 => [
+                        1 => 14,
+                        2 => 11,
+                        3 => 15,
+                        4 => 10,
+                        5 => 5,
+
+                    ], 5 => [
+                        1 => 22,
+                        2 => 2,
+                        3 => 19,
+                        4 => 14,
+                        5 => 1,
+                        6 => 4,
+                    ], 6 => [
+                        1 => 9,
+                        2 => 12,
+                        3 => 5,
+                        4 => 2,
+                        5 => 15,
+                        6 => 1,
+                    ]
+                ]
+            ],
+            [
+                "class" => $studentsGroups[4]['object'],
+                "schedule" => [
+                    1 => [
+                        1 => 17,
+                        2 => 16,
+                        3 => 10,
+                        4 => 12,
+                        5 => 4,
+
+                    ], 2 => [
+                        1 => 6,
+                        2 => 19,
+                        3 => 4,
+                        4 => 1,
+                        5 => 15,
+
+                    ], 3 => [
+                        1 => 9,
+                        2 => 10,
+                        3 => 13,
+                        4 => 18,
+                        5 => 4,
+                        6 => 14,
+                    ], 4 => [
+                        1 => 1,
+                        2 => 3,
+                        3 => 6,
+                        4 => 5,
+                        5 => 2,
+
+                    ], 5 => [
+                        1 => 11,
+                        2 => 1,
+                        3 => 12,
+                        4 => 7,
+                        5 => 14,
+                        6 => 2,
+                    ], 6 => [
+                        1 => 20,
+                        2 => 17,
+                        3 => 15,
+                        4 => 8,
+                        5 => 4,
+                        6 => 22,
+                    ]
+                ]
+            ],
         ];
         $subjectScheduleGroup = new SubjectSchedulesGroup();
         $subjectScheduleGroup->setName('Nusga reje');
         $manager->persist($subjectScheduleGroup);
+        $this->setActivaSubjectSchedulesGroup($subjectScheduleGroup, $manager);
         foreach ($subjectSchedules as $key => $item) {
             $subjectSchedule = new SubjectSchedule();
             $subjectSchedule->setStudentsGroup($item['class']);
@@ -309,6 +494,84 @@ class EduBoxFixtures extends Fixture
         }
         $manager->flush();
 
+        // Createing calendar and holidays
+        $calendar = new Calendar();
+        $calendar->setYear(2019);
+        $calendar->setQuarterOneBegin((new \DateTime())->setDate(2019, 9, 1));
+        $calendar->setQuarterOneEnd((new \DateTime())->setDate(2019, 10, 20));
+        $calendar->setQuarterTwoBegin((new \DateTime())->setDate(2019, 11, 1));
+        $calendar->setQuarterTwoEnd((new \DateTime())->setDate(2019, 12, 30));
+        $calendar->setQuarterThreeBegin((new \DateTime())->setDate(2020, 1, 11));
+        $calendar->setQuarterThreeEnd((new \DateTime())->setDate(2020, 3, 20));
+        $calendar->setQuarterFourBegin((new \DateTime())->setDate(2020, 4, 1));
+        $calendar->setQuarterFourEnd((new \DateTime())->setDate(2020, 5, 25));
+        $manager->persist($calendar);
+        $holidays = [
+            [
+                "name" => "Täze ýyl",
+                "beginDate" => "2019-12-31",
+                "endDate" => "2019-01-01",
+            ],
+            [
+                "name" => "Halkara zenanlar güni",
+                "beginDate" => "2019-03-08",
+                "endDate" => "2019-03-08",
+            ],
+            [
+                "name" => "Milli bahar baýramy",
+                "beginDate" => "2019-03-21",
+                "endDate" => "2019-03-22",
+            ],
+            [
+                "name" => "Türkmenistanyň Konstitusiýasynyň we Türkmenistanyň Döwlet baýdagynyň güni",
+                "beginDate" => "2019-05-18",
+                "endDate" => "2019-05-18",
+            ],
+            [
+                "name" => "Türkmenistanyň Garaşsyzlyk güni",
+                "beginDate" => "2019-09-27",
+                "endDate" => "2019-09-27",
+            ],
+            [
+                "name" => "Hatyra güni",
+                "beginDate" => "2019-10-06",
+                "endDate" => "2019-10-06",
+            ],
+            [
+                "name" => "Halkara Bitaraplyk güni",
+                "beginDate" => "2019-12-12",
+                "endDate" => "2019-12-12",
+            ],
+        ];
+        $holidayObjects = new ArrayCollection();
+        foreach ($holidays as $item) {
+            $holiday = new Holiday();
+            $holiday->setName($item['name']);
+            $holiday->setBegin((new \DateTime())->setTimestamp(strtotime($item['beginDate'])));
+            $holiday->setEnd((new \DateTime())->setTimestamp(strtotime($item['endDate'])));
+            $manager->persist($holiday);
+            $holidayObjects->add($holiday);
+        }
+        $calendar->setHolidays($holidayObjects);
+        $manager->flush();
+
+        // Setting about school
+        $school = [
+            'shortName' => '2-nji orta mekdebi',
+            'fullName' => 'Daşary ýurt dillerinden ýöriteleşdirilen 2-nji orta mekdebi',
+            'address' => 'Balkanabat, 126-njy ýaşaýyş jaýlar toplumy',
+            'phone' => '+99361234567',
+            'email' => 'mekdep.n2@gmail.com',
+            'director' => $users[122]['object']->getId(),
+        ];
+        foreach ($school as $key => $item) {
+            $setting = $manager
+                ->getRepository('EduBoxBundle:Setting')
+                ->findOneByOrCreate(['settingKey' => $key]);
+            $setting->setSettingValue($item);
+            $manager->persist($setting);
+        }
+        $manager->flush();
     }
 
 
@@ -334,6 +597,15 @@ class EduBoxFixtures extends Fixture
                 return $userMetaRepo->findOneByOrCreate(['user' => $student, 'metaKey' => UserMeta::STUDENT_GROUP_ID])->setMetaValue(null);
             }
         }
+    }
+
+    public function setActivaSubjectSchedulesGroup(SubjectSchedulesGroup $schedulesGroup, ObjectManager $manager)
+    {
+        $setting = $manager
+            ->getRepository('EduBoxBundle:Setting')
+            ->findOneByOrCreate(['settingKey' => 'subjectSchedulesGroup']);
+        $setting->setSettingValue($schedulesGroup->getId());
+        $manager->flush();
     }
 
 }

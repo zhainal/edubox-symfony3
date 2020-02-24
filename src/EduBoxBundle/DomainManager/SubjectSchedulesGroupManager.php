@@ -61,7 +61,7 @@ class SubjectSchedulesGroupManager
             ->setParameter('subjectSchedulesGroup', $subjectSchedulesGroup)
             ->getQuery()
             ->getResult();
-        return $schedule[0] ? $schedule[0] : false;
+        return isset($schedule[0]) ? $schedule[0] : false;
     }
 
 
