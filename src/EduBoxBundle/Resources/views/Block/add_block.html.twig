@@ -1,11 +1,11 @@
 {% if is_granted('ROLE_USER') %}
     <li>
         {% if app.request.getSession.get('_theme') == 'dark' %}
-            <a href="{{ path(app.request.attributes.get('_route')) }}?_theme=light">
+            <a href="{{ path(app.request.attributes.get('_route'), {'_theme':'light'}+app.request.attributes.get('_route_params')) }}">
                 <i class="fa fa-sun-o"></i>
             </a>
         {% else %}
-            <a href="{{ path(app.request.attributes.get('_route')) }}?_theme=dark">
+            <a href="{{ path(app.request.attributes.get('_route'), {'_theme':'dark'}+app.request.attributes.get('_route_params')) }}">
                 <i class="fa fa-moon-o"></i>
             </a>
         {% endif %}
