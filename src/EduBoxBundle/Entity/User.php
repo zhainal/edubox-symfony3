@@ -102,6 +102,18 @@ class User extends BaseUser
      */
     private $googleAuthenticatorSecret;
 
+    /**
+     * @var string
+     * @ORM\Column(name="theme", type="string", length=32, nullable=true)
+     */
+    private $theme;
+
+    /**
+     * @var string
+     * @ORM\Column(name="locale", type="string", length=2, nullable=true)
+     */
+    private $locale = 'en';
+
 
 
     /**
@@ -397,6 +409,7 @@ class User extends BaseUser
 
 
     /**
+     *
      */
     public function uploadProfilePicture() {
         // check there is a profile pic to upload
@@ -422,19 +435,68 @@ class User extends BaseUser
         }
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getGoogleAuthenticatorSecret()
     {
         return $this->googleAuthenticatorSecret;
     }
 
+    /**
+     * @param $googleAuthenticatorSecret
+     */
     public function setGoogleAuthenticatorSecret($googleAuthenticatorSecret)
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 
+    /**
+     * @param $theme
+     * @return $this
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return 'User';
+        return $this->getUsername() != ''
+            ? $this->getUsername()
+            : 'User';
     }
 }

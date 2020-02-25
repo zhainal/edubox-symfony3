@@ -1,3 +1,17 @@
+{% if is_granted('ROLE_USER') %}
+    <li>
+        {% if app.request.getSession.get('_theme') == 'dark' %}
+            <a href="{{ path(app.request.attributes.get('_route')) }}?_theme=light">
+                <i class="fa fa-sun-o"></i>
+            </a>
+        {% else %}
+            <a href="{{ path(app.request.attributes.get('_route')) }}?_theme=dark">
+                <i class="fa fa-moon-o"></i>
+            </a>
+        {% endif %}
+    </li>
+{% endif %}
+
 {% if is_granted('ROLE_PARENT') %}
     {% set students = parent_manager.getStudents(app.user) %}
     {% if students[0] is defined %}
@@ -29,8 +43,6 @@
             EN
         {% elseif app.request.getLocale() == 'tm' %}
             TM
-        {% else %}
-            {{ locale }}
         {% endif %}
     </a>
     <ul class="dropdown-menu">
