@@ -27,9 +27,11 @@
 {% endblock %}
 
 {% block body_attributes %}
-    class="sonata-bc fixed skin-blue
+    class="sonata-bc fixed {% if app.request.getSession.get('_theme') == 'dark' %}skin-blue{% else %}skin-blue-light{% endif %}
     {% if app.request.cookies.get('sonata_sidebar_hide') -%}
         sidebar-collapse
     {%- endif -%}"
 {% endblock %}
 
+{% block side_bar_after_nav %}
+{% endblock %}

@@ -24,7 +24,7 @@ class Holiday
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=32)
+     * @ORM\Column(name="name", type="string", length=256)
      */
     private $name;
 
@@ -47,7 +47,7 @@ class Holiday
      *
      * @ORM\Column(name="moved", type="boolean")
      */
-    private $moved;
+    private $moved = false;
 
 
     /**

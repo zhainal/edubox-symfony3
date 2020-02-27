@@ -5,6 +5,7 @@ user.ROLE_STUDENT: Okuwçy
 user.ROLE_USER: Ulanyjy
 user.ROLE_PARENT: Ene-ata
 user.profile: Profil
+user.two_factor: '2 faktor awtorizasiýa'
 sms.student_marked: 'Okuwçy %name% %subject% sapagynda %date% senesinde %mark% aldy'
 subject_areas: 'Ders ugurlary'
 Subject_areas_list: 'Ders ugurlar sanawy'

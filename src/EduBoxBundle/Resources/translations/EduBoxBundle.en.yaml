@@ -5,6 +5,8 @@ user.ROLE_STUDENT: Student
 user.ROLE_USER: User
 user.ROLE_PARENT: Parent
 user.profile: Profile
+user.change_password: 'Change password'
+user.two_factor: '2FA'
 sms.student_marked: 'Student %name% received a mark of %mark% for the subject %subject% in %date%'
 subject_areas: 'Subject areas'
 Subject_areas_list: 'Subject areas list'

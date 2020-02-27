@@ -138,9 +138,14 @@ services:
       - { name: kernel.event_listener, event: edubox.mark.created, method: onMarkCreated }
 
   EduBoxBundle\EventListener\DetermineLocaleListener:
-    arguments: ['@security.token_storage']
+    arguments: []
     tags:
       - { name: kernel.event_listener, event: kernel.request , method: onKernelRequest, priority: 17 }
+
+  EduBoxBundle\EventListener\UserToSessionListener:
+    arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
+    tags:
+      - { name: kernel.event_listener, event: kernel.request , method: onKernelRequest, priority: 0 }
 
   EduBoxBundle\EventListener\DetermineStudentListener:
     arguments: ['@edubox.user_manager']
@@ -163,6 +168,17 @@ services:
       - '@edubox.quarter_manager'
     tags:
       - {name: 'console.command', command: 'edubox:reset-lessons'}
+
+
+  EduBoxBundle\Command\ResetMarksCommand:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@edubox.lesson_manager'
+      - '@edubox.mark_manager'
+      - '@edubox.quarter_manager'
+      - '@edubox.students_group_manager'
+    tags:
+      - {name: 'console.command', command: 'edubox:reset-marks'}
 
   EduBoxBundle\Command\UpdateStatisticsCommand:
     arguments:

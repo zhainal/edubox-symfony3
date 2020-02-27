@@ -1,8 +1,6 @@
 <?php
 
-
 namespace EduBoxBundle\Event;
-
 
 use EduBoxBundle\Entity\Mark;
 use Symfony\Component\EventDispatcher\Event;

@@ -6,6 +6,7 @@ namespace EduBoxBundle\Admin;
 
 use Doctrine\ORM\EntityRepository;
 use EduBoxBundle\Entity\Lesson;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -45,7 +46,12 @@ class HomeworkAdmin extends AbstractAdmin
                     ->andWhere($qb->expr()->isNotNull('l.date'));
             }
         ], ['translation_domain' => 'forms']);
-        $form->add('content', null, ['label' => 'homework.content'], ['translation_domain' => 'forms']);
+        $form->add('content', CKEditorType::class, [
+            'config' => array('toolbar' => 'standard'),
+            'label' => 'homework.content'
+        ], [
+            'translation_domain' => 'forms'
+        ]);
     }
 
     protected function configureShowFields(ShowMapper $show)

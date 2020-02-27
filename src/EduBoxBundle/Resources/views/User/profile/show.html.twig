@@ -34,9 +34,7 @@
         <!-- /.col -->
         <div class="col-md-9">
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#profile" data-toggle="tab" aria-expanded="false">{{ 'user.profile'|trans([], 'EduBoxBundle') }}</a></li>
-                </ul>
+                {% include '@EduBox/User/partials/user_menu.html.twig' %}
                 <div class="tab-content">
                     <div class="tab-pane active" id="profile">
                         <form class="form-horizontal">

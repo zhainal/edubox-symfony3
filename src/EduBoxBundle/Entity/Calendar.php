@@ -87,7 +87,7 @@ class Calendar
     private $quarterFourEnd;
 
     /**
-     * @var \DateTime
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="EduBoxBundle\Entity\Holiday")
      * @ORM\JoinTable(name="calendar_holiday")
@@ -105,24 +105,6 @@ class Calendar
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return Calendar
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -312,7 +294,7 @@ class Calendar
     }
 
     /**
-     * @param \DateTime $holidays
+     * @param $holidays
      */
     public function setHolidays($holidays)
     {
