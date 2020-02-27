@@ -3,8 +3,3 @@ php:
   - 7.2
 before_script: 
   - "composer install"
-deploy:
-  provider: heroku
-  app: "edubox-symfony"
-  api_key:
-    secure: "6670460a-9fd7-4f83-b827-27566995de01"
