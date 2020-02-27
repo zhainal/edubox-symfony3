@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User extends BaseUser
 {
     const DEFAULT_IMG_PATH = 'user.jpg';
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     /**
      * @var int
      * @ORM\Id
