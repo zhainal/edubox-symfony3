@@ -6,7 +6,8 @@ user.ROLE_USER: Ulanyjy
 user.ROLE_PARENT: Ene-ata
 user.profile: Profil
 user.two_factor: '2 faktor awtorizasiýa'
-sms.student_marked: 'Okuwçy %name% %subject% sapagynda %date% senesinde %mark% aldy'
+sms.student_marked: 'Hormatly %parent_name%, siziň çagaňyz %student_name% %subject% dersinden %date% senesinde %mark% aldy'
+sms.student_marked_n: 'Hormatly %parent_name%, siziň çagaňyz %student_name% %subject% dersinde %date% senesinde sapaga gatnaşmady'
 subject_areas: 'Ders ugurlary'
 Subject_areas_list: 'Ders ugurlar sanawy'
 Subject_areas_edit: 'Ders ugur üýtgedilýär'

@@ -7,6 +7,7 @@ namespace EduBoxBundle\EventListener;
 use EduBoxBundle\DomainManager\QuarterManager;
 use EduBoxBundle\DomainManager\SMSManager;
 use EduBoxBundle\DomainManager\StudentManager;
+use EduBoxBundle\Entity\Mark;
 use EduBoxBundle\Entity\User;
 use EduBoxBundle\Event\MarkCreatedEvent;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -36,8 +37,10 @@ class SendMessageToParentListener
         $student = $mark->getUser();
         $parent = $this->studentManager->getParent($student);
         if ($parent instanceof User) {
-            $this->SMSManager->sendMsg($parent, $this->translator->trans('sms.student_marked', [
-                '%name%' => $student->getFullName(),
+            $this->SMSManager->sendMsg($parent, $this->translator->trans(
+                $mark->getMark() == 'dc' ? 'sms.student_marked_n' : 'sms.student_marked', [
+                '%student_name%' => $student->getFirstName(),
+                '%parent_name%' => $parent->getFullName(),
                 '%mark%' => $mark->getMark(),
                 '%subject%' => $mark->getSubject()->getName(),
                 '%date%' => $mark->getDate()->format('Y.m.d'),
