@@ -3,6 +3,7 @@
 
 [![Travis (.org)](https://img.shields.io/travis/agoyli/edubox-symfony3?style=flat-square)](https://travis-ci.org/github/agoyli/edubox-symfony3)
 [![GitHub](https://img.shields.io/github/license/agoyli/edubox-symfony3?style=flat-square)](https://opensource.org/licenses/MIT)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/agoyli/edubox-symfony3?style=flat-square)](https://github.com/agoyli/edubox-symfony3/releases/latest)
 
 This system is an innovative system which allows school management by reducing paperwork, controlling attendance and performance of students, informing parents of their children and ensuring their constant communication. In the novel system, we maintained previous design of class-book which is familiar to teachers so that their daily works are facilitated.  User-friendly interface will help parents, teachers, and students to adapt their new design and features.
 ## Our Mission
