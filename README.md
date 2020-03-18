@@ -4,7 +4,7 @@
 [![Travis (.org)](https://img.shields.io/travis/agoyli/edubox-symfony3?style=flat-square)](https://travis-ci.org/github/agoyli/edubox-symfony3)
 [![GitHub](https://img.shields.io/github/license/agoyli/edubox-symfony3?style=flat-square)](https://opensource.org/licenses/MIT)
 
-This system is an innovative system which allows school management by reducing paperwork, controlling attendance and performance of students, informing parents of their children and ensuring their constant communication. In the novel system, we maintained previous design of class-book which is familiar to teachers so that their daily works are facilitated.  User-friendly interface will help parents, teachers, and students to adapt their new design and features. Edubox mainly helps to save time to fill in the class-books as well as time and power for regular reports.
+This system is an innovative system which allows school management by reducing paperwork, controlling attendance and performance of students, informing parents of their children and ensuring their constant communication. In the novel system, we maintained previous design of class-book which is familiar to teachers so that their daily works are facilitated.  User-friendly interface will help parents, teachers, and students to adapt their new design and features.
 ## Our Mission
 Our mission consists of introducing members of various educational bodies with electronic journal and record books, ensuring their control of the quality of the educational services provided, management of system, and establishing simplistic and secure system for management of various documents relating to academic affairs. 
 ## Availability
@@ -18,10 +18,10 @@ Completion of journals by teachers, and all types of performance of users (as pe
 Next Step in the Growth of Education
 Digital system will become a new standard disrupting current paper-based tradition. It will comply with the all requirements for information & communication and innovation technologies at all schools enabling them to reach new heights.
 ### Demo URL: http://demo.edubox.pw/
-### Administrator: admin/admin
-### Teacher: mugallym/mugallym
-### Student: okuwcy/okuwcy
-### Parent: eneata/eneata
+- Administrator: **admin/admin**
+- Teacher: **mugallym/mugallym**
+- Student: **okuwcy/okuwcy**
+- Parent: **eneata/eneata**
 ## Project Summary
 ### Admin panel 
 - About school
